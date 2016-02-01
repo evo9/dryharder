@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCloudpaymentsCard extends Migration {
+class CreateCloudPaymentsCard extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -19,8 +19,9 @@ class CreateCloudpaymentsCard extends Migration {
 			$table->string('token', 500)->default(''); // токен
 			$table->string('card_pan', 20)->default(''); // номер карты
 			$table->string('card_type', 50)->default(''); // тип карты
-			$table->string('card_username', 255)->default(''); // имя владельца карты
+			$table->string('card_holder', 255)->default(''); // имя владельца карты
 			$table->string('ip', 20)->default(''); // ip адрес
+			$table->string('payment_id')->default(0); // transaction_id // id транзакции
 			$table->string('email', 255)->default(''); // email плательщика
 			$table->boolean('is_default')->default(0); // карта по умолчанию
 			$table->timestamp('external_at'); // datetime_load // Дата создания по времени сервера оплаты

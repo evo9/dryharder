@@ -33,13 +33,13 @@ class PaymentCloudController extends Controller
         $input = Input::all();
         Reporter::payExternalCheck($input['AccountId'], $input['InvoiceId'], $input['Amount'], $input);
 
-        //$this->filter();
+        $this->filter();
         if ($this->params['order_id'] > '') {
             $this->checkOrder();
             $this->processCheckRequest();
         }
         else {
-            $this->saveCard();
+            $this->processCheckCard();
         }
     }
 
@@ -55,9 +55,14 @@ class PaymentCloudController extends Controller
         $input = Input::all();
         Reporter::payExternalPay($input['AccountId'], $input['InvoiceId'], $input['Amount'], $input);
 
-        $this->filter();
-        $this->checkOrder();
-        $this->processPayRequest();
+        //$this->filter();
+        if ($this->params['order_id']> '') {
+            $this->checkOrder();
+            $this->processPayRequest();
+        }
+        else {
+            $this->processPayCard();
+        }
 
     }
 
@@ -378,8 +383,7 @@ class PaymentCloudController extends Controller
     {
 
         $data = [
-            'code' => 0,
-            'addCard' => true
+            'code' => 0
         ];
 
         Reporter::paySaveCardResponseSuccess($this->params['customer_id'], $this->params['payment_id']);
@@ -556,7 +560,7 @@ class PaymentCloudController extends Controller
 
     }
 
-    private function saveCard()
+    private function processCheckCard()
     {
         $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
         if ($card) {
@@ -564,12 +568,32 @@ class PaymentCloudController extends Controller
         }
         else {
             $card = new CloudPaymentsCard();
-            unset($this->params['order_id']);
+            unset($this->params['order_id'], $this->params['request']);
+            $card->unguard();
             $card->fill($this->params);
             $card->save();
 
-            $this->responseAddCardSuccess();
         }
 
+            $this->responseAddCardSuccess();
+    }
+
+    private function processPayCard()
+    {
+        $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
+        if ($card) {
+            $card->token($this->params['token']);
+        }
+        else {
+            $card = new CloudPaymentsCard();
+            unset($this->params['order_id'], $this->params['request']);
+            $card->unguard();
+            $card->fill($this->params);
+            $card->save();
+        }
+
+        if ($card) {
+            $this->responseAddCardSuccess();
+        }
     }
 }
