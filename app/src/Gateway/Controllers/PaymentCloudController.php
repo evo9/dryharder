@@ -34,7 +34,6 @@ class PaymentCloudController extends Controller
         Reporter::payExternalCheck($input['AccountId'], $input['InvoiceId'], $input['Amount'], $input);
 
         //$this->filter();
-        $this->responseError($this->params);
         if ($this->params['order_id'] > '') {
             $this->checkOrder();
             $this->processCheckRequest();
@@ -565,6 +564,7 @@ class PaymentCloudController extends Controller
         }
         else {
             $card = new CloudPaymentsCard();
+            unset($this->params['order_id']);
             $card->fill($this->params);
             $card->save();
 
