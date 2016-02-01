@@ -38,24 +38,10 @@ class Flash
             $lastView->qnt = 1;
             $lastView->save();
 
-            return 'invite';
+            return 'add_card';
 
         }
-
-        // только три раза
-        if ($lastView->qnt >= 3) {
-            return null;
-        }
-
-        // не чаще, чем раз в час
-        if (time() - strtotime($lastView->updated_at) < 60*60) {
-            return null;
-        }
-
-        $lastView->qnt++;
-        $lastView->save();
-
-        return 'invite';
+        return null;
 
     }
 
@@ -72,6 +58,15 @@ class Flash
                     'invite_url' => $invite->url(),
                     'title'      => trans('flashes.invite.title'),
                     'content'    => trans('flashes.invite.content'),
+                ]);
+
+                break;
+
+            case 'add_card':
+
+                return View::make('flash::add_card', [
+                    'title' => trans('flashes.add_card.title'),
+                    'content' => ''
                 ]);
 
                 break;

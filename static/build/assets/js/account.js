@@ -58,25 +58,6 @@ var ua = detect.parse(navigator.userAgent);
 var safari = ua.browser.family == 'Safari' || ua.device.family == 'iPhone' || ua.os.family == 'iOS';
 
 $(function(){
-	var payHandler = function () {
-		var widget = new cp.CloudPayments();
-		widget.charge({ // options
-				publicId: 'pk_bea0e2c75dc5c6795bbb9ae7ab3c6',
-				description: 'Оплата в dryharder.pixy.pro',
-				amount: 123.00, //сумма
-				currency: 'RUB',
-				invoiceId: '1234567', //номер заказа
-				accountId: 'user@example.com', //плательщик
-			},
-			function (options) { // success
-				//действие при успешном платеже
-			},
-			function (reason, options) { // fail
-				//действие при неуспешном платеже
-			});
-	};
-	$("#payButton").on("click", payHandler); //кнопка "Оплатить"
-
 	$.support.cors = true;
 	$( document ).ajaxError(function(r, q) {
 		if(typeof AppAccount.ajaxError == 'function'){

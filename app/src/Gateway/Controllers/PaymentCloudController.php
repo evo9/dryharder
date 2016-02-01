@@ -12,12 +12,14 @@ use Dryharder\Components\Payment\CloudPaymentException;
 use Dryharder\Components\Reporter;
 use Dryharder\Gateway\Components\GenerateAgentXML;
 use Dryharder\Gateway\Models\PaymentCloud;
+use Dryharder\Gateway\Models\CloudPaymentsCard;
 use Input;
 use Log;
 use Response;
 
 class PaymentCloudController extends Controller
 {
+    private $params = [];
 
     /**
      * сюда от платежного шлюза приходит запрос на check
@@ -31,10 +33,15 @@ class PaymentCloudController extends Controller
         $input = Input::all();
         Reporter::payExternalCheck($input['AccountId'], $input['InvoiceId'], $input['Amount'], $input);
 
-        $this->filter();
-        $this->checkOrder();
-        $this->processCheckRequest();
-
+        //$this->filter();
+        $this->responseError($this->params);
+        if ($this->params['order_id'] > '') {
+            $this->checkOrder();
+            $this->processCheckRequest();
+        }
+        else {
+            $this->saveCard();
+        }
     }
 
     /**
@@ -116,12 +123,10 @@ class PaymentCloudController extends Controller
      */
     private function processCheckRequest()
     {
-        $params = $this->parameters();
-
         // вдруг уже был чек с этими параметрами
-        $pay = PaymentCloud::whereCustomerId($params['customer_id'])
-            ->whereOrderId($params['order_id'])
-            ->wherePaymentId($params['payment_id'])
+        $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
+            ->whereOrderId($this->params['order_id'])
+            ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(1)
             ->first();
 
@@ -129,16 +134,16 @@ class PaymentCloudController extends Controller
             $pay = new PaymentCloud();
         }
         $pay->unguard();
-        $pay->fill($params);
+        $pay->fill($this->params);
         $pay->failed = 0;
         $pay->save();
 
         if (!$pay) {
-            Reporter::payTransactionFail($params['customer_id'], $params['order_id'], $params['payment_id']);
+            Reporter::payTransactionFail($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id']);
             $this->responseError(13);
         }
 
-        Reporter::payTransactionCreated($params['customer_id'], $params['order_id'], $params['payment_id'], $pay->id);
+        Reporter::payTransactionCreated($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id'], $pay->id);
         $this->responseSuccess();
 
     }
@@ -149,12 +154,10 @@ class PaymentCloudController extends Controller
      */
     private function processPayRequest()
     {
-        $params = $this->parameters();
-
         // может быть уже была оплата, сразу ответим "ок"
-        $pay = PaymentCloud::whereCustomerId($params['customer_id'])
-            ->whereOrderId($params['order_id'])
-            ->wherePaymentId($params['payment_id'])
+        $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
+            ->whereOrderId($this->params['order_id'])
+            ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(0)
             ->first();
 
@@ -163,31 +166,31 @@ class PaymentCloudController extends Controller
         }
 
         // такая транзакция уже должна быть в нашей базе, и не оплаченная
-        $pay = PaymentCloud::whereCustomerId($params['customer_id'])
-            ->whereOrderId($params['order_id'])
-            ->wherePaymentId($params['payment_id'])
+        $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
+            ->whereOrderId($this->params['order_id'])
+            ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(1)
             ->first();
 
         // если ее нет, значит ничего не делаем
         if (!$pay) {
-            Reporter::payTransactionLost($params['customer_id'], $params['order_id'], $params['payment_id']);
+            Reporter::payTransactionLost($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id']);
             $this->responseError(13);
         }
 
-        Reporter::payTransactionFound($params['customer_id'], $params['order_id'], $params['payment_id'], $pay->id);
+        Reporter::payTransactionFound($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id'], $pay->id);
 
         // обновляем транзакцию как оплаченную
-        $pay->request = $params['request'];
-        $pay->paid($params['token']);
+        $pay->request = $this->params['request'];
+        $pay->paid($this->params['token']);
 
         // удалить все токены, если клиент против хранения карты
-        $saveCard = Customer::instance()->initByExternalId($params['customer_id'])->isSaveCard();
+        $saveCard = Customer::instance()->initByExternalId($this->params['customer_id'])->isSaveCard();
         if(!$saveCard){
-            PaymentCloud::removeTokens($params['customer_id']);
+            PaymentCloud::removeTokens($this->params['customer_id']);
         }
 
-        Reporter::payTransactionPaid($params['customer_id'], $params['order_id'], $params['payment_id'], $pay->id);
+        Reporter::payTransactionPaid($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id'], $pay->id);
 
         $this->responseSuccess();
 
@@ -199,17 +202,15 @@ class PaymentCloudController extends Controller
      */
     private function processPayFail()
     {
-        $params = $this->parameters();
-
-        $pay = PaymentCloud::whereCustomerId($params['customer_id'])
-            ->whereOrderId($params['order_id'])
-            ->wherePaymentId($params['payment_id'])
+        $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
+            ->whereOrderId($this->params['order_id'])
+            ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(1)
             ->first();
 
         if ($pay) {
             $pay->failed = 1;
-            $pay->request = $params['request'];
+            $pay->request = $this->params['request'];
             $pay->save();
         }
 
@@ -223,17 +224,15 @@ class PaymentCloudController extends Controller
     private function checkOrder()
     {
 
-        $params = $this->parameters();
-
         try {
 
             $api = new Api();
-            $api->IsGoodOrder($params['order_id'], $params['customer_id']);
-            Reporter::payOrderFound($params['customer_id'], $params['order_id']);
+            $api->IsGoodOrder($this->params['order_id'], $this->params['customer_id']);
+            Reporter::payOrderFound($this->params['customer_id'], $this->params['order_id']);
 
         } catch (ApiException $e) {
 
-            Reporter::payOrderLost($params['customer_id'], $params['order_id']);
+            Reporter::payOrderLost($this->params['customer_id'], $this->params['order_id']);
 
             if ($e->getCode() == 400) {
                 $this->responseError(10);
@@ -242,6 +241,7 @@ class PaymentCloudController extends Controller
             $this->responseError(13);
 
         }
+
 
     }
 
@@ -291,15 +291,15 @@ class PaymentCloudController extends Controller
     private function checkParameters()
     {
 
-        $params = $this->parameters();
+        $this->params = $this->parameters();
 
-        Reporter::payExternalParameters($params);
+        Reporter::payExternalParameters($this->params);
 
         if (
-            empty($params['order_id']) ||
-            empty($params['customer_id'])
+            /*empty($this->params['order_id']) ||*/
+            empty($this->params['customer_id'])
         ) {
-            Reporter::payExternalParametersFail($params);
+            Reporter::payExternalParametersFail($this->params);
             $this->responseError(13);
         }
 
@@ -362,11 +362,28 @@ class PaymentCloudController extends Controller
     {
 
         $data = [
-            'code' => 0,
+            'code' => 0
         ];
 
-        $params = $this->parameters();
-        Reporter::payResponseSuccess($params['customer_id'], $params['payment_id'], $params['order_id']);
+        Reporter::payResponseSuccess($this->params['customer_id'], $this->params['payment_id'], $this->params['order_id']);
+
+        Response::json($data)->send();
+        die();
+
+    }
+
+    /**
+     * Добавление карты. ответ успешно
+     */
+    private function responseAddCardSuccess()
+    {
+
+        $data = [
+            'code' => 0,
+            'addCard' => true
+        ];
+
+        Reporter::paySaveCardResponseSuccess($this->params['customer_id'], $this->params['payment_id']);
 
         Response::json($data)->send();
         die();
@@ -540,5 +557,19 @@ class PaymentCloudController extends Controller
 
     }
 
+    private function saveCard()
+    {
+        $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
+        if ($card) {
+            // card is exist message and return
+        }
+        else {
+            $card = new CloudPaymentsCard();
+            $card->fill($this->params);
+            $card->save();
 
+            $this->responseAddCardSuccess();
+        }
+
+    }
 }

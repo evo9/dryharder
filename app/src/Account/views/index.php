@@ -30,8 +30,6 @@ $v = 19;
 		<?= View::make('ac::inc.header', compact('user', 'promo', 'cardInfo')) ?>
 	</header>
 
-	<button id="payButton">Pay Button</button>
-
 	<main id="main" role="main">
 		<div class="add-mobile-informations visible-xs">
 			<div class="container">

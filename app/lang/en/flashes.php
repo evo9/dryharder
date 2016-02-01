@@ -8,10 +8,13 @@ return [
             'To participate in campaign you friend has to register using the link below. ' .
             '(Please note, we will add funds to your account once your friend receives first fulfilled order)',
     ],
-
     'review' => [
         'title'   => 'Пожалуйста, оцените качество выполнения заказа',
         'comment' => 'Комментарий',
     ],
+    'add_card' => [
+        'title'   => 'Добавьте платежную карту',
+        //'comment' => 'Комментарий',
+    ]
 
 ];

@@ -95,7 +95,7 @@ class OrderController extends BaseController
         foreach ($fields as $key) {
             $data[$key] = Input::get($key);
         }
-       // Mailer::requestOrderMessage($data);
+        Mailer::requestOrderMessage($data);
 
         OrderRequest::unguard();
         OrderRequest::create([

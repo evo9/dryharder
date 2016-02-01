@@ -412,6 +412,13 @@ class Reporter
         self::report(self::PAY_RESPONSE_SUCCESS, $data);
     }
 
+    public static function paySaveCardResponseSuccess($customer_id, $payment_id)
+    {
+        $message = 'успешный ответ платежному шлюзу';
+        $data = compact('message', 'customer_id', 'order_id', 'payment_id');
+        self::report(self::PAY_RESPONSE_SUCCESS, $data);
+    }
+
     const PAY_EXTERNAL_PARAMETERS_FAIL = 'pay.external.parameters.fail';
 
     public static function payExternalParametersFail($parameters)
