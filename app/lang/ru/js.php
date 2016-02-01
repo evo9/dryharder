@@ -1,0 +1,21 @@
+<?php
+return [
+    'Waiting...'                                  => 'Ожидание...',
+    'Loading order list...'                       => 'Загружаем список заказов...',
+    'Loading order information...'                => 'Загружаем информацию о заказе...',
+    'Server error. Please try later'              => 'Ошибка запроса к серверу. Повторите позднее',
+    'Payment successful'                          => 'Спасибо! Оплата успешно завершена.<br>В течение 10 минут оплата отразится в личном кабинете.',
+    'Payment not finished'                        => 'Оплата не завершена',
+    'just a second...'                            => '<small>Just a second...</small>',
+    'Error loading orders list. Please try later' => 'Ошибка загрузки списка ваших заказов. Пожалуйста, повторите позже.',
+    'Error loading order data. Please try later'  => 'Произошла ошибка загрузки данных по вашему заказу. Пожалуйста, повторите позже.',
+    'Payment in progress...'                      => 'Выполняется оплата...',
+    'Loading payment form...'                     => 'Загружаем форму для оплаты...',
+    'Registration data has been changed'          => 'Ваши регистрационные данные успешно изменены',
+    'Password has been changed'                   => 'Ваш пароль был успешно изменен',
+    'feedbackSendErrorMessage'                    => 'Просим прощения! Отправка сообщений временно недоступна... Попробуйте повторить через пару минут.',
+    'sending'                                     => 'отправляем...',
+    'saved'                                       => 'сохранено',
+    'saving'                                      => 'сохранение...',
+    'Review sent successful'                      => 'Спасибо за ваш отзыв!',
+];

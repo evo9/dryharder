@@ -1,0 +1,40 @@
+/* button style */
+
+.btn{
+	font-size:18px;
+	line-height:24px;
+	border-radius:0;
+	border:none;
+	&.btn-base{
+		min-width:256px;
+	}
+	&.btn-default{
+		&:hover{
+			background:lighten($btn-default-bg, 20%);
+		}
+	}
+	@include max-screen($screen-md){
+		&.btn-base{
+			min-width:224px;
+		}
+	}
+}
+
+.mobile-button{
+	position:relative;
+	padding:0 0 48px;
+	.btn{
+		display:block;
+		box-shadow:2px 2px 0 0 darken($brand-primary, 10%);
+		i{
+			color:darken($brand-primary, 10%);
+		}
+		&:hover,
+		&:focus{
+			box-shadow:2px 2px 0 0 darken($brand-primary, 15%);
+			i{
+				color:darken($brand-primary, 15%);
+			}
+		}
+	}
+}

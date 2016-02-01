@@ -1,0 +1,35 @@
+.lang-buttons a {
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.editButton, .editButton:hover {
+	background-color: green;
+	color: #ffffff;
+}
+
+.div-lang-editor {
+	display: none;
+}
+
+pre.pretty-pre {
+	margin: 0;
+	padding: 3px;
+	font-size: 10px;
+}
+
+pre.pretty-pre.active {
+	border: 1px solid green;
+	z-index: 999;
+}
+
+pre.pretty-pre:hover {
+	background-color: white;
+}
+
+tr.tokenized {
+	background-color: rgba(0, 160, 0, 0.14);
+}
+tr.tokenized-error {
+	background-color: rgba(160, 0, 43, 0.14);
+}

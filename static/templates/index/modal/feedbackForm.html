@@ -1,0 +1,92 @@
+<div class="modal fade" id="feedbackFormResult" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3>@@messageSent</h3>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-default" data-dismiss="modal">ОК</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<div class="modal-content contacts-section">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+
+			<div class="heading-section">
+				<div class="box">
+					<h2>@@contactsFeedbackForm</h2>
+				</div>
+			</div>
+
+			<div class="row contacts-row">
+				<div class="col-sm-4 col-xs-12">
+					<div class="text hidden-xs">
+						<p>@@weAreAlwaysReadyToHelp</p>
+					</div>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<address>Dry Harder <br> @@physicalAddress</address>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<span class="phone"><a href="tel:+74956665607">+7 495 666 56 07</a><br> 10:00 - 19:00 <br><a class="email" href="mailto:info@dryharder.me">info@dryharder.me</a></span>
+				</div>
+			</div>
+
+			<!-- contacts-form of the page -->
+			<form action="feedback/message/create" class="contacts-form wpcf7-form sent" onsubmit="return false;">
+				<fieldset>
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<div class="row-holder">
+								<label class="none">@@name</label>
+								<span class="wpcf7-form-control-wrap text-field-required">
+									<input type="text" name="name" placeholder="@@name" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required text-field-class wpcf7-use-title-as-watermark">
+								</span>
+							</div>
+							<div class="row-holder">
+								<label class="none">@@phoneNumber</label>
+								<span class="wpcf7-form-control-wrap text-field-required input-group">
+									<span class="input-group-addon plus-seven">+7</span>
+									<input type="text" name="phone" placeholder="@@phoneNumber" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required text-field-class wpcf7-use-title-as-watermark input-group-addon-input">
+								</span>
+							</div>
+							<div class="row-holder">
+								<label class="none">E-mail</label>
+								<span class="wpcf7-form-control-wrap Emailfield">
+									<input type="text" name="email" placeholder="E-mail" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email email-class wpcf7-use-title-as-watermark">
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-8 col-xs-12">
+							<label class="none">@@yourMessage</label>
+							<span class="wpcf7-form-control-wrap textarea">
+								<textarea name="text" placeholder="@@yourMessage" class="wpcf7-form-control wpcf7-textarea textarea-class wpcf7-use-title-as-watermark" cols="10" rows="4"></textarea>
+							</span>
+						</div>
+					</div>
+					<div class="button-holder">
+						<div class="row">
+							<div class="col-sm-4 col-xs-12">
+								<span class="note">@@pleaseFillOutEverything</span>
+							</div>
+							<div class="col-sm-8 col-xs-12">
+								<div class="btn btn-primary">
+									<span class="submit-label">@@toSend</span> <i class="fa fa-envelope"></i>
+									<input type="submit" value="@@toSend" class="wpcf7-form-control wpcf7-submit submit-class feedBackFormSubmit">
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+	</div>
+</div>

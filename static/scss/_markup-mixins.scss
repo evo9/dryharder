@@ -1,0 +1,279 @@
+%clearfix{
+	&:after{
+		content:" ";
+		display:block;
+		clear:both;
+	}
+}
+
+// reset for list
+%listreset {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// animation style
+@mixin animation{
+	-webkit-transition:all .2s linear;
+	-moz-transition:all .2s linear;
+	transition:all .2s linear;
+}
+@mixin animation-color{
+	-webkit-transition:color .2s linear;
+	-moz-transition:color .2s linear;
+	transition:color .2s linear;
+}
+@mixin animation-bg{
+	-webkit-transition:background .2s linear;
+	-moz-transition:background .2s linear;
+	transition:background .2s linear;
+}
+
+// hide text
+@mixin hide-text {
+	overflow: hidden;
+	text-indent: -9999px;
+}
+
+@mixin placeholder($base-form-placeholder-color){
+	&::-moz-placeholder{
+		color:$base-form-placeholder-color;
+		opacity:1;
+	}
+	&:-ms-input-placeholder{color:$base-form-placeholder-color;}
+	&::-webkit-input-placeholder{color:$base-form-placeholder-color;}
+	&:-moz-placeholder{color:$base-form-placeholder-color;}
+}
+
+@mixin max-screen($screen-lg){
+	@media screen and (max-width:$screen-lg){
+		@content;
+	}
+}
+@mixin max-screen($screen-md){
+	@media screen and (max-width:$screen-md){
+		@content;
+	}
+}
+@mixin max-screen($mobile){
+	@media screen and (max-width:$mobile){
+		@content;
+	}
+}
+@mixin max-screen-retina($screen-lg){
+	@media (max-width:$screen-lg) and (-webkit-min-device-pixel-ratio:1.5), (max-width:$screen-lg) and (-o-min-device-pixel-ratio:1.5), (max-width:$screen-lg) and (min-resolution:144dpi){
+		@content;
+	}
+}
+@mixin max-screen-retina($screen-md){
+	@media (max-width:$screen-md) and (-webkit-min-device-pixel-ratio:1.5), (max-width:$screen-md) and (-o-min-device-pixel-ratio:1.5), (max-width:$screen-md) and (min-resolution:144dpi){
+		@content;
+	}
+}
+@mixin max-screen-retina($mobile){
+	@media (max-width:$mobile) and (-webkit-min-device-pixel-ratio:1.5), (max-width:$mobile) and (-o-min-device-pixel-ratio:1.5), (max-width:$mobile) and (min-resolution:144dpi){
+		@content;
+	}
+}
+
+// font-smothing
+// @include font-smoothing(on);
+// @include font-smoothing(off);
+@mixin font-smoothing($value:on){
+	@if $value == on{
+		-webkit-font-smoothing:antialiased;
+		-moz-osx-font-smoothing:grayscale;
+	}
+	@else{
+		-webkit-font-smoothing:subpixel-antialiased;
+		-moz-osx-font-smoothing:auto;
+	}
+}
+
+@mixin full-width {
+	padding-left:9999px;
+	padding-right:9999px;
+	margin-left:-9999px;
+	margin-right:-9999px;
+}
+
+@mixin transition($transition-property, $transition-time) {
+	-webkit-transition:$transition-property $transition-time ease 0s;
+	-moz-transition:$transition-property $transition-time ease 0s;
+	-o-transition:$transition-property $transition-time ease 0s;
+	transition:$transition-property $transition-time ease 0s; 
+}
+
+@mixin transition ($type:all, $time:0.4s, $ease:ease) {
+	-moz-transition     :$type $time $ease;
+	-webkit-transition  :$type $time $ease;
+	-o-transition       :$type $time $ease;
+	transition          :$type $time $ease;
+}
+
+@mixin linear-gradient($fromColor, $toColor) {
+	background-color:$toColor; /* Fallback Color */
+	background-image:-webkit-linear-gradient(top, $fromColor, $toColor);
+	background-image:   -moz-linear-gradient(top, $fromColor, $toColor);
+	background-image:    -ms-linear-gradient(top, $fromColor, $toColor);
+	background-image:     -o-linear-gradient(top, $fromColor, $toColor);
+	background-image:        linear-gradient(top, $fromColor, $toColor);
+	filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{$fromColor}', EndColorStr='#{$toColor}');
+}
+
+@mixin linearGradient($top, $bottom){
+	background:$top; /* Old browsers */
+	background:-moz-linear-gradient(top,  $top 0%, $bottom 100%);
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom));
+	background:-webkit-linear-gradient(top,  $top 0%,$bottom 100%);
+	background:-o-linear-gradient(top,  $top 0%,$bottom 100%);
+	background:-ms-linear-gradient(top,  $top 0%,$bottom 100%);
+	background:linear-gradient(to bottom,  $top 0%,$bottom 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$top}', endColorstr='#{$bottom}',GradientType=0 );
+}
+
+@mixin transform ($deg) {
+	transform         :$deg;
+	-moz-transform    :$deg;
+	-ms-transform     :$deg;
+	-o-transform      :$deg;
+	-webkit-transform :$deg;
+}
+
+@mixin scale ($multiplier) {
+	transform         :scale($multiplier);
+	-moz-transform    :scale($multiplier);
+	-ms-transform     :scale($multiplier);
+	-o-transform      :scale($multiplier);
+	-webkit-transform :scale($multiplier);
+}
+
+@mixin rotate ($deg) {
+	-moz-transform    :rotate($deg);
+	-ms-transform     :rotate($deg);
+	-o-transform      :rotate($deg);
+	-webkit-transform :rotate($deg);
+}
+
+@mixin skew ($deg, $deg2) {
+	transform         :skew($deg, $deg2);
+	-moz-transform    :skew($deg, $deg2);
+	-ms-transform     :skew($deg, $deg2);
+	-o-transform      :skew($deg, $deg2);
+	-webkit-transform :skew($deg, $deg2);
+}
+
+
+@mixin font-size ($sizeValue){
+	font-size:$sizeValue + px;
+	font-size:($sizeValue / 10) + rem;
+}
+
+
+@mixin arrow ($w:5px, $color:rgba(255,0,0,0.5), $position:top, $offset:50%){
+	content   :'';
+	position  :absolute;
+	border    :$w solid transparent;
+
+	@if $position == top{
+		border-bottom-color:$color;
+		top:-2 * $w;
+		margin-right:- $w;
+		right:$offset;
+	}
+	@else if $position == right{
+		border-left-color:$color;
+		right:-2 * $w;
+		margin-top:-.5 * $w;
+		top:$offset;
+	}
+	@else if $position == bottom{
+		border-top-color:$color;
+		bottom:-2 * $w;
+		margin-left:- $w;
+		left:$offset;
+	}
+	@else{
+		// left
+		border-right-color:$color;
+		left:-2 * $w;
+		margin-top:-.5 * $w;
+		top:$offset;
+	}
+}
+
+
+@mixin triangle ($size, $color, $direction){
+	height:0;
+	width:0;
+	$width:nth($size, 1);
+	$height:nth($size, length($size));
+	$foreground-color:nth($color, 1);
+	$background-color:transparent !default;
+	@if (length($color) == 2){
+		$background-color:nth($color, 2);
+	}
+	@if($direction == up) or ($direction == down) or ($direction == right) or ($direction == left){
+		$width:$width / 2;
+		@if $direction == up {
+			border-left:$width solid $background-color;
+			border-right:$width solid $background-color;
+			border-bottom:$height solid $foreground-color;
+		}
+		@else if $direction == right{
+			border-top:$width solid $background-color;
+			border-bottom:$width solid $background-color;
+			border-left:$height solid $foreground-color;
+
+		}
+		@else if $direction == down{
+			border-left:$width solid $background-color;
+			border-right:$width solid $background-color;
+			border-top:$height solid $foreground-color;
+		}
+		@else if $direction == left{
+			border-top:$width solid $background-color;
+			border-bottom:$width solid $background-color;
+			border-right:$height solid $foreground-color;
+		}
+	}
+	@else if ($direction == up-right) or ($direction == up-left) {
+		border-top:$height solid $foreground-color;
+		@if $direction == up-right {
+			border-left: $width solid $background-color;
+		}
+		@else if $direction == up-left {
+			border-right:$width solid $background-color;
+		}
+	}
+	@else if ($direction == down-right) or ($direction == down-left) {
+		border-bottom:$height solid $foreground-color;
+		@if $direction == down-right{
+			border-left: $width solid $background-color;
+		}
+		@else if $direction == down-left{
+			border-right:$width solid $background-color;
+		}
+	}
+	@else if ($direction == inset-up){
+		border-width:$height $width;
+		border-style:solid;
+		border-color:$background-color $background-color $foreground-color;
+	}
+	@else if ($direction == inset-down){
+		border-width:$height $width;
+		border-style:solid;
+		border-color:$foreground-color $background-color $background-color;
+	}
+	@else if ($direction == inset-right){
+		border-width:$width $height;
+		border-style:solid;
+		border-color:$background-color $background-color $background-color $foreground-color;
+	}
+	@else if ($direction == inset-left){
+		border-width:$width $height;
+		border-style:solid;
+		border-color:$background-color $foreground-color $background-color $background-color;
+	}
+}

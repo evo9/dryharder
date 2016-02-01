@@ -1,0 +1,20 @@
+{
+  "lang": {
+    "contentBlocks": {
+      "_comment": "Сборка языкового файла blocks.js",
+      "dev": {
+        "url": "http://api-test.dryharder.me:8000/man/content/blocks",
+        "host": "api-test.dryharder.me",
+        "port": "8000"
+      },
+      "production": {
+        "url": "http://api-test.dryharder.me/man/content/blocks",
+        "host": "api-test.dryharder.me",
+        "port": "80"
+      }
+    }
+  },
+  "manage": {
+    "auth": "dh-manage:b53EAB2XF4BH2jH0L2Qa"
+  }
+}

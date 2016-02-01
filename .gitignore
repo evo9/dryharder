@@ -1,0 +1,13 @@
+/vendor
+/.idea
+/app/config/local/*
+/app/config/production/*
+/app/config/testing/*
+/public/manage/bower_components/
+composer.lock
+/bootstrap/compiled.php
+.env.*.php
+.env.php
+.DS_Store
+Thumbs.db
+_ide_*

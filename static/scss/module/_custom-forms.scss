@@ -1,0 +1,208 @@
+/* ---------------------------------------------------------
+   4. Сustom form styles
+   ---------------------------------------------------------*/
+
+/* custom select styles */
+.jcf-select {
+	display:block;
+	position: relative;
+	background:$base-select-background;
+	margin:0;
+	min-width: 65px;
+	height: 32px;
+	box-shadow:2px 2px 0 0 $base-shadow-element;
+	select {
+		z-index: 1;
+		left: 0;
+		top: 0;
+	}
+	.jcf-select-text {
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		cursor: default;
+		display: block;
+		font-size: 14px;
+		line-height: 18px;
+		margin: 0 32px 0 10px;
+		padding:7px 0;
+		color:$lightgrey-text-color;
+	}
+	.jcf-select-opener {
+		position: absolute;
+		text-align: center;
+		width: 28px;
+		bottom: 0;
+		right: 0;
+		top: 0;
+		&:after{
+			font: normal normal normal 14px/1 FontAwesome;
+			font-size: inherit;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			content:'\f175';
+			position:absolute;
+			left:0;
+			top:11px;
+			width:100%;
+			text-align:center;
+			color:$brand-primary;
+			font-size:12px;
+			line-height:12px;
+		}
+	}
+	.jcf-select-drop {
+		position: absolute;
+		margin-top: 0px;
+		z-index: 9999;
+		top: 100%;
+		left: -1px;
+		right: -1px;
+	}
+	.jcf-drop-flipped {
+		bottom: 100%;
+		top: auto;
+	}
+	&.jcf-select-orders-select{
+		.jcf-select-opener{
+			&:after{
+				content:'\f0dc';
+			}
+		}
+		.jcf-select-text{
+			color:$brand-primary;
+			span:before{
+				display:inline-block;
+				vertical-align:top;
+				margin:0 3px 0 0;
+				content:'Show';
+				color:$lightgrey-text-color;
+			}
+		}
+	}
+}
+body{
+	> .jcf-select-drop {
+		position: absolute;
+		margin: -1px 0 0;
+		z-index: 9999;
+	}
+	> .jcf-select-drop.jcf-drop-flipped {
+		margin: 1px 0 0;
+	}
+}
+.jcf-select-drop .jcf-select-drop-content {
+	margin:3px 0;
+}
+/* multiple select styles */
+.jcf-list-box {
+	overflow: hidden;
+	display: inline-block;
+	min-width: 200px;
+	margin: 0 15px;
+}
+/* select options styles */
+.jcf-list {
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	background:$white-text-color;
+	font-size: 14px;
+	line-height: 18px;
+	background:$white-background-color;
+	width: 100%;
+	.jcf-list-content {
+		vertical-align: top;
+		display: inline-block;
+		overflow: auto;
+		width: 100%;
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		li {
+			overflow: hidden;
+			display: block;
+			margin-top:1px;
+			&:first-child{
+				margin:0;
+			}
+		}
+	}
+	.jcf-overflow {
+		overflow: auto;
+	}
+	.jcf-option {
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		cursor: default;
+		display: block;
+		padding: 6px 10px;
+		color:$white-text-color;
+		background:$brand-primary;
+		height: 1%;
+		cursor:pointer;
+	}
+	.jcf-disabled {
+		background: #fff !important;
+		color: #aaa !important;
+	}
+	.jcf-optgroup-caption {
+		white-space: nowrap;
+		font-weight: bold;
+		display: block;
+		padding: 5px 9px;
+		cursor: default;
+		color: #000;
+	}
+	.jcf-optgroup .jcf-option {
+		padding-left: 30px;
+	}
+}
+.jcf-select-drop .jcf-hover,
+.jcf-list-box .jcf-selected {
+	background:darken($brand-primary, 5%);
+}
+/* common custom form elements styles */
+.jcf-disabled {background: #ddd !important;}
+.jcf-focus, .jcf-focus * {border-color:$brand-primary !important;}
+
+.jcf-select-drop.jcf-select-mobile{
+	.jcf-list{
+		.jcf-option{
+			padding:10px 23px;
+		}
+	}
+}
+
+.jcf-select-type-select{
+	width:100%;
+	height:60px;
+	.jcf-select-text{
+		font-size:20px;
+		line-height:24px;
+		padding:0 40px 0 26px;
+		margin:19px 0;
+		float:left;
+	}
+	.jcf-select-opener{
+		width:48px;
+		&:after{
+			content:'\f0dc';
+			top:50%;
+			margin:-10px 0 0;
+			font-size:20px;
+			line-height:20px;
+		}
+	}
+}
+.jcf-select-type-select{
+	.jcf-option{
+		font-size:18px;
+		line-height:22px;
+		padding:16px 26px;
+	}
+}

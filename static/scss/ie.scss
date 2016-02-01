@@ -1,0 +1,46 @@
+/* ie8 style */
+
+img{
+	max-width:20000px;
+}
+.logo{
+	img{
+		width:100%;
+	}
+}
+
+.cycle-gallery{
+	.image-box{
+		display:block;
+		width:100%;
+		height:auto;
+	}
+}
+.icons-list{
+	margin:0;
+}
+.icons-list li .icon-cell img{
+	display:block;
+	width:100%;
+	height:auto;
+}
+
+.modal-content .close{
+	filter:none;
+	&:hover{
+		filter:none;
+	}
+}
+
+.registration-form .input-holder input{
+	color:#9aacb4;
+	&:focus{
+		color:#000;
+	}
+}
+
+.jcf-select{
+	border:solid;
+	border-width:0 1px 1px 0;
+	border-color:#ebebeb;
+}

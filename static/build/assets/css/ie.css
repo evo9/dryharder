@@ -1,0 +1,21 @@
+#feedbackForm .modal-dialog,
+#orderForm .modal-dialog {
+	width: 800px;
+}
+#orderForm input {
+	width: 350px;
+}
+#feedbackForm input {
+	width: 200px;
+}
+#orderForm textarea {
+	width: 500px;
+	border: 2px solid black;
+}
+#feedbackForm textarea {
+	width: 350px;
+	border: 2px solid black;
+}
+body {
+	min-width: 960px;
+}

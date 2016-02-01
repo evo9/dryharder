@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<meta name="google-site-verification" content="QM-Eq9VN6JpZLUlKTXplRO5b_avG8E6oqjfsZuFRqq4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dry Harder - химчистка с доставкой</title>
+<link media="all" rel="stylesheet" href="assets/css/app.min.css?v=4408">
+<link rel="shortcut icon" href="favicon.ico">
+<!--[if lt IE 9]>
+	<link rel="stylesheet" href="assets/css/ie.min.css?v=4408">
+	<script type="text/javascript" src="assets/js/ie.js?v=4408"></script>
+<![endif]-->
+<!--[if lte IE 9]>
+	<link rel="stylesheet" href="assets/css/ie.css?v=4408">
+<![endif]-->
+
+<meta property="og:title" content="Dry Harder" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://dryharder.me/" />
+<meta property="og:image" content="http://dryharder.me/images/logo-small.png" />
+<meta property="og:description" content="Новая удобная химчистка с доставкой" />
+<meta property="og:site_name" content="Dry Harder" />
+
+
+<link rel="image_src" href="http://dryharder.me/images/logo-small.png" />
+
+<meta itemprop="name" content="Dry Harder" />
+<meta itemprop="description" content="Новая удобная химчистка с доставкой" />
+<meta itemprop="image" content="http://dryharder.me/images/logo-small.png" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="Dry Harder" />
+<meta name="twitter:title" content="Dry Harder">
+<meta name="twitter:description" content="Новая удобная химчистка с доставкой" />
+<meta name="twitter:creator" content="Dry Harder" />
+<meta name="twitter:image:src" content="http://dryharder.me/images/logo-small.png" />
+<meta name="twitter:domain" content="dryharder.me" />
+	<script>
+		switch(window.location.protocol) {
+	case 'http:':
+	case 'https:':
+
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-57161998-1', 'auto');
+		ga('require', 'displayfeatures');
+		ga('send', 'pageview');
+
+		break;
+
+	default:
+
+		break;
+}
+
+if(typeof console == 'undefined' || (typeof windows != 'undefined' && !windows.console)){
+	var console = {log: function(){}};
+}
+		var GLOBAL_URL = 'http://www.himstat.ru/cl/laundry2/api/';
+		var API_BASE_URL = '/api/v1/';
+		var DASHBOARD_URL = '/account/';
+		var LANG = 'ru';
+		var TEST = false;
+		var TRANS = {"lang":"ru","login":"Войти","logout":"Выход","register":"Регистрация","registerDo":"Зарегистрироваться","account":"Личный кабинет","loadSession":"Загрузка сессии","second":"Секундочку...","metaDescription":"Новая удобная химчистка с доставкой","metaTitle":"Dry Harder","metaImage":"images/logo-small.png","metaUrl":"","addresses":"Адреса","ourServices":"Услуги","whatWeOffer":"Услуги","ourWork":"Как мы работаем","ourPrinciples":"Наши принципы","ourProcess":"Процесс","ourPrice":"Цены","ourContacts":"Адреса &amp; Контакты","promo1part1":"Dry Harder - это новая хорошая химчистка","promo1part2":"в которой вещи снова","promo1part3":"становятся свежими, выглаженными и ","promo1part4":"красиво сложенными","promo2part1":"Каждая вещь индивидуальна.","promo2part2":"Специалисты Dry Harder внимательно","promo2part3":"осматривают вещи и подбирают","promo2part4":"идеальный метод стирки для каждой из них.","promo3part1":"Чистим не только одежду, но и планету.","promo3part2":"Мы используем только экологически","promo3part3":"чистые материалы и прибегаем к более","promo3part4":"сильным веществам лишь в крайних случаях.","priceRateDetail":"Подробнее о тарифах","getOrder":"Сделать заказ","waterCleaning":"Аквачистка","dryCleaning":"Химчистка","bagsCleaning":"Чистка изделий из кожи и меха","howDoWeWork":"Как мы работаем?","leaveARequest":"Оставьте заявку на сайте","registerAndSend":"Зарегистрируйтесь на сайте и оставьте заявку. Наш курьер заберет вещи в удобное для вас время. Заказы свыше 2 500","deliveredForFree":" доставляются бесплатно.","toRegister":"Зарегистрироваться","payOnline":"Оплатите заказ онлайн","weWillLetYouKnow":"Мы сообщим вам о готовности заказа по почте или смс.","enjoyClean":"Радуйтесь чистым вещам","weDeliver":"Мы доставим вещи в удобное для вас время.","RequestServiceForm":"Заявка на вызов курьера","aboutDryHarder":"О Dry Harder","howWeWorkHeader11":"Мы усердно работаем, ","howWeWorkHeader12":"чтобы вы радовались своим вещам.","howWeWorkHeader21":"Мы не хотим, чтобы вы тратили время впустую.","processTitle":"Процесс","assessment":"Осмотр","processHand":"Pучная зачистка","processMachine":"Машинная чистка","pressing":"Глажка","packing":"Упаковка","priceTitle":"Цены","priceStandard":"Стандарт","priceBusiness":"Бизнес","priceCare":"Без забот","shirtBlouse":"Рубашка/блузка","suit":"Пиджак","trousers":"Брюки","skirt":"Юбка","wEverydayDress":"Повседневное платье","prisePerMonth":"Цена подписки в месяц","shirtBlouseIncluded":"Рубашек/блузок включено","pricePerMonth":"Стоимость в месяц","suitSkirtIncluded":"Костюмов/платьев <br> включено","discountToStandard":"Скидка к \"стандартному\" тарифу","bizTariff":"Бизнес тариф","included":"Включен","more":"Подробнее","weWorkWithCorp":"Mы работаем и с корпоративными клиентами","write":"Напишите","us":"нам","contacts":"Контакты","weAreAlwaysReadyToHelp":"Мы всегда внимательны к вашим пожеланиям и вопросам. Свяжитесь с нами удобным для вас способом!","physicalAddress":"Ул. Грайвороновская, д. 4, cтр. 1, г. Москва, 109518, Россия.","infoAbout":"Информация о ","confData":"конфиденциальности данных ","andWord":" и ","transactions":"проведении платежей","serverErrorMessage":"Ошибка... Попробуйте повторить немного позже, мы скоро все исправим!","feedbackSendErrorMessage":"Просим прощения! Отправка сообщений временно недоступна... Попробуйте повторить через пару минут.","errorFieldPhone":"Проверьте правильность номера телефона","checkPromoCode":"Проверка промо-кода...","notSelected":"Hе выбрано","foundPromoCode":"промо-код найден, выберите адрес","foundPromoCodeNot":"Промо-код не найден","errorFieldEmail":"Некорректный Email","errorFieldAddress":"Укажите адрес, с которого мы будем забирать вещи!","errorFieldHouse":"А как же номер дома?","errorFieldRoom":"Номер квартиры или офиса?","errorFieldPromoCode":"Промо-код обязательное поле!","errorFieldAddressId":"Выберите адрес по промо-коду или зарегистрируйтесь без промо-кода","Moscow":"Москва","serverErrorTryLater":"Ошибка сервера. Попробуйте позже.","messageSent":"Ваше обращение принято!","contactsFeedbackForm":"Контакты","name":"Ваше имя","phoneNumber":"Номер телефона","yourMessage":"Текст вашего сообщения","pleaseFillOutEverything":"* Заполните все поля.","toSend":"Отправить","yes":"Да","no":"Нет","termsAndConditions":"Условия оказания услуг","iAgree":"Я согласен с условиями оказания услуг","iDisagree":"Не согласен с условиями","entry":"Вход","mobileNumber":"Номер мобильного","password":"Пароль","rememberMe":"Запомнить меня","helpIForgot":"Помогите! Я забыл пароль","nameAndSurname":"Имя и Фамилия","back":"Назад","iAmCorp":"Я корпоративный клиент,","iHaveTheCode":"у меня есть промо-код","street":"Улица","building":"Д.","apt":"Кв./офис","floor":"Эт.","promocode":"Промо-код","agreedWith":"Согласен c ","termsAndCond":"условиями","ofService":" оказания услуг","sendPassword":"Отправить пароль ","toEmailAndPhone":"на почту и телефон","next":"Далее","sendSmsAgain":"Повторно отправить смс","inviteRegisterComment":"Ура! Ваш друг любит нас, теперь мы хотим понравиться и вам!<br>Зарегистрируйтесь чтобы начать пользоваться нашими услугами.","resetPass":"Сброс пароля","resetting":"Сбрасываем пароль...","reset":"Сбросить ","cancel":"Отменить","areYourSureExit":"Уверены, что хотите выйти?","yesExit":"Да, выйти ","smsSent":"SMS с паролем отправлено","smsPass":"Пароль из смс","working":"Секундочку...","sending":"Отправляем...","sendAgain":"Отправить повторно","empty":"empty","cb-services-water":"<p>Самый экологически чистый и современный вариант. Чистка производится с помощью воды и невредных очищающих материалов. Вещи бережно отстирываются и при этом не соприкасаются с сильными реагентами.</p><p>Что мы так чистим: рубашки, белье, джинсы, поло и другие вещи, из материалов, которые не боятся воды.</p>","cb-services-dry":"<p>Чистка для самых сложных случаев. В Химчистке мы не используем воду, только специальные материалы, которые справятся абсолютно со всем и вернут вам вещи, с которыми вы уже думали прощаться, свежими, чистыми и вообще, как будто новыми.</p><p>Что мы так чистим: абсолютно всё, что вызывает у вас отчаяние.</p>","cb-services-bag-shoes":"<p>Стирать дома любимую кожаную куртку или меховую шубу — не лучшая идея. Доверьте это нам.</p><p>Специалисты Dry Harder профессионально и аккуратно чистят вашу дорогую одежду, а так же обувь и сумки. Всё будет выглядеть, как новое.</p>","cb-approach-about":"<p>Мы любим красивые вещи, ценим хороший сервис и нам всегда было жаль время на бытовые заботы. Поэтому мы сделали Dry Harder.</p>","cb-approach-happy":"<p>Ухаживая за вашими вещами, мы сочетаем ручную работу и чистку в современных итальянских и немецких машинах.</p>&#10;<p>Самые современные чистящие средства подбираются для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>&#10;<p>Аккуратно погладить и сложить - так же важно как и почистить. Поэтому мы используем только профессиональное гладильное оборудование, биоразлагаемый пластик и внимательно прислушиваемся к вашим пожеланиям.</p>","cb-approach-time":"<p>Мы постарались все продумать.</p>&#10;<p>Используя он-лайн кабинет, вы можете моментально оплачивать заказы.</p>&#10;<p>Простая процедура оплаты, моментальная сдача вещей, быстрое получение заказа. Ведь никому не нравится тратить время в приемном пункте.</p>&#10;<p>Если у вас есть специальные пожелания, мы рады их услышать. Может быть разложить вещи по цветам? Или сложить в дорогу? А может быть что-то нужно только погладить? Просто скажите нам.</p>","cb-process-assessment":"<p>Каждая вещь перед чисткой внимательно осматривается. Мы знаем, как это неприятно, когда пуговицы <span>ломаются или портится красивая отделка, поэтому перед чисткой мы все проверим и укрепим.</span></p>","cb-process-hand":"<p>Перед стиркой вещи зачищаются в ручную. Это обеспечивает высочайшее качество и позволяет продлить <span>срок службы.</span></p>","cb-process-machine":"<p>После ручной зачистки наши технологи выбирают способ подходящей машинной обработки. Мы используем <span>только высококачественное итальянское и немецкое оборудование и выбираем наиболее щадящие </span><span>средства.</span></p>","cb-process-pressing":"<p>Каждая вещь требует внимaния после стирки. С помощью профессионального оборудования мы делаем <span>так, чтобы на вещах не оставалось ни одного ненужного залома.</span></p>","cb-process-packaging":"<p>Есть пожелания к упаковке? Просто скажите нам.</p><p><span>Часто бываете в командировках? Мы сложим рубашки так, что вам останется только положить их в </span><span>чемодан.</span></p><p><span>Хотите чтобы мы разложили вещи по цветам? Мужские отдельно, женские отдельно? Нет проблем.</span></p>","cb-price-standard":"<p>Самый простой тариф - подойдет тем, кто предпочитает стирать дома</p>","cb-price-business":"<p>Часто выбираете офисный стиль? Начните экономить, подписавшись на наши<span> услуги </span></p>","cb-price-carefree":"<p>Не хотите больше думать о чистке личных вещей? Чистите все за<span> фиксированную сумму</span></p>"};
+	</script>
+</head>
+<body class="fixed-header">
+<!-- main container of all the page elements -->
+<div id="wrapper">
+
+	<div class="start-section">
+
+<header id="header">
+	<div class="header-section hidden-xs">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-lg-offset-1 col-xs-4">
+					<!-- account navigation -->
+					<nav class="account-nav">
+						<ul>
+							<li class="li-nav-wait">Загрузка сессии...</li>
+							<li class="li-nav-login" style="display: none;">
+								<a href="#" data-toggle="modal" data-target="#myModa2"><i class="fa fa-user"></i>Войти</a>
+							</li>
+							<li class="li-nav-register" style="display: none;">
+								<a class="lightbox" href="#myModal">Регистрация</a>
+							</li>
+							<li class="cl li-nav-user" style="display: none;">
+								<a href="#"><i class="fa fa-user"></i></a>
+							</li>
+							<li style="display: none;" class="li-nav-logout">
+								<a href="#" data-toggle="modal" data-target="#myModa3"><i class="fa fa-times-circle"></i>
+									Выход</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="col-xs-4" style="text-align: center;">
+					<a class="logo" href="#"><img src="images/logo.png" height="150" width="240" alt="Dry Harder"></a>
+				</div>
+				<div class="col-lg-3 col-xs-4" style="text-align: right; padding-top: 14px;">
+					<a href="tel:+74956665607" class="phone"><i class="fa fa-phone"></i> +7 495 666 56 07</a>
+					<a href="#" onclick="return false;" class="lang-href" data-lang="ru">Ru</a>
+					<a href="#" onclick="return false;" class="lang-href" data-lang="en">En</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- nav-bar of the page -->
+	<div class="nav-bar hidden-xs">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-offset-1 col-lg-8 col-xs-10">
+					<!-- navigation of the page -->
+					<div id="nav">
+						<ul>
+							<li class="active"><a href="#" class="home"><i class="fa fa-home"></i></a></li>
+							<li><a href="#our-services">Услуги</a></li>
+							<li><a href="#how-does-it-work">Как мы работаем</a></li>
+							<li><a href="#how-we-work">Наши принципы</a></li>
+							<li><a href="#our-process">Процесс</a></li>
+							<li><a href="#price-anchor">Цены</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<!-- add-nav of the page -->
+					<nav class="add-nav">
+						<ul>
+							<li class="base-tooltip">
+								<a href="#location" data-toggle="tooltip" data-placement="bottom" title="Адреса"><i class="fa fa-map-marker"></i></a>
+							</li>
+							<li><a href="#" data-target="feedbackForm"><i class="fa fa-envelope"></i></a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- mobile-header of the page -->
+	<div class="mobile-header visible-xs" id="mob-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<a href="#" class="mobile-logo"><i class="icon-svg5"></i></a>
+
+					<div class="basket-box">
+						<span class="number"></span> <a href="#" class="basket-link"><i class="icon-basket"></i></a>
+					</div>
+					<div class="mobile-navigation">
+						<a href="#" class="opener"><i class="fa fa-bars"></i></a>
+
+						<div class="drop">
+							<ul class="main-nav">
+								<li><a href="#">Home</a></li>
+								<li><a href="#our-services">Услуги</a></li>
+								<li><a href="#how-does-it-work">Как мы работаем</a></li>
+								<li><a href="#how-we-work">Наши принципы</a></li>
+								<li><a href="#our-process">Процесс</a></li>
+								<li><a href="#price-anchor">Цены</a></li>
+								<li><a href="#location">Адреса &amp; Контакты</a></li>
+							</ul>
+							<!-- account navigation -->
+							<nav class="account-nav">
+								<ul>
+									<li class="li-nav-wait">Загрузка сессии...</li>
+									<li class="li-nav-login" style="display: none;">
+										<a href="#" data-toggle="modal" data-target="#myModa2"><i class="fa fa-user"></i>
+											Войти</a>
+									</li>
+									<li class="li-nav-register" style="display: none;">
+										<a class="lightbox" href="#myModal">Зарегистрироваться</a>
+									</li>
+									<li class="cl li-nav-user" style="display: none;">
+										<a href="#"><i class="fa fa-user"></i></a>
+									</li>
+									<li style="display: none;" class="li-nav-logout">
+										<a href="#" data-toggle="modal" data-target="#myModa3"><i class="fa fa-times-circle"></i>
+											Выход</a>
+									</li>
+								</ul>
+							</nav>
+							<a href="tel:+74956665607" class="phone"><i class="fa fa-phone"></i> +7 495 666 56 07</a>
+							<a href="#" onclick="return false;" class="lang-href" data-lang="ru">Ru</a>
+							<a href="#" onclick="return false;" class="lang-href" data-lang="en">En</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- text-carusel-section of the page -->
+	<div class="text-carousel-section">
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="item active">
+					<div class="text-container">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<strong class="title">
+										<span class="decor">Dry Harder - это новая хорошая химчистка, </span>
+										<span class="decor">в которой вещи снова  </span> <span class="decor">становятся свежими, выглаженными и  </span>
+										<span class="decor">красиво сложенными. </span> </strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 button-holder" style="text-align: center;">
+									<button href="#" onclick="return false;" class="btn btn-default btn-base leave-a-request" data-loading-text="Секундочку..." data-loc="slider">Сделать заказ</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="text-container">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<strong class="title"> <span class="decor">Каждая вещь индивидуальна. </span>
+										<span class="decor">Специалисты Dry Harder внимательно</span>
+										<span class="decor"> осматривают вещи и подбирают </span> <span class="decor"> идеальный метод стирки для каждой из них. </span>
+									</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 button-holder" style="text-align: center;">
+									<button href="#" onclick="return false;" class="btn btn-default btn-base leave-a-request" data-loading-text="Секундочку..." data-loc="slider">>Сделать заказ</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="text-container">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<strong class="title">
+										<span class="decor">Чистим не только одежду, но и планету.</span>
+										<span class="decor">Мы используем только экологически</span>
+										<span class="decor">чистые материалы и прибегаем к более</span>
+										<span class="decor">сильным веществам лишь в крайних случаях.</span> </strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 button-holder" style="text-align: center;">
+									<button href="#" onclick="return false;" class="btn btn-default btn-base leave-a-request" data-loading-text="Секундочку..." data-loc="slider">>Сделать заказ</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			</ol>
+		</div>
+	</div>
+</header>
+
+
+<div class="header-fixed-container hidden-xs" id="fixed-header-section">
+	<a href="#" class="logo-header-fixed"><img src="images/fixed-logo.png" height="39" width="39" alt="Dry Harder"></a>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2 col-md-3 col-xs-4">
+				<a href="#" class="logo-header-fixed add"><img src="images/fixed-logo.png" height="39" width="39" alt="Dry Harder"></a>
+				<!-- accaunt-menu of the page -->
+				<nav class="account-menu" style="display: none;">
+					<ul>
+						<li>
+							<a href="#"><i class="fa fa-user"></i> <i class="arrow fa fa-long-arrow-down"></i></a>
+
+							<div class="drop">
+								<ul>
+									<li><a href="#"><i class="fa fa-tachometer"></i>Личный кабинет</a></li>
+									<li>
+										<a href="#" data-toggle="modal" data-target="#myModa3"><i class="fa fa-times-circle"></i>
+											Выйти</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-lg-8 col-xs-6">
+				<!-- navigation of the page -->
+				<div class="navigation">
+					<ul>
+						<li class="active"><a href="#our-services">Услуги</a></li>
+						<li><a href="#how-does-it-work">Как мы работаем</a></li>
+						<li><a href="#how-we-work">Наши принципы</a></li>
+						<li><a href="#our-process">Процесс</a></li>
+						<li><a href="#price-anchor">Цены</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-1">
+				<!-- add-nav of the page -->
+				<nav class="add-nav style02">
+					<ul>
+						<li class="base-tooltip">
+							<a href="#location" data-toggle="tooltip" data-placement="bottom" title="Адреса"><i class="fa fa-map-marker"></i></a>
+						</li>
+						<li><a href="#" data-target="feedbackForm"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-xs-1">
+				<!-- basket-box of the page -->
+				<div class="basket-box base-tooltip" style="display: none;">
+					<a href="#" class="basket-icon" data-toggle="tooltip" data-placement="bottom" title="My Laundry">icon</a>
+					<span class="number"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>	
+
+	<main id="main" role="main">
+		<div class="tabset-section" id="our-services">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Услуги</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cycle-gallery of the page -->
+	<div class="cycle-gallery">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-3">
+					<ul class="switcher">
+						<li class="active">
+							<a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg"></i></span></span>
+								<span class="text hidden-xs">Аквачистка</span></a></li>
+						<li>
+							<a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg2"></i></span></span>
+								<span class="text hidden-xs">Химчистка</span></a></li>
+						<li>
+							<a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg3"></i></span><span class="icon hidden-xs"><i class="icon-svg4"></i></span></span>
+								<span class="text hidden-xs">Чистка изделий из кожи и меха</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide active">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4 image-column">
+								<div class="image-box hidden-xs">
+									<img src="images/img-svg-01.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/img-svg-01.png'">
+									<span class="decor">
+										<img src="images/divider02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/divider02.png'">
+									</span>
+								</div>
+							</div>
+							<div class="col-sm-8 col-lg-offset-1">
+								<div class="text-holder">
+									<strong class="title-mobile visible-xs">Аквачистка</strong>
+									<p>Самый экологически чистый и современный вариант. Чистка производится с помощью воды и невредных очищающих материалов. Вещи бережно отстирываются и при этом не соприкасаются с сильными реагентами.</p><p>Что мы так чистим: рубашки, белье, джинсы, поло и другие вещи, из материалов, которые не боятся воды.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4 image-column">
+								<div class="image-box hidden-xs">
+									<img src="images/img-svg-02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/img-svg-01.png'">
+									<span class="decor">
+										<img src="images/divider02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/divider02.png'">
+									</span>
+								</div>
+							</div>
+							<div class="col-sm-8 col-lg-offset-1">
+								<div class="text-holder">
+									<strong class="title-mobile visible-xs">Химчистка</strong>
+									<p>Чистка для самых сложных случаев. В Химчистке мы не используем воду, только специальные материалы, которые справятся абсолютно со всем и вернут вам вещи, с которыми вы уже думали прощаться, свежими, чистыми и вообще, как будто новыми.</p><p>Что мы так чистим: абсолютно всё, что вызывает у вас отчаяние.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4 image-column">
+								<div class="image-box hidden-xs">
+									<img src="images/img-svg-03.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/img-svg-01.png'">
+									<span class="decor">
+										<img src="images/divider02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/divider02.png'">
+									</span>
+								</div>
+							</div>
+							<div class="col-sm-8 col-lg-offset-1">
+								<div class="text-holder">
+									<strong class="title-mobile visible-xs">Чистка изделий из кожи и меха</strong>
+									<p>Стирать дома любимую кожаную куртку или меховую шубу — не лучшая идея. Доверьте это нам.</p><p>Специалисты Dry Harder профессионально и аккуратно чистят вашу дорогую одежду, а так же обувь и сумки. Всё будет выглядеть, как новое.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+		<section class="work-section" id="how-does-it-work">
+	<header class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="ol-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Как мы работаем?</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="steps-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-md-3">
+					<div class="step active">
+						<div class="heading">
+							<span class="num">1.</span>
+
+							<div class="visual">
+								<i class="icon2-1"></i>
+							</div>
+						</div>
+						<h3>Оставьте заявку на сайте</h3>
+
+						<p>Зарегистрируйтесь на сайте и оставьте заявку. Наш курьер заберет вещи в удобное для вас время. Заказы свыше 2 500<i class="fa fa-rub"></i> доставляются бесплатно.</p>
+						<button class="btn btn-primary leave-a-request" data-loading-text="Секундочку..." data-loc="plate">Сделать заказ <i class="fa fa-truck"></i></button>
+					</div>
+				</div>
+				<div class="col-md-1 text-center hidden-sm hidden-xs">
+					<i class="icon2-arrow"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<div class="step">
+						<div class="heading">
+							<span class="num">2.</span>
+
+							<div class="visual">
+								<i class="icon2-2"></i>
+							</div>
+						</div>
+						<h3>Оплатите заказ онлайн</h3>
+
+						<p>Мы сообщим вам о готовности заказа по почте или смс.</p>
+						<a href="#" class="btn btn-primary">Зарегистрироваться <i class="fa fa-truck"></i></a>
+					</div>
+				</div>
+				<div class="col-md-1 text-center hidden-sm hidden-xs">
+					<i class="icon2-arrow"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<div class="step">
+						<div class="heading">
+							<span class="num">3.</span>
+
+							<div class="visual">
+								<i class="icon2-3"></i>
+							</div>
+						</div>
+						<h3>Радуйтесь чистым вещам</h3>
+
+						<p>Мы доставим вещи в удобное для вас время.</p>
+						<a href="#" class="btn btn-primary">Зарегистрироваться <i class="fa fa-truck"></i></a>
+					</div>
+				</div>
+				<div class="col-md-1 text-center hidden-sm hidden-xs">
+					<i class="icon2-done"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+		<div class="tabset-section style02" id="how-we-work">
+	<div class="heading-section style02">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Наши принципы</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cycle-gallery of the page -->
+	<div class="cycle-gallery style02">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-4 col-xs-12">
+					<ul class="switcher">
+						<!--<li class="active"><a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg5"></i></span></span> <span class="text hidden-xs">О Dry Harder</span></a></li>-->
+						<!--<li><a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg6"></i></span></span> <span class="text hidden-xs">Наша команда</span></a></li>-->
+						<!--<li><a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg7"></i></span></span> <span class="text hidden-xs">Наши принципы</span></a></li>-->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide active">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4">
+								<div class="heading-box">
+									<strong class="title-mobile visible-xs">О Dry Harder </strong>
+
+									<h3><p>Мы любим красивые вещи, ценим хороший сервис и нам всегда было жаль время на бытовые заботы. Поэтому мы сделали Dry Harder.</p></h3>
+								</div>
+							</div>
+							<div class="col-sm-4 col-lg-offset-1">
+								<div class="mobile-text-openbox">
+									<div class="heading">
+										<strong class="title">Мы усердно работаем, <span class="mark01">чтобы вы радовались своим вещам.</span></strong>
+										<a href="#" class="opener-text visible-xs"></a>
+									</div>
+									<div class="slide-text">
+										<p>Ухаживая за вашими вещами, мы сочетаем ручную работу и чистку в современных итальянских и немецких машинах.</p>&#10;<p>Самые современные чистящие средства подбираются для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>&#10;<p>Аккуратно погладить и сложить - так же важно как и почистить. Поэтому мы используем только профессиональное гладильное оборудование, биоразлагаемый пластик и внимательно прислушиваемся к вашим пожеланиям.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="text-block">
+									<div class="mobile-text-openbox">
+										<div class="heading">
+											<strong class="title">Мы не хотим, чтобы вы тратили время впустую.</strong>
+											<a href="#" class="opener-text visible-xs"></a>
+										</div>
+										<div class="slide-text">
+											<p>Мы постарались все продумать.</p>&#10;<p>Используя он-лайн кабинет, вы можете моментально оплачивать заказы.</p>&#10;<p>Простая процедура оплаты, моментальная сдача вещей, быстрое получение заказа. Ведь никому не нравится тратить время в приемном пункте.</p>&#10;<p>Если у вас есть специальные пожелания, мы рады их услышать. Может быть разложить вещи по цветам? Или сложить в дорогу? А может быть что-то нужно только погладить? Просто скажите нам.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4">
+								<div class="heading-box">
+									<strong class="title-mobile visible-xs">О нас longer</strong>
+									<h3>Качество услуг и комфорт клиента - наши ориентиры в работе.</h3>
+								</div>
+							</div>
+							<div class="col-sm-4 col-lg-offset-1">
+								<div class="mobile-text-openbox">
+									<div class="heading">
+										<strong class="title">Цените свои вещи? <span class="mark01">Мы о них заботимся.</span></strong>
+										<a href="#" class="opener-text visible-xs"></a>
+									</div>
+									<div class="slide-text">
+										<p>Сочетание ручной работы и чистки в современных итальянских и немецких машинах. В его основе лежит применение чистящих средств агрессивных средств позволяет назвать этот метод одним из эффективных.</p>
+										<p>Новейшие средства чистки, подбираемые для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>
+										<p>Осмотр и проверка результатов чистки каждой вещи.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="text-block">
+									<div class="mobile-text-openbox">
+										<div class="heading">
+											<strong class="title">Уход за вещами отнимает время? Устали от плохого сервиса? Мы все продумали.</strong>
+											<a href="#" class="opener-text visible-xs"></a>
+										</div>
+										<div class="slide-text">
+											<p>Мы рады экономить ваше время. Используя он-лайн кабинет вы можете моментально оплачивать заказы и заказывать курьера.</p>
+											<p>Мы можем легко забрать и доставить Ваши вещи оттуда, откуда вы скажете.</p>
+											<p>Хотите привезти свои вещи сами, но не готовы тратить время на сдачу вещей? Единожды зарегистрировавшись онлайн вы сможете просто оставлять пакет с вещами у нас, и не тратить свое время на оплату.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>-->							<!--<div class="slide">
+								<div class="container">
+									<div class="row">
+										<div class="col-lg-3 col-sm-4">
+											<div class="heading-box">
+												<strong class="title-mobile visible-xs">О нас longer</strong>
+												<h3>Качество услуг и комфорт клиента - наши ориентиры в работе.</h3>
+											</div>
+										</div>
+										<div class="col-sm-4 col-lg-offset-1">
+											<div class="mobile-text-openbox">
+												<div class="heading">
+													<strong class="title">Цените свои вещи? <span class="mark01">Мы о них заботимся.</span></strong>
+													<a href="#" class="opener-text visible-xs"></a>
+												</div>
+												<div class="slide-text">
+													<p>Сочетание ручной работы и чистки в современных итальянских и немецких машинах. В его основе лежит применение чистящих средств агрессивных средств позволяет назвать этот метод одним из эффективных.</p>
+													<p>Новейшие средства чистки, подбираемые для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>
+													<p>Осмотр и проверка результатов чистки каждой вещи.</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="text-block">
+												<div class="mobile-text-openbox">
+													<div class="heading">
+														<strong class="title">Уход за вещами отнимает время? Устали от плохого сервиса? Мы все продумали.</strong>
+														<a href="#" class="opener-text visible-xs"></a>
+													</div>
+													<div class="slide-text">
+														<p>Мы рады экономить ваше время. Используя он-лайн кабинет вы можете моментально оплачивать заказы и заказывать курьера.</p>
+														<p>Мы можем легко забрать и доставить Ваши вещи оттуда, откуда вы скажете.</p>
+														<p>Хотите привезти свои вещи сами, но не готовы тратить время на сдачу вещей? Единожды зарегистрировавшись онлайн вы сможете просто оставлять пакет с вещами у нас, и не тратить свое время на оплату.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>-->
+			</div>
+		</div>
+		<!--<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>-->
+	</div>
+</div>
+		<div class="content-container hidden-xs" id="our-process">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div style="text-align: center;">
+					<div class="box">
+						<h2>Процесс</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-xs-4">
+				<ul class="icons-list">
+					<li>
+						<div class="icon-cell style02">
+							<img src="images/icon01.svg" alt="" width="102" height="45" onerror="this.onerror=null; this.src='images/icon01.png'">
+						</div>
+					</li>
+					<li class="align-right">
+						<div class="icon-cell">
+							<img src="images/icon02.svg" alt="" width="77" height="65" onerror="this.onerror=null; this.src='images/icon02.png'">
+						</div>
+					</li>
+					<li>
+						<div class="icon-cell">
+							<img src="images/icon03.svg" alt="" width="84" height="83" onerror="this.onerror=null; this.src='images/icon03.png'">
+						</div>
+					</li>
+					<li class="align-right">
+						<div class="icon-cell">
+							<img src="images/icon04.svg" alt="" width="91" height="72" onerror="this.onerror=null; this.src='images/icon04.png'">
+						</div>
+					</li>
+					<li>
+						<div class="icon-cell">
+							<img src="images/icon05.svg" alt="" width="89" height="63" onerror="this.onerror=null; this.src='images/icon05.png'">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-4 col-lg-offset-1">
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Осмотр</strong> <span class="number">1</span>
+					</div>
+					<p><p>Каждая вещь перед чисткой внимательно осматривается. Мы знаем, как это неприятно, когда пуговицы <span>ломаются или портится красивая отделка, поэтому перед чисткой мы все проверим и укрепим.</span></p></p>
+				</div>
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Pучная зачистка</strong> <span class="number">2</span>
+					</div>
+					<p><p>Перед стиркой вещи зачищаются в ручную. Это обеспечивает высочайшее качество и позволяет продлить <span>срок службы.</span></p></p>
+				</div>
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Машинная чистка</strong> <span class="number">3</span>
+					</div>
+					<p><p>После ручной зачистки наши технологи выбирают способ подходящей машинной обработки. Мы используем <span>только высококачественное итальянское и немецкое оборудование и выбираем наиболее щадящие </span><span>средства.</span></p></p>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Глажка</strong> <span class="number">4</span>
+					</div>
+					<p><p>Каждая вещь требует внимaния после стирки. С помощью профессионального оборудования мы делаем <span>так, чтобы на вещах не оставалось ни одного ненужного залома.</span></p></p>
+				</div>
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Упаковка</strong> <span class="number">5</span>
+					</div>
+					<p><p>Есть пожелания к упаковке? Просто скажите нам.</p><p><span>Часто бываете в командировках? Мы сложим рубашки так, что вам останется только положить их в </span><span>чемодан.</span></p><p><span>Хотите чтобы мы разложили вещи по цветам? Мужские отдельно, женские отдельно? Нет проблем.</span></p></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+		<div class="tabset-section visible-xs">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-4 col-xs-12">
+					<div class="box">
+						<h2>Процесс</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cycle-gallery of the page -->
+	<div class="cycle-gallery">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-2">
+					<ul class="switcher style04">
+						<li class="active">
+							<a href="#"><span class="image-cell"><img src="images/icon01.svg" height="13" width="29" alt="" onerror="this.onerror=null; this.src='images/icon01.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon02.svg" height="18" width="22" alt="" onerror="this.onerror=null; this.src='images/icon02.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon03.svg" height="24" width="24" alt="" onerror="this.onerror=null; this.src='images/icon03.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon04.svg" height="21" width="24" alt="" onerror="this.onerror=null; this.src='images/icon04.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon05.svg" height="18" width="29" alt="" onerror="this.onerror=null; this.src='images/icon05.png'"></span></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide active">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">1 Осмотр</strong>
+
+									<p><p>Каждая вещь перед чисткой внимательно осматривается. Мы знаем, как это неприятно, когда пуговицы <span>ломаются или портится красивая отделка, поэтому перед чисткой мы все проверим и укрепим.</span></p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">2 Pучная зачистка</strong>
+
+									<p><p>Перед стиркой вещи зачищаются в ручную. Это обеспечивает высочайшее качество и позволяет продлить <span>срок службы.</span></p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">3 Машинная чистка</strong>
+
+									<p><p>После ручной зачистки наши технологи выбирают способ подходящей машинной обработки. Мы используем <span>только высококачественное итальянское и немецкое оборудование и выбираем наиболее щадящие </span><span>средства.</span></p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">4 Глажка</strong>
+
+									<p><p>Каждая вещь требует внимaния после стирки. С помощью профессионального оборудования мы делаем <span>так, чтобы на вещах не оставалось ни одного ненужного залома.</span></p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">5 Упаковка</strong>
+
+									<p><p>Есть пожелания к упаковке? Просто скажите нам.</p><p><span>Часто бываете в командировках? Мы сложим рубашки так, что вам останется только положить их в </span><span>чемодан.</span></p><p><span>Хотите чтобы мы разложили вещи по цветам? Мужские отдельно, женские отдельно? Нет проблем.</span></p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+		<div class="price-section add-price-style" id="price-anchor">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Цены</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- price-carousel of the page -->
+	<div class="price-carousel">
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-3 col-sm-4">
+								<article class="info-box">
+									<div class="frame">
+										<div class="heading">
+											<h3>1. Стандарт</h3>
+											<!--	<a href="#" class="icon-basket"></a>-->
+										</div>
+										<div class="text">
+											<p><p>Самый простой тариф - подойдет тем, кто предпочитает стирать дома</p></p>
+										</div>
+										<div class="info-table">
+											<table>
+												<tbody>
+												<tr>
+													<td>Рубашка/блузка<br></td>
+													<td>250 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Пиджак</td>
+													<td>550 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Брюки</td>
+													<td>450 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Юбка</td>
+													<td>450 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Повседневное платье</td>
+													<td>800 <i class="fa fa-rub"></i></td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="button-holder">
+											<a href="#price-section" class="btn btn-primary" data-tab="tab1">Подробнее<i class="fa fa-bars"></i></a>
+										</div>
+									</div>
+								</article>
+							</div>
+							<div class="col-md-3 col-md-offset-1 col-sm-4">
+								<article class="info-box">
+									<div class="frame">
+										<div class="heading style02">
+											<h3>2. Бизнес</h3>
+											<!--	<a href="#" class="icon-basket"></a> -->
+										</div>
+										<div class="text">
+											<p><p>Часто выбираете офисный стиль? Начните экономить, подписавшись на наши<span> услуги </span></p></p>
+										</div>
+										<div class="info-table">
+											<table>
+												<tbody>
+												<tr>
+													<td>Стоимость в месяц</td>
+													<td>7 900<i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Рубашек/блузок включено<br></td>
+													<td>25 шт</td>
+												</tr>
+												<tr>
+													<td>Костюмов/платьев <br> включено</td>
+													<td>3 шт</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="button-holder">
+											<a href="#price-section" class="btn btn-primary" data-tab="tab2">Подробнее
+												<i class="fa fa-bars"></i></a>
+										</div>
+									</div>
+								</article>
+							</div>
+							<div class="col-md-3 col-md-offset-1 col-sm-4">
+								<article class="info-box">
+									<div class="frame">
+										<div class="heading style03">
+											<h3>3. Без забот</h3>
+											<!--<a href="#" class="icon-basket"></a>-->
+										</div>
+										<div class="text">
+											<p><p>Не хотите больше думать о чистке личных вещей? Чистите все за<span> фиксированную сумму</span></p></p>
+										</div>
+										<div class="info-table">
+											<table>
+												<tbody>
+												<tr>
+													<td>Цена подписки в месяц</td>
+													<td>15 000<i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Бизнес тариф</td>
+													<td>Включен</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="button-holder">
+											<a href="#price-section" class="btn btn-primary" data-tab="tab3">Подробнее
+												<i class="fa fa-bars"></i></a>
+
+										</div>
+									</div>
+								</article>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+		<div class="add-price-section" id="price-section">
+	<div class="frame">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="price-tabset-holder">
+						<!-- price-tabset of the page -->
+						<ul class="price-tabset">
+							<li><a href="#tab1" class="active">Стандарт</a></li>
+							<li><a href="#tab2">Бизнес</a></li>
+							<li><a href="#tab3">Без забот</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="price-tabset-holder">
+						<div class="price-tab-content">
+							<div id="tab1">
+								<div class="price-table price-standard"></div>
+							</div>
+							<div id="tab2">
+								<div class="price-table price-business"></div>
+							</div>
+							<div id="tab3">
+								<div class="price-table price-care"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="#" class="link-close"><i class="icon-arrow-left"></i></a>
+	</div>
+</div>
+		<section class="corporate-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="visual">
+					<i class="icon2-decor"></i>
+				</div>
+			</div>
+			<div class="col-sm-offset-1 col-sm-8 col-md-5">
+				<h2>Mы работаем и с корпоративными клиентами<br></h2>
+				<a href="#" class="info-link" data-target="feedbackForm"><span>Напишите </span><span>&nbsp;нам&nbsp;<i class="fa fa-info-circle"></i></span></a>
+			</div>
+		</div>
+	</div>
+</section>
+<section style="position: relative; padding: 0;">
+	<iframe style="display: block; z-index: -1;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d35963.36702636057!2d37.728581431065486!3d55.711404813875795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414ab53d5b6aec2b%3A0xdc57126769ee4676!2z0JPRgNCw0LnQstC-0YDQvtC90L7QstGB0LrQsNGPINGD0LsuLCA0LCDQnNC-0YHQutCy0LAsIDEwOTUxOA!5e0!3m2!1sru!2sru!4v1427143031608" width="600" height="450" frameborder="0" class="iframe-map"></iframe>
+	<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; z-index: 1;" onclick="$(this).hide(); return;"></div>
+</section>
+<div class="contacts-section">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Контакты</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container contacts-block">
+		<div class="row">
+			<div class="col-sm-4 col-xs-12">
+				<div class="text hidden-xs">
+					<p>Мы всегда внимательны к вашим пожеланиям и вопросам. Свяжитесь с нами удобным для вас способом!</p>
+				</div>
+			</div>
+			<div class="col-sm-8 col-xs-12" id="location">
+				<address>Dry Harder <br> Ул. Грайвороновская, д. 4, cтр. 1, г. Москва, 109518, Россия.</address>
+				<span class="phone"><a href="tel:+74956665607">+7 495 666 56 07</a> <br> 10:00 - 19:00 <br><a class="email" href="#" data-target="feedbackForm">info@dryharder.me</a></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+	</main>
+
+	<footer id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 col-xs-12">
+				<p>&copy; 2014 Dry Harder</p>
+			</div>
+			<div class="col-sm-4 col-xs-12 confidentiality-links">
+				Информация о <a href="confidentiality.html" class="link"> конфиденциальности данных  </a>  и 
+				<a href="#" class="link show-license-link"> проведении платежей </a>.
+			</div>
+			<div class="col-sm-3 col-xs-12 social-icons">
+				<a href="https://www.facebook.com/DryHarderMsk" target="_blank">
+					<i class="fa fa-facebook"></i>
+				</a>
+				<!--<a href="#" target="_blank">-->
+					<!--<i class="fa fa-vk"></i>-->
+				<!--</a>-->
+				<a href="https://twitter.com/dryharder" target="_blank">
+					<i class="fa fa-twitter"></i>
+				</a>
+			</div>
+			<div class="col-sm-1 col-xs-12">
+				<a href="#wrapper" class="btn-top"><i class="icon-svg9"></i></a>
+			</div>
+		</div>
+	</div>
+</footer>
+
+	<div class="popup-holder">
+	<div id="myModal" class="lightbox">
+		<div class="modal-content">
+			<div class="heading">
+				<a href="#" class="close">
+					<i class="fa fa-times-circle"></i>
+				</a>
+				<button type="button" class="close step-address step-back" style="display: none;">
+					<i class="fa fa-arrow-circle-left"></i>
+				</button>
+				<h2>Регистрация</h2>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="text" placeholder="Имя и Фамилия">
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Номер мобильного" name="phone">
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="email" placeholder="Email" name="email">
+						</div>
+					</div>
+					<div class="row-holder step-address step-promo-back" style="display: none;">
+						<input type="checkbox" style="width: 20px; height: 20px;" title="Назад" id="backToPromoCheckbox" class="pull-left col-lg-1">
+						<label for="backToPromoCheckbox" class="col-lg-11 weight-normal">Я корпоративный клиент,<br>у меня есть промо-код</label>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="input-holder">
+							<input type="text" placeholder="Город" value="Москва" name="city" disabled="disabled" class="disabled-bgr">
+						</div>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="input-holder">
+							<input type="text" placeholder="Улица" name="street">
+						</div>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="cell">
+							<div class="input-holder">
+								<input type="text" placeholder="Д." name="house">
+							</div>
+						</div>
+						<div class="cell step-address" style="display: none;">
+							<div class="input-holder">
+								<input type="text" placeholder="Кв./офис" name="room">
+							</div>
+						</div>
+						<div class="cell step-address" style="display: none;">
+							<div class="input-holder">
+								<input type="text" placeholder="Эт." name="float">
+							</div>
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="text" placeholder="Промо-код" class="promo input-signup-promo">
+						</div>
+					</div>
+					<div class="row-holder step-start address-select-loading"></div>
+					<div class="row-holder step-start address-select-list" style="display: none;">
+						<select>
+							<option value="null" class="none">Hе выбрано</option>
+						</select>
+					</div>
+					<div class="row-holder">
+						<span class="col-xs-1"><input type="checkbox" id="AgreeLicense" style="width: 20px; height: 20px;" title="принять условия"></span>
+						<span class="col-xs-10"><label for="AgreeLicense" class="help-link weight-normal">Согласен c <a href="#" class="help-link show-license-link">условиями</a> оказания услуг</label> </span>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary btn-signup-password" disabled="disabled" data-loading="Отправляем..." style="display: none;">
+							<span class="inner-text"> Отправить пароль  <br> на почту и телефон</span>
+							<i class="fa fa-arrow-circle-right"></i></button>
+						<button class="btn btn-primary btn-signup-next" disabled="disabled" data-loading="Отправляем...">
+							<span class="inner-text">Далее</span>
+							<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+					<div class="row-holder link-signup-sms">
+						<a href="#" class="help-link" data-toggle="modal" data-target="#ResubmitSms"><i class="fa fa-lock"></i>Повторно отправить смс</a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<button type="button" class="close" data-dismiss="modal">
+					<i class="fa fa-times-circle"></i>
+				</button>
+				<h2>Вход</h2>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Номер мобильного" name="phone">
+						</div>
+					</div>
+					<div class="row-holder">
+						<div class="input-holder" style="position: relative;">
+							<input type="password" placeholder="Пароль" class="input-password">
+							<a href="#" onclick="return false;" class="toggle-type-password"><i class="fa fa-eye-slash"></i> </a>
+						</div>
+					</div>
+					<div class="row-holder">
+						<div class="">
+							<input type="checkbox" placeholder="Запомнить меня" id="save_me" style="width: 15px; height: 15px;">
+							<label for="save_me" style="margin-left: 5px;">Запомнить меня</label>
+						</div>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary" data-loading-text="Секундочку...">Войти<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+					<div class="row-holder">
+						<a href="#" class="help-link" data-target="PasswordReset"><i class="fa fa-lock"></i>Помогите! Я забыл пароль</a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myModa3" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3>Уверены, что хотите выйти?</h3>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-primary">Да, выйти <i class="fa fa-arrow-circle-right"></i></a>
+				<a href="#" class="btn btn-default" data-dismiss="modal">Отменить <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="modal fade" id="PasswordReset" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<button type="button" class="close cancel-from-reset">
+					<i class="fa fa-times-circle"></i>
+				</button>
+				<h3>Сброс пароля</h3>
+			</div>
+			<form action="" class="signup-form">
+				<fieldset>
+					<div class="row-holder">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Номер мобильного" name="phone">
+						</div>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary"  data-loading-text="Сбрасываем пароль...">Сбросить  <i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+				</fieldset>
+			</form>
+			<div class="button-box">
+				<a href="#" class="btn btn-default cancel-from-reset">Отменить <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="ResubmitSms" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<button type="button" class="close" data-dismiss="modal">
+					<i class="fa fa-times-circle"></i>
+				</button>
+				<h3>SMS с паролем отправлено</h3>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Номер мобильного" name="phone">
+						</div>
+					</div>
+					<div class="row-holder">
+						<div class="input-holder">
+							<input type="password" placeholder="Пароль из смс" class="input-password">
+						</div>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary" data-loading-text="Секундочку...">Войти<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+				</fieldset>
+			</form>
+			<div class="button-box">
+				<a href="#" class="btn btn-default btn-base" data-loading-text="Отправляем...">Отправить повторно</a>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-default" data-dismiss="modal">Отменить <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myLicense" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" style="padding: 10px 10px 10px;">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+			<div class="heading">
+				<h3>Условия оказания услуг</h3>
+			</div>
+			<div class="row-holder"></div>
+			<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">OK</button>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myMessage" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3></h3>
+			</div>
+			<div class="button-box l">
+				<a href="#" class="btn btn-primary" data-dismiss="modal">ОK <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="modal fade" id="myConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3></h3>
+			</div>
+			<div class="button-box l">
+				<a href="#" class="btn btn-primary">Да <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+			<div class="button-box r">
+				<a href="#" class="btn btn-default" data-dismiss="modal">@No <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="feedbackFormResult" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3>Ваше обращение принято!</h3>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-default" data-dismiss="modal">ОК</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<div class="modal-content contacts-section">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+
+			<div class="heading-section">
+				<div class="box">
+					<h2>Контакты</h2>
+				</div>
+			</div>
+
+			<div class="row contacts-row">
+				<div class="col-sm-4 col-xs-12">
+					<div class="text hidden-xs">
+						<p>Мы всегда внимательны к вашим пожеланиям и вопросам. Свяжитесь с нами удобным для вас способом!</p>
+					</div>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<address>Dry Harder <br> Ул. Грайвороновская, д. 4, cтр. 1, г. Москва, 109518, Россия.</address>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<span class="phone"><a href="tel:+74956665607">+7 495 666 56 07</a><br> 10:00 - 19:00 <br><a class="email" href="mailto:info@dryharder.me">info@dryharder.me</a></span>
+				</div>
+			</div>
+
+			<!-- contacts-form of the page -->
+			<form action="feedback/message/create" class="contacts-form wpcf7-form sent" onsubmit="return false;">
+				<fieldset>
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<div class="row-holder">
+								<label class="none">Ваше имя</label>
+								<span class="wpcf7-form-control-wrap text-field-required">
+									<input type="text" name="name" placeholder="Ваше имя" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required text-field-class wpcf7-use-title-as-watermark">
+								</span>
+							</div>
+							<div class="row-holder">
+								<label class="none">Номер телефона</label>
+								<span class="wpcf7-form-control-wrap text-field-required input-group">
+									<span class="input-group-addon plus-seven">+7</span>
+									<input type="text" name="phone" placeholder="Номер телефона" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required text-field-class wpcf7-use-title-as-watermark input-group-addon-input">
+								</span>
+							</div>
+							<div class="row-holder">
+								<label class="none">E-mail</label>
+								<span class="wpcf7-form-control-wrap Emailfield">
+									<input type="text" name="email" placeholder="E-mail" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email email-class wpcf7-use-title-as-watermark">
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-8 col-xs-12">
+							<label class="none">Текст вашего сообщения</label>
+							<span class="wpcf7-form-control-wrap textarea">
+								<textarea name="text" placeholder="Текст вашего сообщения" class="wpcf7-form-control wpcf7-textarea textarea-class wpcf7-use-title-as-watermark" cols="10" rows="4"></textarea>
+							</span>
+						</div>
+					</div>
+					<div class="button-holder">
+						<div class="row">
+							<div class="col-sm-4 col-xs-12">
+								<span class="note">* Заполните все поля.</span>
+							</div>
+							<div class="col-sm-8 col-xs-12">
+								<div class="btn btn-primary">
+									<span class="submit-label">Отправить</span> <i class="fa fa-envelope"></i>
+									<input type="submit" value="Отправить" class="wpcf7-form-control wpcf7-submit submit-class feedBackFormSubmit">
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="orderForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content contacts-section">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+			<div class="heading-section">
+				<div class="box">
+					<h2>Заявка на вызов курьера</h2>
+				</div>
+			</div>
+			<div class="form-request-content">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+<script type="text/javascript" src="assets/js/src.min.js?v=4408"></script>
+<script type="text/javascript" src="assets/js/app.js?v=4408"></script>
+<script type="text/javascript" src="http://cdn2.adnous.ru/1082.js"></script>
+
+<script>(function() {
+	var _fbq = window._fbq || (window._fbq = []);
+	if (!_fbq.loaded) {
+		var fbds = document.createElement('script');
+		fbds.async = true;
+		fbds.src = '//connect.facebook.net/en_US/fbds.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(fbds, s);
+		_fbq.loaded = true;
+	}
+	_fbq.push(['addPixelId', '304919476372889']);
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', 'PixelInitialized', {}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=304919476372889&amp;ev=PixelInitialized" /></noscript>
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript"> (function (d, w, c) {
+	(w[c] = w[c] || []).push(function () {
+		try {
+			w.yaCounter27721494 = new Ya.Metrika({
+				id: 27721494,
+				clickmap: true,
+				trackLinks: true,
+				accurateTrackBounce: true,
+				webvisor: true
+			});
+		} catch (e) {
+		}
+	});
+	var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () {
+		n.parentNode.insertBefore(s, n);
+	};
+	s.type = "text/javascript";
+	s.async = true;
+	s.src = "https://mc.yandex.ru/metrika/watch.js";
+	if (w.opera == "[object Opera]") {
+		d.addEventListener("DOMContentLoaded", f, false);
+	} else {
+		f();
+	}
+})(document, window, "yandex_metrika_callbacks");</script>
+<noscript>
+	<div><img src="https://mc.yandex.ru/watch/27721494" style="position:absolute; left:-9999px;" alt="" /></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- SmartPixel  -->
+<script type="text/javascript">
+	adroll_adv_id = "6NET24OUVRGALEN72GTZDW";
+	adroll_pix_id = "YZ6SMA5WOFE6BP5OVVVF2Y";
+	(function () {
+		var oldonload = window.onload;
+		window.onload = function(){
+			__adroll_loaded=true;
+			var scr = document.createElement("script");
+			var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+			scr.setAttribute('async', 'true');
+			scr.type = "text/javascript";
+			scr.src = host + "/j/roundtrip.js";
+			((document.getElementsByTagName('head') || [null])[0] ||
+			document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+			if(oldonload){oldonload()}};
+	}());
+</script>
+<!-- /SmartPixel  -->
+
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+	(function(){ var widget_id = 'hJxwuRyx1a';
+		var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "LocalBusiness",
+      "url": "http://dryharder.me",
+      "logo": "http://dryharder.me/images/logo.png",
+      "contactPoint" : [{
+	    "@type" : "ContactPoint",
+	    "telephone" : "+7 495 666-56-07",
+	    "contactType" : "customer service",
+	    "areaServed" : "RU",
+	    "availableLanguage": ["RU","EN"]
+	  }],
+	  "sameAs" : [
+	    "https://www.facebook.com/DryHarderMsk"
+	  ]
+    }
+</script>
+
+<div style="display: none;">
+	<div itemscope itemtype="http://schema.org/LocalBusiness">
+		<a itemprop="url" href="http://dryharder.me">
+			<div itemprop="name"><strong>Dry Harder - химчистка с доставкой</strong></div>
+		</a>
+		<div itemprop="description">Dry Harder - это новая хорошая химчистка, в которой вещи снова становятся свежими, выглаженными и красиво сложенными. Мы с радостью заберем и доставим ваши вещи, примем оплату он-лайн и приведем все в порядок.
+		</div>
+		<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+			<span itemprop="streetAddress">Ул. Грайвороновская, д. 4, cтр. 1</span><br>
+			<span itemprop="addressLocality">Москва</span><br>
+			<span itemprop="postalCode">109518</span><br>
+			<span itemprop="addressCountry">Россия</span><br>
+		</div>
+		<div class="telephone">+7 495 666-56-07</div>
+		<time itemprop="openingHours" datetime="Mo-Su 8:00-22:00">Вызов курьера на забор вещей - с 8:00 до 22:00 без выходных</time>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,288 @@
+/*
+Theme Name: DryHarder
+Author: Anonymous
+Author URI:
+Version: 1
+Description: Base theme for Wordpress
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: base
+Tags: one-column, two-columns
+Theme URI:
+*/
+
+/* ---------------------------------------------------------
+   1. General reset
+   2. Embedded fonts styles
+   3. Common site styles
+   4. Сustom form styles
+   ---------------------------------------------------------*/
+
+/* ---------------------------------------------------------
+   1. General reset
+   ---------------------------------------------------------*/
+
+/*
+ * set default text color
+ * set default font size, line height and font family
+ * set default background
+ */
+
+html{
+	-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+	-webkit-focus-ring-color:rgba(0,0,0,0);
+	tap-highlight-color:rgba(0,0,0,0);
+	max-height:100000px;
+}
+body{
+	margin: 0;
+	min-width:$base-min-width;
+	overflow-y:scroll;
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:none;
+	@include max-screen($screen-xs){
+		font-size:14px;
+		line-height:22px;
+	}
+}
+
+/* set styles for default page links */
+a {
+	display:inline-block;
+	vertical-align:top;
+	padding-bottom:3px;
+	border-bottom:1px solid $brand-primary;
+	text-decoration:none;
+	color:$gray-darker;
+	outline:none !important;
+	@include animation-color;
+	&:hover,
+	&:focus{
+		color:$brand-primary;
+		text-decoration:none;
+		outline:none !important;
+	}
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+figure{
+	margin:0;
+	padding:0;
+}
+
+img {
+	border-style: none;
+	vertical-align:top;
+	max-width:100%;
+	height:auto;
+}
+video, iframe, object, embed{max-width: 100%;}
+
+/* set default styles in all browsers */
+form,
+fieldset {
+	margin: 0;
+	padding: 0;
+	border-style:none;
+}
+
+input[type="search"]::-ms-clear{display:none;}
+input[type="button"],
+input[type="submit"]{
+	-webkit-background-clip:padding-box;
+	background-clip:padding-box;
+}
+input[type="button"]::-moz-focus-inner{border:0;}
+input[type="submit"]::-moz-focus-inner{border:0;}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	overflow:visible;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	border-radius:0;
+	cursor:pointer;
+	outline:none !important;
+}
+input[type="submit"]:hover,
+button:hover{cursor:pointer;}
+input[type="submit"]:focus,
+input[type="button"]:focus{outline:none;}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+	margin: 0;
+	border:none;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	border-radius:0;
+	background:#e2fafa;
+	padding:17px 20px 17px 32px;
+	height:61px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	&:focus {
+		outline: none;
+	}
+}
+input[type="submit"],
+button::-moz-focus-inner{
+	padding:0;
+	border:0;
+}
+textarea {
+	overflow: auto;
+	resize: vertical;
+	vertical-align: top;
+	-webkit-overflow-scrolling:touch;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	box-sizing: border-box; 
+	padding:0;
+}
+
+input[type="search"]::-webkit-search-decoration{display:none;}
+input[type="search"]::-webkit-search-cancel-button{display:none;}
+input[type="search"]::-webkit-search-results-button{display:none;}
+input[type="search"]::-webkit-search-results-decoration{display:none;}
+input[type="search"] {
+	-webkit-appearance:none;
+	border-radius:0;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="number"]::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{
+	-webkit-appearance:none;
+	margin:0;
+}
+p{margin: 0 0 1.5em;}
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+.widget {
+	margin-bottom: 14px; 
+	overflow: hidden;
+	ul{
+		padding-left:2em;
+	}
+	select{
+		min-width: 150px;
+	}
+}
+.comment-form{
+	input[type="text"]{
+		margin:0 4px 0 0;
+		width:300px;
+	}
+	label{
+		display:block;
+		padding-bottom:4px;
+	}
+	textarea{
+		width:300px;
+		overflow:auto;
+		height:120px;
+	}
+}
+.searchform{
+	input[type="text"]{
+		width:200px;
+		margin:0 4px 0 0;
+	}
+}
+.post-password-form{
+	input[type="password"]{
+		margin:0 4px 0 0;
+		width:150px;
+	}
+} 
+.commentlist{margin:0 0 14px;}
+.commentlist .edit-link{margin:0;}
+.commentlist-item .commentlist-item {padding:0 0 0 3em;}
+@media only screen and (max-width: 767px){.commentlist-item .commentlist-item {padding: 0;}}
+.comment,
+.commentlist-holder{overflow:hidden;}
+.commentlist-item .commentlist-item,
+.commentlist-item + .commentlist-item{padding-top:14px;}
+.commentlist .avatar-holder{
+	float:left;
+	margin:0 14px 4px 0;
+}
+.gallery-item dt{
+	float:none;
+	padding:0;
+}
+.navigation{
+	overflow:hidden;
+	.next {
+		float:left;
+	}
+	.prev{
+		float:right;
+	}
+}
+.wp-caption{
+	max-width: 100%;
+	clear:both;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border:1px solid #ccc;
+	padding:5px;
+	p{
+		margin:10px 0 0;
+	}
+}
+div.aligncenter {margin: 0 auto 14px;}
+img.aligncenter {
+	display: block;
+	margin: 0 auto;
+}
+.alignleft {
+	float: left;
+	margin: 0 14px 4px 0;
+}
+.alignright {
+	float: right;
+	margin: 0 0 4px 14px;
+}
+@-ms-viewport{width:auto !important;}

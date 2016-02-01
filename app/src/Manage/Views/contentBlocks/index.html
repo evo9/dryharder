@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.3.1/yeti/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<link rel='stylesheet' href='/manage/textAngular.css'>
+	<link rel="stylesheet" href="/manage/main.css">
+</head>
+<body ng-app="Dryharder">
+
+<div class="container" ng-controller="ContentBlocksCtrl" id="ContentBlocksCtrl" style="margin-top: 10px;">
+
+	<div class="col-md-5">
+
+		<table class="table">
+			<tr>
+				<th class="col-md-4">code</th>
+				<th class="col-md-4">comment</th>
+				<th class="col-md-4">lang</th>
+			</tr>
+			<tr ng-repeat="item in list">
+				<td>{{item.code}}</td>
+				<td>{{item.comment}}</td>
+				<td class="lang-buttons">
+					<a ng-repeat="lang in languages" id="content-{{item.id + '-' + lang}}" class="btn btn-xs" ng-class="{'btn-default': item.lang[lang], 'btn-warning': !item.lang[lang]}" ng-click="editLang(item, lang)">{{lang}}</a>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
+	<div class="col-md-7" style="position: relative;">
+
+		<div style="position: fixed; width: 660px; min-height: 500px;">
+
+
+				<div class="col-md-12">
+
+					<form class="form-horizontal" onsubmit="return false;" ng-submit="createNew(store)">
+
+						<div class="form-group">
+							<label for="createNewCode" class="control-label col-md-4">Новый блок с кодом:</label>
+							<div class="col-md-4">
+								<input id="createNewCode" type="text" class="form-control" ng-model="store.code" />
+							</div>
+							<button type="button" class="btn btn-primary btn-xs btn-create-new col-md-2" style="margin-top: 5px;" ng-click="createNew(store)">
+								добавить
+							</button>
+						</div>
+
+					</form>
+
+				</div>
+
+				<div class="col-md-12 div-lang-editor">
+
+					<form class="form-horizontal" onsubmit="return false;" ng-submit="saveLang(edit)">
+
+						<h4>{{edit.title}}</h4>
+
+						<div class="form-group">
+							<div text-angular ng-model="edit.content" ta-toolbar="[['bold','underline','italics','html']]"></div>
+						</div>
+
+						<div class="form-group">
+							<label for="editBlockComment" class="control-label col-md-2">комментарий к блоку:</label>
+
+							<div class="col-md-10">
+								<input id="editBlockComment" type="text" class="form-control" ng-model="edit.comment" />
+							</div>
+						</div>
+
+						<div class="clear clearfix"></div>
+
+						<div class="form-group">
+							<label for="editBlockCode" class="control-label col-md-2">изменить код блока:</label>
+
+							<div class="col-md-10">
+								<input id="editBlockCode" type="text" class="form-control" ng-model="edit.change" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-lg-10">
+								<button type="submit" class="btn btn-xs btn-primary btn-save-item-lang">
+									сохранить
+								</button>
+								<button type="button" class="btn btn-xs btn-danger btn-remove-item-lang pull-right" ng-click="remove(edit)">
+									удалить блок
+								</button>
+							</div>
+						</div>
+
+					</form>
+
+				</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<script type="text/javascript" src="/manage/bower_components/jquery2/jquery.min.js"></script>
+<script type="text/javascript" src="/manage/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/manage/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src='/manage/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+<script type="text/javascript" src='/manage/bower_components/textAngular/dist/textAngular.min.js'></script>
+
+<script type="text/javascript" src="/manage/main.js"></script>
+
+</body>
+</html>

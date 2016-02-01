@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel -->
+<html>
+<head>
+	<meta charset="utf-8">
+<meta name="google-site-verification" content="QM-Eq9VN6JpZLUlKTXplRO5b_avG8E6oqjfsZuFRqq4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dry Harder - химчистка с доставкой</title>
+<link media="all" rel="stylesheet" href="assets/css/app.min.css?v=4408">
+<link rel="shortcut icon" href="favicon.ico">
+<!--[if lt IE 9]>
+	<link rel="stylesheet" href="assets/css/ie.min.css?v=4408">
+	<script type="text/javascript" src="assets/js/ie.js?v=4408"></script>
+<![endif]-->
+<!--[if lte IE 9]>
+	<link rel="stylesheet" href="assets/css/ie.css?v=4408">
+<![endif]-->
+
+<meta property="og:title" content="Dry Harder" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://dryharder.me/" />
+<meta property="og:image" content="http://dryharder.me/images/logo-small.png" />
+<meta property="og:description" content="Новая удобная химчистка с доставкой" />
+<meta property="og:site_name" content="Dry Harder" />
+
+
+<link rel="image_src" href="http://dryharder.me/images/logo-small.png" />
+
+<meta itemprop="name" content="Dry Harder" />
+<meta itemprop="description" content="Новая удобная химчистка с доставкой" />
+<meta itemprop="image" content="http://dryharder.me/images/logo-small.png" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="Dry Harder" />
+<meta name="twitter:title" content="Dry Harder">
+<meta name="twitter:description" content="Новая удобная химчистка с доставкой" />
+<meta name="twitter:creator" content="Dry Harder" />
+<meta name="twitter:image:src" content="http://dryharder.me/images/logo-small.png" />
+<meta name="twitter:domain" content="dryharder.me" />
+	<link media="all" rel="stylesheet" href="assets/css/tablet.min.css?v=4408">
+	<script>
+		switch(window.location.protocol) {
+	case 'http:':
+	case 'https:':
+
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-57161998-1', 'auto');
+		ga('require', 'displayfeatures');
+		ga('send', 'pageview');
+
+		break;
+
+	default:
+
+		break;
+}
+
+if(typeof console == 'undefined' || (typeof windows != 'undefined' && !windows.console)){
+	var console = {log: function(){}};
+}
+		var GLOBAL_URL = 'http://www.himstat.ru/cl/laundry2/api/';
+		var API_BASE_URL = '/api/v1/';
+		var DASHBOARD_URL = '/account/';
+		var LANG = 'ru';
+		var TEST = false;
+		//noinspection JSUnresolvedVariable
+		var TRANS = {"lang":"ru","login":"Войти","logout":"Выход","register":"Регистрация","registerDo":"Зарегистрироваться","account":"Личный кабинет","loadSession":"Загрузка сессии","second":"Секундочку...","metaDescription":"Новая удобная химчистка с доставкой","metaTitle":"Dry Harder","metaImage":"images/logo-small.png","metaUrl":"","addresses":"Адреса","ourServices":"Услуги","whatWeOffer":"Услуги","ourWork":"Как мы работаем","ourPrinciples":"Наши принципы","ourProcess":"Процесс","ourPrice":"Цены","ourContacts":"Адреса &amp; Контакты","promo1part1":"Dry Harder - это новая хорошая химчистка","promo1part2":"в которой вещи снова","promo1part3":"становятся свежими, выглаженными и ","promo1part4":"красиво сложенными","promo2part1":"Каждая вещь индивидуальна.","promo2part2":"Специалисты Dry Harder внимательно","promo2part3":"осматривают вещи и подбирают","promo2part4":"идеальный метод стирки для каждой из них.","promo3part1":"Чистим не только одежду, но и планету.","promo3part2":"Мы используем только экологически","promo3part3":"чистые материалы и прибегаем к более","promo3part4":"сильным веществам лишь в крайних случаях.","priceRateDetail":"Подробнее о тарифах","getOrder":"Сделать заказ","waterCleaning":"Аквачистка","dryCleaning":"Химчистка","bagsCleaning":"Чистка изделий из кожи и меха","howDoWeWork":"Как мы работаем?","leaveARequest":"Оставьте заявку на сайте","registerAndSend":"Зарегистрируйтесь на сайте и оставьте заявку. Наш курьер заберет вещи в удобное для вас время. Заказы свыше 2 500","deliveredForFree":" доставляются бесплатно.","toRegister":"Зарегистрироваться","payOnline":"Оплатите заказ онлайн","weWillLetYouKnow":"Мы сообщим вам о готовности заказа по почте или смс.","enjoyClean":"Радуйтесь чистым вещам","weDeliver":"Мы доставим вещи в удобное для вас время.","RequestServiceForm":"Заявка на вызов курьера","aboutDryHarder":"О Dry Harder","howWeWorkHeader11":"Мы усердно работаем, ","howWeWorkHeader12":"чтобы вы радовались своим вещам.","howWeWorkHeader21":"Мы не хотим, чтобы вы тратили время впустую.","processTitle":"Процесс","assessment":"Осмотр","processHand":"Pучная зачистка","processMachine":"Машинная чистка","pressing":"Глажка","packing":"Упаковка","priceTitle":"Цены","priceStandard":"Стандарт","priceBusiness":"Бизнес","priceCare":"Без забот","shirtBlouse":"Рубашка/блузка","suit":"Пиджак","trousers":"Брюки","skirt":"Юбка","wEverydayDress":"Повседневное платье","prisePerMonth":"Цена подписки в месяц","shirtBlouseIncluded":"Рубашек/блузок включено","pricePerMonth":"Стоимость в месяц","suitSkirtIncluded":"Костюмов/платьев <br> включено","discountToStandard":"Скидка к \"стандартному\" тарифу","bizTariff":"Бизнес тариф","included":"Включен","more":"Подробнее","weWorkWithCorp":"Mы работаем и с корпоративными клиентами","write":"Напишите","us":"нам","contacts":"Контакты","weAreAlwaysReadyToHelp":"Мы всегда внимательны к вашим пожеланиям и вопросам. Свяжитесь с нами удобным для вас способом!","physicalAddress":"Ул. Грайвороновская, д. 4, cтр. 1, г. Москва, 109518, Россия.","infoAbout":"Информация о ","confData":"конфиденциальности данных ","andWord":" и ","transactions":"проведении платежей","serverErrorMessage":"Ошибка... Попробуйте повторить немного позже, мы скоро все исправим!","feedbackSendErrorMessage":"Просим прощения! Отправка сообщений временно недоступна... Попробуйте повторить через пару минут.","errorFieldPhone":"Проверьте правильность номера телефона","checkPromoCode":"Проверка промо-кода...","notSelected":"Hе выбрано","foundPromoCode":"промо-код найден, выберите адрес","foundPromoCodeNot":"Промо-код не найден","errorFieldEmail":"Некорректный Email","errorFieldAddress":"Укажите адрес, с которого мы будем забирать вещи!","errorFieldHouse":"А как же номер дома?","errorFieldRoom":"Номер квартиры или офиса?","errorFieldPromoCode":"Промо-код обязательное поле!","errorFieldAddressId":"Выберите адрес по промо-коду или зарегистрируйтесь без промо-кода","Moscow":"Москва","serverErrorTryLater":"Ошибка сервера. Попробуйте позже.","messageSent":"Ваше обращение принято!","contactsFeedbackForm":"Контакты","name":"Ваше имя","phoneNumber":"Номер телефона","yourMessage":"Текст вашего сообщения","pleaseFillOutEverything":"* Заполните все поля.","toSend":"Отправить","yes":"Да","no":"Нет","termsAndConditions":"Условия оказания услуг","iAgree":"Я согласен с условиями оказания услуг","iDisagree":"Не согласен с условиями","entry":"Вход","mobileNumber":"Номер мобильного","password":"Пароль","rememberMe":"Запомнить меня","helpIForgot":"Помогите! Я забыл пароль","nameAndSurname":"Имя и Фамилия","back":"Назад","iAmCorp":"Я корпоративный клиент,","iHaveTheCode":"у меня есть промо-код","street":"Улица","building":"Д.","apt":"Кв./офис","floor":"Эт.","promocode":"Промо-код","agreedWith":"Согласен c ","termsAndCond":"условиями","ofService":" оказания услуг","sendPassword":"Отправить пароль ","toEmailAndPhone":"на почту и телефон","next":"Далее","sendSmsAgain":"Повторно отправить смс","inviteRegisterComment":"Ура! Ваш друг любит нас, теперь мы хотим понравиться и вам!<br>Зарегистрируйтесь чтобы начать пользоваться нашими услугами.","resetPass":"Сброс пароля","resetting":"Сбрасываем пароль...","reset":"Сбросить ","cancel":"Отменить","areYourSureExit":"Уверены, что хотите выйти?","yesExit":"Да, выйти ","smsSent":"SMS с паролем отправлено","smsPass":"Пароль из смс","working":"Секундочку...","sending":"Отправляем...","sendAgain":"Отправить повторно","empty":"empty","cb-services-water":"<p>Самый экологически чистый и современный вариант. Чистка производится с помощью воды и невредных очищающих материалов. Вещи бережно отстирываются и при этом не соприкасаются с сильными реагентами.</p><p>Что мы так чистим: рубашки, белье, джинсы, поло и другие вещи, из материалов, которые не боятся воды.</p>","cb-services-dry":"<p>Чистка для самых сложных случаев. В Химчистке мы не используем воду, только специальные материалы, которые справятся абсолютно со всем и вернут вам вещи, с которыми вы уже думали прощаться, свежими, чистыми и вообще, как будто новыми.</p><p>Что мы так чистим: абсолютно всё, что вызывает у вас отчаяние.</p>","cb-services-bag-shoes":"<p>Стирать дома любимую кожаную куртку или меховую шубу — не лучшая идея. Доверьте это нам.</p><p>Специалисты Dry Harder профессионально и аккуратно чистят вашу дорогую одежду, а так же обувь и сумки. Всё будет выглядеть, как новое.</p>","cb-approach-about":"<p>Мы любим красивые вещи, ценим хороший сервис и нам всегда было жаль время на бытовые заботы. Поэтому мы сделали Dry Harder.</p>","cb-approach-happy":"<p>Ухаживая за вашими вещами, мы сочетаем ручную работу и чистку в современных итальянских и немецких машинах.</p>&#10;<p>Самые современные чистящие средства подбираются для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>&#10;<p>Аккуратно погладить и сложить - так же важно как и почистить. Поэтому мы используем только профессиональное гладильное оборудование, биоразлагаемый пластик и внимательно прислушиваемся к вашим пожеланиям.</p>","cb-approach-time":"<p>Мы постарались все продумать.</p>&#10;<p>Используя он-лайн кабинет, вы можете моментально оплачивать заказы.</p>&#10;<p>Простая процедура оплаты, моментальная сдача вещей, быстрое получение заказа. Ведь никому не нравится тратить время в приемном пункте.</p>&#10;<p>Если у вас есть специальные пожелания, мы рады их услышать. Может быть разложить вещи по цветам? Или сложить в дорогу? А может быть что-то нужно только погладить? Просто скажите нам.</p>","cb-process-assessment":"<p>Каждая вещь перед чисткой внимательно осматривается. Мы знаем, как это неприятно, когда пуговицы <span>ломаются или портится красивая отделка, поэтому перед чисткой мы все проверим и укрепим.</span></p>","cb-process-hand":"<p>Перед стиркой вещи зачищаются в ручную. Это обеспечивает высочайшее качество и позволяет продлить <span>срок службы.</span></p>","cb-process-machine":"<p>После ручной зачистки наши технологи выбирают способ подходящей машинной обработки. Мы используем <span>только высококачественное итальянское и немецкое оборудование и выбираем наиболее щадящие </span><span>средства.</span></p>","cb-process-pressing":"<p>Каждая вещь требует внимaния после стирки. С помощью профессионального оборудования мы делаем <span>так, чтобы на вещах не оставалось ни одного ненужного залома.</span></p>","cb-process-packaging":"<p>Есть пожелания к упаковке? Просто скажите нам.</p><p><span>Часто бываете в командировках? Мы сложим рубашки так, что вам останется только положить их в </span><span>чемодан.</span></p><p><span>Хотите чтобы мы разложили вещи по цветам? Мужские отдельно, женские отдельно? Нет проблем.</span></p>","cb-price-standard":"<p>Самый простой тариф - подойдет тем, кто предпочитает стирать дома</p>","cb-price-business":"<p>Часто выбираете офисный стиль? Начните экономить, подписавшись на наши<span> услуги </span></p>","cb-price-carefree":"<p>Не хотите больше думать о чистке личных вещей? Чистите все за<span> фиксированную сумму</span></p>"};
+	</script>
+</head>
+<body class="fixed-header">
+<!-- main container of all the page elements -->
+<div id="wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+	<main id="main" role="main" style="height: 100%;">
+		<div class="start-section" style="height: 100%;">
+			<div class="container">
+				<!--suppress HtmlFormInputWithoutLabel -->
+<div class="row" style="padding-top: 20px;">
+	<img src="images/logo.png" height="150" width="240" alt="Dry Harder" style="margin: 0 auto 30px auto; display: block;">
+</div>
+
+<div class="row start-button-row" style="padding-top: 50px; text-align: center;">
+	<button type="button" class="btn btn-primary big-button start-button" style="display: block; margin: 0 auto;">
+		Cообщить о заказе
+	</button>
+</div>
+
+			</div>
+		</div>
+	</main>
+</div>
+
+<div class="modal fade" id="modal-tablet" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-content" style="width: 500px; margin: 0 auto;">
+		<div class="heading">
+			<a href="#" class="close">
+				<i class="fa fa-times-circle"></i>
+			</a>
+			<h2>Сообщить о заказе</h2>
+		</div>
+
+		<div class="row error-row">
+			<h3></h3>
+			<div class="row-holder">
+				<div style="margin-top: 16px; text-align: center;">
+					<button type="button" class="btn btn-default back-button">
+						<i class="fa fa fa-arrow-circle-left"></i> Назад
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row success-row">
+			<h3></h3>
+			<div class="row-holder">
+				<div style="margin-top: 16px; text-align: center;">
+					<button type="button" class="btn btn-default back-button">
+						<i class="fa fa fa-arrow-circle-left"></i> Назад
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row phone-row">
+
+			<div class="col-xs-12">
+
+				<div class="row-holder" style="margin-bottom: 16px;">
+					<div class="input-holder input-group">
+						<input type="text" name="title" placeholder="Наименование компании" class="input-title">
+					</div>
+				</div>
+
+				<div class="row-holder" style="margin-bottom: 16px;">
+					<div class="input-holder input-group">
+						<span class="input-group-addon plus-seven">+7</span>
+						<input type="tel" placeholder="Номер мобильного" name="phone" class="input-phone">
+					</div>
+				</div>
+
+				<p>Прежде, чем оставить свой первый заказ, пожалуйста, зарегистрируйтесь на сайте dryharder.me с промо-кодом вашей компании и приложите заполненную бланк-заявку</p>
+
+				<div class="row-holder" style="text-align: center;">
+					<button type="button" class="btn btn-primary big-button confirm-button" data-loading-text="проверка...">
+						Отправить <i class="fa fa-arrow-circle-right"></i>
+					</button>
+					<div style="margin-top: 16px; text-align: center;">
+						<button type="button" class="btn btn-default back-button">
+							<i class="fa fa fa-arrow-circle-left"></i> Назад
+						</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+
+<script type="text/javascript" src="assets/js/src.min.js?v=4408"></script>
+<script type="text/javascript" src="assets/js/app.js?v=4408"></script>
+
+<script type="text/javascript">
+	(function(){
+	var modal = $('#modal-tablet');
+	var $startRow = $('.start-button-row');
+	var $bigButton = $('.start-button');
+	var $phoneRow = $('.phone-row');
+	var $confirmButton = $('.confirm-button');
+	var $backButton = $('.back-button');
+	var $errorRow = $('.error-row');
+	var $successRow = $('.success-row');
+
+	var phone = $('.input-phone');
+	var title = $('.input-title');
+
+	$('.close').on('click', function(){
+		modal.modal('hide');
+	});
+
+	$('.modal.fade').on('hidden.bs.modal', function(e){
+		$backButton.click();
+	});
+
+	$bigButton.click(function(){
+		$phoneRow.show();
+		$errorRow.hide();
+		$successRow.hide();
+		modal.modal('show');
+		return false;
+	});
+
+	$backButton.click(function(){
+		$phoneRow.hide();
+		$errorRow.hide();
+		$successRow.hide();
+		modal.modal('hide');
+		return false;
+	});
+
+
+	$confirmButton.click(function(){
+
+		$confirmButton.button('loading');
+		$backButton.hide();
+
+		function reset(clear){
+			$confirmButton.button('reset');
+			$backButton.show();
+			if(!clear){
+				phone.val('');
+				title.val('');
+				phone.css('border', '4px solid black');
+				title.css('border', '4px solid black');
+			}
+		}
+
+		if(!AppHelpers.isPhoneNumber(phone.val())){
+			phone.css('border', '4px solid red');
+			reset(1);
+			return;
+		}else{
+			phone.css('border', '4px solid green');
+		}
+
+		if(title.val().length <= 0){
+			title.css('border', '4px solid red');
+			reset(1);
+			return;
+		}else{
+			title.css('border', '4px solid green');
+		}
+
+
+		AppHelpers.ajaxMe('customer/order/message', {
+			phone: phone.val(),
+			title: title.val()
+		}, function (res) {
+			AppHelpers.messageSuccess(res.message);
+			reset();
+		}, function(){
+			reset();
+		});
+
+	});
+
+	AppHelpers.message = function(text){
+		$errorRow.find('h3').html(text);
+		$errorRow.show();
+		$phoneRow.hide();
+	};
+
+	AppHelpers.messageSuccess = function(text){
+		$successRow.find('h3').html(text);
+		$successRow.show();
+		$phoneRow.hide();
+	};
+
+})();
+</script>
+
+</body>
+</html>

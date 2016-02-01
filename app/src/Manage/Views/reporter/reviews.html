@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.3.1/yeti/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/manage/main.css">
+</head>
+<body ng-app="Dryharder">
+
+<div class="container" ng-controller="ReporterReviewCtrl" id="ReporterReviewCtrl" style="margin-top: 10px;">
+
+	<div class="col-md-12">
+
+		<table class="table table-hover">
+			<tr>
+				<th class="col-md-2">кто написал</th>
+				<th class="col-md-2">к какому заказу</th>
+				<th class="col-md-1">когда</th>
+				<th class="col-md-1">оценка</th>
+				<th class="col-md-6">текст</th>
+			</tr>
+			<tr ng-repeat="item in list">
+				<td>
+					{{item.customer.name}}<br>
+					+7 {{item.customer.phone | tel}}<br>
+					{{item.customer.email}}
+				</td>
+				<td>
+					id: {{item.order_id}}<br>
+					номер: {{item.doc_number}}
+				</td>
+				<td>{{item.created_at}}</td>
+				<td>{{item.stars}}</td>
+				<td>{{item.text}}</td>
+			</tr>
+		</table>
+
+	</div>
+
+</div>
+
+
+<script type="text/javascript" src="/manage/bower_components/jquery2/jquery.min.js"></script>
+<script type="text/javascript" src="/manage/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/manage/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src='/manage/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+<script type="text/javascript" src='/manage/bower_components/textAngular/dist/textAngular.min.js'></script>
+
+<script type="text/javascript" src="/manage/main.js"></script>
+
+</body>
+</html>

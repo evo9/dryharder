@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel -->
+<html>
+<head>
+	@@include('./index/meta.html')
+	<link media="all" rel="stylesheet" href="assets/css/tablet.min.css?v=@@ts">
+	<script>
+		@@include('./index/scripts.js')
+		var GLOBAL_URL = 'http://www.himstat.ru/cl/laundry2/api/';
+		var API_BASE_URL = '/api/v1/';
+		var DASHBOARD_URL = '/account/';
+		var LANG = '@@lang';
+		var TEST = false;
+		//noinspection JSUnresolvedVariable
+		var TRANS = T_LANG;
+	</script>
+</head>
+<body class="fixed-header">
+<!-- main container of all the page elements -->
+<div id="wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+	<main id="main" role="main" style="height: 100%;">
+		<div class="start-section" style="height: 100%;">
+			<div class="container">
+				@@include('./tablet/inner.html', T_LANG)
+			</div>
+		</div>
+	</main>
+</div>
+
+@@include('./tablet/modal.html', T_LANG)
+
+<script type="text/javascript" src="assets/js/src.min.js?v=@@ts"></script>
+<script type="text/javascript" src="assets/js/app.js?v=@@ts"></script>
+
+<script type="text/javascript">
+	@@include('./tablet/scripts.js', T_LANG)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<meta name="google-site-verification" content="QM-Eq9VN6JpZLUlKTXplRO5b_avG8E6oqjfsZuFRqq4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dry Harder - химчистка с доставкой</title>
+<link media="all" rel="stylesheet" href="assets/css/app.min.css?v=4408">
+<link rel="shortcut icon" href="favicon.ico">
+<!--[if lt IE 9]>
+	<link rel="stylesheet" href="assets/css/ie.min.css?v=4408">
+	<script type="text/javascript" src="assets/js/ie.js?v=4408"></script>
+<![endif]-->
+<!--[if lte IE 9]>
+	<link rel="stylesheet" href="assets/css/ie.css?v=4408">
+<![endif]-->
+
+<meta property="og:title" content="Dry Harder" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://dryharder.me/en.html" />
+<meta property="og:image" content="http://dryharder.me/images/logo-small.png" />
+<meta property="og:description" content="New convenient dry cleaning" />
+<meta property="og:site_name" content="Dry Harder" />
+
+
+<link rel="image_src" href="http://dryharder.me/images/logo-small.png" />
+
+<meta itemprop="name" content="Dry Harder" />
+<meta itemprop="description" content="New convenient dry cleaning" />
+<meta itemprop="image" content="http://dryharder.me/images/logo-small.png" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="Dry Harder" />
+<meta name="twitter:title" content="Dry Harder">
+<meta name="twitter:description" content="New convenient dry cleaning" />
+<meta name="twitter:creator" content="Dry Harder" />
+<meta name="twitter:image:src" content="http://dryharder.me/images/logo-small.png" />
+<meta name="twitter:domain" content="dryharder.me" />
+	<script>
+		switch(window.location.protocol) {
+	case 'http:':
+	case 'https:':
+
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-57161998-1', 'auto');
+		ga('require', 'displayfeatures');
+		ga('send', 'pageview');
+
+		break;
+
+	default:
+
+		break;
+}
+
+if(typeof console == 'undefined' || (typeof windows != 'undefined' && !windows.console)){
+	var console = {log: function(){}};
+}
+		var GLOBAL_URL = 'http://www.himstat.ru/cl/laundry2/api/';
+		var API_BASE_URL = '/api/v1/';
+		var DASHBOARD_URL = '/account/';
+		var LANG = 'en';
+		var TEST = false;
+		var TRANS = {"lang":"en","login":"Login","logout":"Logout","register":"Registration","registerDo":"Register","account":"Account","loadSession":"Loading session","second":"just a second...","metaDescription":"New convenient dry cleaning","metaTitle":"Dry Harder","metaImage":"images/logo-small.png","metaUrl":"en.html","addresses":"Addresses","ourServices":"Services","whatWeOffer":"What we offer","ourWork":"How to works","ourPrinciples":"Our principles","ourProcess":"Process","ourPrice":"Prices","ourContacts":"Addresses &amp; Contacts","promo1part1":"Dry Harder is a great new dry-cleaning service","promo1part2":"where your clothes become","promo1part3":"clean, pressed","promo1part4":"and neatly folded","promo2part1":"Every item gets individual treatment.","promo2part2":"Our specialists at Dry Harder carefully","promo2part3":"tend to your items and choose","promo2part4":"the best cleaning method for each of them.","promo3part1":"We don’t clean just clothes, we keep","promo3part2":"the planet clean too. We use only clean, ecological","promo3part3":"methods and turn to stronger solutions","promo3part4":"only in extreme cases.","priceRateDetail":"Price details","getOrder":"Order for service","waterCleaning":"Water-based cleaning","dryCleaning":"Dry cleaning","bagsCleaning":"Cleaning bags and shoes","howDoWeWork":"How do we work?","leaveARequest":"Send us a pick-up request","registerAndSend":"Register online and send a request. If your order cost more than 2 500","deliveredForFree":" delivery is on us","toRegister":"Register","payOnline":"Pay on line","weWillLetYouKnow":"We will send you an email and sms once your order is ready","enjoyClean":"Enjoy clean clothes","weDeliver":"We deliver your order when it is convenient for you.","RequestServiceForm":"Order for service","aboutDryHarder":"О Dry Harder","howWeWorkHeader11":"We work diligently so that ","howWeWorkHeader12":"you are happy with your clothes","howWeWorkHeader21":"We don’t want you to waste your time.","processTitle":"Process","assessment":"Assessment","processHand":"Hand cleaning","processMachine":"Machine cleaning","pressing":"Pressing","packing":"Packing","priceTitle":"Our prices","priceStandard":"Standard","priceBusiness":"Business","priceCare":"Сarefree","shirtBlouse":"Shirt/blouse","suit":"Suit jacket","trousers":"Trousers","skirt":"Skirt","wEverydayDress":"Casual dress","prisePerMonth":"Monthly subscription","shirtBlouseIncluded":"Shirts/blouses included","pricePerMonth":"Monthly price","suitSkirtIncluded":"Suits/dresses <BR> included","discountToStandard":"Savings over the standard option","bizTariff":"The Business option","included":"included","more":"More details","weWorkWithCorp":"We also work with corporate clients!","write":"Write","us":"us","contacts":"Contacts","weAreAlwaysReadyToHelp":"We are always attentive to your questions and requests. Contact us by whatever way is convenient for you.","physicalAddress":"Grayvoronovskaya St 4/1, Moscow, 109518, Russia.","infoAbout":" Information about ","confData":" data privacy ","andWord":" and ","transactions":" payment transactions","serverErrorMessage":"Error... Please try again a bit later","feedbackSendErrorMessage":"Sorry! Mail service is not available at the moment... Please try again.","errorFieldPhone":"Are you sure you entered correct phone number?","checkPromoCode":"checking promo-code...","notSelected":"Not selected","foundPromoCode":"Promo-code found! Please select an address","foundPromoCodeNot":"Promo-code not found!","errorFieldEmail":"Incorrect Email","errorFieldAddress":"Please provide your address!","errorFieldHouse":"What about House No. ?","errorFieldRoom":"What about apt/office No. ?","errorFieldPromoCode":"Promo-code is required!","errorFieldAddressId":"Please provide a promo-code or enter your address","Moscow":"Moscow","serverErrorTryLater":"Server error. Please, try again later.","messageSent":"Message sent!","contactsFeedbackForm":"Contacts","name":"Name","phoneNumber":"Phone number","yourMessage":"Your message","pleaseFillOutEverything":"* All required field","toSend":"Send","yes":"Yes","no":"No","termsAndConditions":"Terms and conditions","iAgree":"I agree with terms and conditions","iDisagree":"I disagree with terms and conditions","entry":"Login","mobileNumber":"Mobile","password":"Password","rememberMe":"Remember me","helpIForgot":"Help! I forgot my password!","nameAndSurname":"Name and Surname","back":"Back","iAmCorp":"I am a corporate client,","iHaveTheCode":"I have the promo-code","street":"Str","building":"B.","apt":"Apt/Office","floor":"F","promocode":"Promo-code","agreedWith":"Agree with ","termsAndCond":"terms and conditions","ofService":" of services","sendPassword":"Send password ","toEmailAndPhone":"to my email and phone","next":"Next","sendSmsAgain":"Send SMS once again","inviteRegisterComment":"Ура! Ваш друг любит нас, теперь мы хотим понравиться и вам!<br>Зарегистрируйтесь чтобы начать пользоваться нашими услугами.","resetPass":"Reset password","resetting":"Please wait...","reset":"Reset ","cancel":"Cancel","areYourSureExit":"Are you sure you want to exit?","yesExit":"Yes","smsSent":"SMS with new password was sent","smsPass":"Password","working":"Please wait...","sending":"Sending...","sendAgain":"Send again","empty":"empty","cb-services-water":"<p>The most ecological and modern solution. We clean your items with water and safe cleaning materials. Your clothes are washed with care and aren’t exposed to powerful chemical agents.</p><p>We use this method to clean: shirts, linen, jeans, and other items made from materials which aren’t afraid of water.</p>","cb-services-dry":"<p>Cleaning for the toughest cases. With this method we don’t use water, only special cleaning materials that can handle everything thrown at it. Clothes you thought you would have to say goodbye to forever come back fresh, clean and like-new.</p><p>We use this method to clean: absolutely everything you might despair over.</p>","cb-services-bag-shoes":"<p>Washing your favorite leather jacket or fur coat at home isn’t the best idea. Leave it to us.</p><p>At Dry Harder, our specialists clean your valuable items, including bags and shoes, expertly and with care. Everything will look like new again.</p>","cb-approach-about":"<p><span>We love good-looking clothes, we value good service, and we always disliked mundane chores. That’s why we started Dry Harder.</span><br/></p>","cb-approach-happy":"<p>We carefully tend to your clothes and combine handwashing and cleaning in state-of-the-art Italian and German machines.</p><p><span>The most state-of-the-art cleaning solutions are selected for each individual item depending on the type of fabric and soiling.</span><br/></p><p><span>Neatly pressing and folding clothes is just as important as washing them well. That’s why we use only professional presses and biodegradable plastics and carefully listen to your special requests.</span><br/></p>","cb-approach-time":"We think of everything. With our online accounts, you can pay for your order instantly.&#10;&#10;We offer a simple way to pay, instant drop-off of clothes, and fast pick-up. After all, no one likes to spend their time at  the dry-cleaner’s.&#10;&#10;If you have any special requests, we’d be happy to hear them. Maybe you want us to sort clothes by color? Or fold them for your suitcase? Or maybe you just want something to be pressed? Just let us know.","cb-process-assessment":"<p>Before washing, every item is carefully examined. We know it’s not nice when buttons break or trimming gets ruined. That’s why we check your clothes and reinforce everything before cleaning.</p>","cb-process-hand":"<p>Before your clothes are washed, they are cleaned by hand. This ensures the highest quality and means that your clothes will serve you longer.</p>","cb-process-machine":"After they have been cleaned your clothes by hand, our experts decide the best machine for them. We use only state-of-the-art Italian and German machines and chose the safest method of cleaning your clothes.","cb-process-pressing":"Every item needs to be cared for after washing. With the help of our professional equipment, we make sure your clothes are wrinkle-free.","cb-process-packaging":"Do you have any request for how your clothes should be packaged? Just let us know.&#10;&#10;Do you go on business trips often? We can fold your clothes so they can go right in your suitcase.&#10;&#10;Do you want us to sort your clothes by color? Or separate men’s and women’s? It’s no problem.","cb-price-standard":"The simplest option, for those who prefer to wash clothes at home.","cb-price-business":"<p>Do you wear smart business attire? Use our services and save.</p>","cb-price-carefree":"<p>Never want to think about washing clothes? Get everything cleaned for a set price.</p>"};
+	</script>
+</head>
+<body class="fixed-header">
+<!-- main container of all the page elements -->
+<div id="wrapper">
+
+	<div class="start-section">
+
+<header id="header">
+	<div class="header-section hidden-xs">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-lg-offset-1 col-xs-4">
+					<!-- account navigation -->
+					<nav class="account-nav">
+						<ul>
+							<li class="li-nav-wait">Loading session...</li>
+							<li class="li-nav-login" style="display: none;">
+								<a href="#" data-toggle="modal" data-target="#myModa2"><i class="fa fa-user"></i>Login</a>
+							</li>
+							<li class="li-nav-register" style="display: none;">
+								<a class="lightbox" href="#myModal">Registration</a>
+							</li>
+							<li class="cl li-nav-user" style="display: none;">
+								<a href="#"><i class="fa fa-user"></i></a>
+							</li>
+							<li style="display: none;" class="li-nav-logout">
+								<a href="#" data-toggle="modal" data-target="#myModa3"><i class="fa fa-times-circle"></i>
+									Logout</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="col-xs-4" style="text-align: center;">
+					<a class="logo" href="#"><img src="images/logo.png" height="150" width="240" alt="Dry Harder"></a>
+				</div>
+				<div class="col-lg-3 col-xs-4" style="text-align: right; padding-top: 14px;">
+					<a href="tel:+74956665607" class="phone"><i class="fa fa-phone"></i> +7 495 666 56 07</a>
+					<a href="#" onclick="return false;" class="lang-href" data-lang="ru">Ru</a>
+					<a href="#" onclick="return false;" class="lang-href" data-lang="en">En</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- nav-bar of the page -->
+	<div class="nav-bar hidden-xs">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-offset-1 col-lg-8 col-xs-10">
+					<!-- navigation of the page -->
+					<div id="nav">
+						<ul>
+							<li class="active"><a href="#" class="home"><i class="fa fa-home"></i></a></li>
+							<li><a href="#our-services">Services</a></li>
+							<li><a href="#how-does-it-work">How to works</a></li>
+							<li><a href="#how-we-work">Our principles</a></li>
+							<li><a href="#our-process">Process</a></li>
+							<li><a href="#price-anchor">Prices</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<!-- add-nav of the page -->
+					<nav class="add-nav">
+						<ul>
+							<li class="base-tooltip">
+								<a href="#location" data-toggle="tooltip" data-placement="bottom" title="Addresses"><i class="fa fa-map-marker"></i></a>
+							</li>
+							<li><a href="#" data-target="feedbackForm"><i class="fa fa-envelope"></i></a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- mobile-header of the page -->
+	<div class="mobile-header visible-xs" id="mob-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<a href="#" class="mobile-logo"><i class="icon-svg5"></i></a>
+
+					<div class="basket-box">
+						<span class="number"></span> <a href="#" class="basket-link"><i class="icon-basket"></i></a>
+					</div>
+					<div class="mobile-navigation">
+						<a href="#" class="opener"><i class="fa fa-bars"></i></a>
+
+						<div class="drop">
+							<ul class="main-nav">
+								<li><a href="#">Home</a></li>
+								<li><a href="#our-services">Services</a></li>
+								<li><a href="#how-does-it-work">How to works</a></li>
+								<li><a href="#how-we-work">Our principles</a></li>
+								<li><a href="#our-process">Process</a></li>
+								<li><a href="#price-anchor">Prices</a></li>
+								<li><a href="#location">Addresses &amp; Contacts</a></li>
+							</ul>
+							<!-- account navigation -->
+							<nav class="account-nav">
+								<ul>
+									<li class="li-nav-wait">Loading session...</li>
+									<li class="li-nav-login" style="display: none;">
+										<a href="#" data-toggle="modal" data-target="#myModa2"><i class="fa fa-user"></i>
+											Login</a>
+									</li>
+									<li class="li-nav-register" style="display: none;">
+										<a class="lightbox" href="#myModal">Register</a>
+									</li>
+									<li class="cl li-nav-user" style="display: none;">
+										<a href="#"><i class="fa fa-user"></i></a>
+									</li>
+									<li style="display: none;" class="li-nav-logout">
+										<a href="#" data-toggle="modal" data-target="#myModa3"><i class="fa fa-times-circle"></i>
+											Logout</a>
+									</li>
+								</ul>
+							</nav>
+							<a href="tel:+74956665607" class="phone"><i class="fa fa-phone"></i> +7 495 666 56 07</a>
+							<a href="#" onclick="return false;" class="lang-href" data-lang="ru">Ru</a>
+							<a href="#" onclick="return false;" class="lang-href" data-lang="en">En</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- text-carusel-section of the page -->
+	<div class="text-carousel-section">
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="item active">
+					<div class="text-container">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<strong class="title">
+										<span class="decor">Dry Harder is a great new dry-cleaning service, </span>
+										<span class="decor">where your clothes become  </span> <span class="decor">clean, pressed </span>
+										<span class="decor">and neatly folded. </span> </strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 button-holder" style="text-align: center;">
+									<button href="#" onclick="return false;" class="btn btn-default btn-base leave-a-request" data-loading-text="just a second..." data-loc="slider">Order for service</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="text-container">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<strong class="title"> <span class="decor">Every item gets individual treatment. </span>
+										<span class="decor">Our specialists at Dry Harder carefully</span>
+										<span class="decor"> tend to your items and choose </span> <span class="decor"> the best cleaning method for each of them. </span>
+									</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 button-holder" style="text-align: center;">
+									<button href="#" onclick="return false;" class="btn btn-default btn-base leave-a-request" data-loading-text="just a second..." data-loc="slider">>Order for service</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="text-container">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<strong class="title">
+										<span class="decor">We don’t clean just clothes, we keep</span>
+										<span class="decor">the planet clean too. We use only clean, ecological</span>
+										<span class="decor">methods and turn to stronger solutions</span>
+										<span class="decor">only in extreme cases.</span> </strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 button-holder" style="text-align: center;">
+									<button href="#" onclick="return false;" class="btn btn-default btn-base leave-a-request" data-loading-text="just a second..." data-loc="slider">>Order for service</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			</ol>
+		</div>
+	</div>
+</header>
+
+
+<div class="header-fixed-container hidden-xs" id="fixed-header-section">
+	<a href="#" class="logo-header-fixed"><img src="images/fixed-logo.png" height="39" width="39" alt="Dry Harder"></a>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2 col-md-3 col-xs-4">
+				<a href="#" class="logo-header-fixed add"><img src="images/fixed-logo.png" height="39" width="39" alt="Dry Harder"></a>
+				<!-- accaunt-menu of the page -->
+				<nav class="account-menu" style="display: none;">
+					<ul>
+						<li>
+							<a href="#"><i class="fa fa-user"></i> <i class="arrow fa fa-long-arrow-down"></i></a>
+
+							<div class="drop">
+								<ul>
+									<li><a href="#"><i class="fa fa-tachometer"></i>Account</a></li>
+									<li>
+										<a href="#" data-toggle="modal" data-target="#myModa3"><i class="fa fa-times-circle"></i>
+											Выйти</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-lg-8 col-xs-6">
+				<!-- navigation of the page -->
+				<div class="navigation">
+					<ul>
+						<li class="active"><a href="#our-services">What we offer</a></li>
+						<li><a href="#how-does-it-work">How to works</a></li>
+						<li><a href="#how-we-work">Our principles</a></li>
+						<li><a href="#our-process">Process</a></li>
+						<li><a href="#price-anchor">Prices</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-1">
+				<!-- add-nav of the page -->
+				<nav class="add-nav style02">
+					<ul>
+						<li class="base-tooltip">
+							<a href="#location" data-toggle="tooltip" data-placement="bottom" title="Адреса"><i class="fa fa-map-marker"></i></a>
+						</li>
+						<li><a href="#" data-target="feedbackForm"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-xs-1">
+				<!-- basket-box of the page -->
+				<div class="basket-box base-tooltip" style="display: none;">
+					<a href="#" class="basket-icon" data-toggle="tooltip" data-placement="bottom" title="My Laundry">icon</a>
+					<span class="number"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>	
+
+	<main id="main" role="main">
+		<div class="tabset-section" id="our-services">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>What we offer</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cycle-gallery of the page -->
+	<div class="cycle-gallery">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-3">
+					<ul class="switcher">
+						<li class="active">
+							<a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg"></i></span></span>
+								<span class="text hidden-xs">Water-based cleaning</span></a></li>
+						<li>
+							<a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg2"></i></span></span>
+								<span class="text hidden-xs">Dry cleaning</span></a></li>
+						<li>
+							<a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg3"></i></span><span class="icon hidden-xs"><i class="icon-svg4"></i></span></span>
+								<span class="text hidden-xs">Cleaning bags and shoes</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide active">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4 image-column">
+								<div class="image-box hidden-xs">
+									<img src="images/img-svg-01.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/img-svg-01.png'">
+									<span class="decor">
+										<img src="images/divider02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/divider02.png'">
+									</span>
+								</div>
+							</div>
+							<div class="col-sm-8 col-lg-offset-1">
+								<div class="text-holder">
+									<strong class="title-mobile visible-xs">Water-based cleaning</strong>
+									<p>The most ecological and modern solution. We clean your items with water and safe cleaning materials. Your clothes are washed with care and aren’t exposed to powerful chemical agents.</p><p>We use this method to clean: shirts, linen, jeans, and other items made from materials which aren’t afraid of water.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4 image-column">
+								<div class="image-box hidden-xs">
+									<img src="images/img-svg-02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/img-svg-01.png'">
+									<span class="decor">
+										<img src="images/divider02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/divider02.png'">
+									</span>
+								</div>
+							</div>
+							<div class="col-sm-8 col-lg-offset-1">
+								<div class="text-holder">
+									<strong class="title-mobile visible-xs">Dry cleaning</strong>
+									<p>Cleaning for the toughest cases. With this method we don’t use water, only special cleaning materials that can handle everything thrown at it. Clothes you thought you would have to say goodbye to forever come back fresh, clean and like-new.</p><p>We use this method to clean: absolutely everything you might despair over.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4 image-column">
+								<div class="image-box hidden-xs">
+									<img src="images/img-svg-03.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/img-svg-01.png'">
+									<span class="decor">
+										<img src="images/divider02.svg" alt="" width="220" height="192" onerror="this.onerror=null; this.src='images/divider02.png'">
+									</span>
+								</div>
+							</div>
+							<div class="col-sm-8 col-lg-offset-1">
+								<div class="text-holder">
+									<strong class="title-mobile visible-xs">Cleaning bags and shoes</strong>
+									<p>Washing your favorite leather jacket or fur coat at home isn’t the best idea. Leave it to us.</p><p>At Dry Harder, our specialists clean your valuable items, including bags and shoes, expertly and with care. Everything will look like new again.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+		<section class="work-section" id="how-does-it-work">
+	<header class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="ol-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>How do we work?</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="steps-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-md-3">
+					<div class="step active">
+						<div class="heading">
+							<span class="num">1.</span>
+
+							<div class="visual">
+								<i class="icon2-1"></i>
+							</div>
+						</div>
+						<h3>Send us a pick-up request</h3>
+
+						<p>Register online and send a request. If your order cost more than 2 500<i class="fa fa-rub"></i> delivery is on us</p>
+						<button class="btn btn-primary leave-a-request" data-loading-text="just a second..." data-loc="plate">Order for service <i class="fa fa-truck"></i></button>
+					</div>
+				</div>
+				<div class="col-md-1 text-center hidden-sm hidden-xs">
+					<i class="icon2-arrow"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<div class="step">
+						<div class="heading">
+							<span class="num">2.</span>
+
+							<div class="visual">
+								<i class="icon2-2"></i>
+							</div>
+						</div>
+						<h3>Pay on line</h3>
+
+						<p>We will send you an email and sms once your order is ready</p>
+						<a href="#" class="btn btn-primary">Register <i class="fa fa-truck"></i></a>
+					</div>
+				</div>
+				<div class="col-md-1 text-center hidden-sm hidden-xs">
+					<i class="icon2-arrow"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<div class="step">
+						<div class="heading">
+							<span class="num">3.</span>
+
+							<div class="visual">
+								<i class="icon2-3"></i>
+							</div>
+						</div>
+						<h3>Enjoy clean clothes</h3>
+
+						<p>We deliver your order when it is convenient for you.</p>
+						<a href="#" class="btn btn-primary">Register <i class="fa fa-truck"></i></a>
+					</div>
+				</div>
+				<div class="col-md-1 text-center hidden-sm hidden-xs">
+					<i class="icon2-done"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+		<div class="tabset-section style02" id="how-we-work">
+	<div class="heading-section style02">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Our principles</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cycle-gallery of the page -->
+	<div class="cycle-gallery style02">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-4 col-xs-12">
+					<ul class="switcher">
+						<!--<li class="active"><a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg5"></i></span></span> <span class="text hidden-xs">О Dry Harder</span></a></li>-->
+						<!--<li><a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg6"></i></span></span> <span class="text hidden-xs">Наша команда</span></a></li>-->
+						<!--<li><a href="#"><span class="icons-holder"><span class="icon"><i class="icon-svg7"></i></span></span> <span class="text hidden-xs">Наши принципы</span></a></li>-->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide active">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4">
+								<div class="heading-box">
+									<strong class="title-mobile visible-xs">О Dry Harder </strong>
+
+									<h3><p><span>We love good-looking clothes, we value good service, and we always disliked mundane chores. That’s why we started Dry Harder.</span><br/></p></h3>
+								</div>
+							</div>
+							<div class="col-sm-4 col-lg-offset-1">
+								<div class="mobile-text-openbox">
+									<div class="heading">
+										<strong class="title">We work diligently so that <span class="mark01">you are happy with your clothes</span></strong>
+										<a href="#" class="opener-text visible-xs"></a>
+									</div>
+									<div class="slide-text">
+										<p>We carefully tend to your clothes and combine handwashing and cleaning in state-of-the-art Italian and German machines.</p><p><span>The most state-of-the-art cleaning solutions are selected for each individual item depending on the type of fabric and soiling.</span><br/></p><p><span>Neatly pressing and folding clothes is just as important as washing them well. That’s why we use only professional presses and biodegradable plastics and carefully listen to your special requests.</span><br/></p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="text-block">
+									<div class="mobile-text-openbox">
+										<div class="heading">
+											<strong class="title">We don’t want you to waste your time.</strong>
+											<a href="#" class="opener-text visible-xs"></a>
+										</div>
+										<div class="slide-text">
+											We think of everything. With our online accounts, you can pay for your order instantly.&#10;&#10;We offer a simple way to pay, instant drop-off of clothes, and fast pick-up. After all, no one likes to spend their time at  the dry-cleaner’s.&#10;&#10;If you have any special requests, we’d be happy to hear them. Maybe you want us to sort clothes by color? Or fold them for your suitcase? Or maybe you just want something to be pressed? Just let us know.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-sm-4">
+								<div class="heading-box">
+									<strong class="title-mobile visible-xs">О нас longer</strong>
+									<h3>Качество услуг и комфорт клиента - наши ориентиры в работе.</h3>
+								</div>
+							</div>
+							<div class="col-sm-4 col-lg-offset-1">
+								<div class="mobile-text-openbox">
+									<div class="heading">
+										<strong class="title">Цените свои вещи? <span class="mark01">Мы о них заботимся.</span></strong>
+										<a href="#" class="opener-text visible-xs"></a>
+									</div>
+									<div class="slide-text">
+										<p>Сочетание ручной работы и чистки в современных итальянских и немецких машинах. В его основе лежит применение чистящих средств агрессивных средств позволяет назвать этот метод одним из эффективных.</p>
+										<p>Новейшие средства чистки, подбираемые для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>
+										<p>Осмотр и проверка результатов чистки каждой вещи.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="text-block">
+									<div class="mobile-text-openbox">
+										<div class="heading">
+											<strong class="title">Уход за вещами отнимает время? Устали от плохого сервиса? Мы все продумали.</strong>
+											<a href="#" class="opener-text visible-xs"></a>
+										</div>
+										<div class="slide-text">
+											<p>Мы рады экономить ваше время. Используя он-лайн кабинет вы можете моментально оплачивать заказы и заказывать курьера.</p>
+											<p>Мы можем легко забрать и доставить Ваши вещи оттуда, откуда вы скажете.</p>
+											<p>Хотите привезти свои вещи сами, но не готовы тратить время на сдачу вещей? Единожды зарегистрировавшись онлайн вы сможете просто оставлять пакет с вещами у нас, и не тратить свое время на оплату.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>-->							<!--<div class="slide">
+								<div class="container">
+									<div class="row">
+										<div class="col-lg-3 col-sm-4">
+											<div class="heading-box">
+												<strong class="title-mobile visible-xs">О нас longer</strong>
+												<h3>Качество услуг и комфорт клиента - наши ориентиры в работе.</h3>
+											</div>
+										</div>
+										<div class="col-sm-4 col-lg-offset-1">
+											<div class="mobile-text-openbox">
+												<div class="heading">
+													<strong class="title">Цените свои вещи? <span class="mark01">Мы о них заботимся.</span></strong>
+													<a href="#" class="opener-text visible-xs"></a>
+												</div>
+												<div class="slide-text">
+													<p>Сочетание ручной работы и чистки в современных итальянских и немецких машинах. В его основе лежит применение чистящих средств агрессивных средств позволяет назвать этот метод одним из эффективных.</p>
+													<p>Новейшие средства чистки, подбираемые для каждой вещи в отдельности в зависимости от типа загрязнения и ткани.</p>
+													<p>Осмотр и проверка результатов чистки каждой вещи.</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="text-block">
+												<div class="mobile-text-openbox">
+													<div class="heading">
+														<strong class="title">Уход за вещами отнимает время? Устали от плохого сервиса? Мы все продумали.</strong>
+														<a href="#" class="opener-text visible-xs"></a>
+													</div>
+													<div class="slide-text">
+														<p>Мы рады экономить ваше время. Используя он-лайн кабинет вы можете моментально оплачивать заказы и заказывать курьера.</p>
+														<p>Мы можем легко забрать и доставить Ваши вещи оттуда, откуда вы скажете.</p>
+														<p>Хотите привезти свои вещи сами, но не готовы тратить время на сдачу вещей? Единожды зарегистрировавшись онлайн вы сможете просто оставлять пакет с вещами у нас, и не тратить свое время на оплату.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>-->
+			</div>
+		</div>
+		<!--<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>-->
+	</div>
+</div>
+		<div class="content-container hidden-xs" id="our-process">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div style="text-align: center;">
+					<div class="box">
+						<h2>Process</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-xs-4">
+				<ul class="icons-list">
+					<li>
+						<div class="icon-cell style02">
+							<img src="images/icon01.svg" alt="" width="102" height="45" onerror="this.onerror=null; this.src='images/icon01.png'">
+						</div>
+					</li>
+					<li class="align-right">
+						<div class="icon-cell">
+							<img src="images/icon02.svg" alt="" width="77" height="65" onerror="this.onerror=null; this.src='images/icon02.png'">
+						</div>
+					</li>
+					<li>
+						<div class="icon-cell">
+							<img src="images/icon03.svg" alt="" width="84" height="83" onerror="this.onerror=null; this.src='images/icon03.png'">
+						</div>
+					</li>
+					<li class="align-right">
+						<div class="icon-cell">
+							<img src="images/icon04.svg" alt="" width="91" height="72" onerror="this.onerror=null; this.src='images/icon04.png'">
+						</div>
+					</li>
+					<li>
+						<div class="icon-cell">
+							<img src="images/icon05.svg" alt="" width="89" height="63" onerror="this.onerror=null; this.src='images/icon05.png'">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-4 col-lg-offset-1">
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Assessment</strong> <span class="number">1</span>
+					</div>
+					<p><p>Before washing, every item is carefully examined. We know it’s not nice when buttons break or trimming gets ruined. That’s why we check your clothes and reinforce everything before cleaning.</p></p>
+				</div>
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Hand cleaning</strong> <span class="number">2</span>
+					</div>
+					<p><p>Before your clothes are washed, they are cleaned by hand. This ensures the highest quality and means that your clothes will serve you longer.</p></p>
+				</div>
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Machine cleaning</strong> <span class="number">3</span>
+					</div>
+					<p>After they have been cleaned your clothes by hand, our experts decide the best machine for them. We use only state-of-the-art Italian and German machines and chose the safest method of cleaning your clothes.</p>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Pressing</strong> <span class="number">4</span>
+					</div>
+					<p>Every item needs to be cared for after washing. With the help of our professional equipment, we make sure your clothes are wrinkle-free.</p>
+				</div>
+				<div class="text">
+					<div class="heading">
+						<strong class="title">Packing</strong> <span class="number">5</span>
+					</div>
+					<p>Do you have any request for how your clothes should be packaged? Just let us know.&#10;&#10;Do you go on business trips often? We can fold your clothes so they can go right in your suitcase.&#10;&#10;Do you want us to sort your clothes by color? Or separate men’s and women’s? It’s no problem.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+		<div class="tabset-section visible-xs">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-4 col-xs-12">
+					<div class="box">
+						<h2>Process</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cycle-gallery of the page -->
+	<div class="cycle-gallery">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-2">
+					<ul class="switcher style04">
+						<li class="active">
+							<a href="#"><span class="image-cell"><img src="images/icon01.svg" height="13" width="29" alt="" onerror="this.onerror=null; this.src='images/icon01.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon02.svg" height="18" width="22" alt="" onerror="this.onerror=null; this.src='images/icon02.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon03.svg" height="24" width="24" alt="" onerror="this.onerror=null; this.src='images/icon03.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon04.svg" height="21" width="24" alt="" onerror="this.onerror=null; this.src='images/icon04.png'"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="image-cell"><img src="images/icon05.svg" height="18" width="29" alt="" onerror="this.onerror=null; this.src='images/icon05.png'"></span></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide active">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">1 Assessment</strong>
+
+									<p><p>Before washing, every item is carefully examined. We know it’s not nice when buttons break or trimming gets ruined. That’s why we check your clothes and reinforce everything before cleaning.</p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">2 Hand cleaning</strong>
+
+									<p><p>Before your clothes are washed, they are cleaned by hand. This ensures the highest quality and means that your clothes will serve you longer.</p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">3 Machine cleaning</strong>
+
+									<p>After they have been cleaned your clothes by hand, our experts decide the best machine for them. We use only state-of-the-art Italian and German machines and chose the safest method of cleaning your clothes.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">4 Pressing</strong>
+
+									<p>Every item needs to be cared for after washing. With the help of our professional equipment, we make sure your clothes are wrinkle-free.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="text-holder">
+									<strong class="title">5 Packing</strong>
+
+									<p>Do you have any request for how your clothes should be packaged? Just let us know.&#10;&#10;Do you go on business trips often? We can fold your clothes so they can go right in your suitcase.&#10;&#10;Do you want us to sort your clothes by color? Or separate men’s and women’s? It’s no problem.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+		<div class="price-section add-price-style" id="price-anchor">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Our prices</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- price-carousel of the page -->
+	<div class="price-carousel">
+		<div class="mask">
+			<div class="slideset">
+				<div class="slide">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-3 col-sm-4">
+								<article class="info-box">
+									<div class="frame">
+										<div class="heading">
+											<h3>1. Standard</h3>
+											<!--	<a href="#" class="icon-basket"></a>-->
+										</div>
+										<div class="text">
+											<p>The simplest option, for those who prefer to wash clothes at home.</p>
+										</div>
+										<div class="info-table">
+											<table>
+												<tbody>
+												<tr>
+													<td>Shirt/blouse<br></td>
+													<td>250 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Suit jacket</td>
+													<td>550 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Trousers</td>
+													<td>450 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Skirt</td>
+													<td>450 <i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Casual dress</td>
+													<td>800 <i class="fa fa-rub"></i></td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="button-holder">
+											<a href="#price-section" class="btn btn-primary" data-tab="tab1">More details<i class="fa fa-bars"></i></a>
+										</div>
+									</div>
+								</article>
+							</div>
+							<div class="col-md-3 col-md-offset-1 col-sm-4">
+								<article class="info-box">
+									<div class="frame">
+										<div class="heading style02">
+											<h3>2. Business</h3>
+											<!--	<a href="#" class="icon-basket"></a> -->
+										</div>
+										<div class="text">
+											<p><p>Do you wear smart business attire? Use our services and save.</p></p>
+										</div>
+										<div class="info-table">
+											<table>
+												<tbody>
+												<tr>
+													<td>Monthly price</td>
+													<td>7 900<i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>Shirts/blouses included<br></td>
+													<td>25 шт</td>
+												</tr>
+												<tr>
+													<td>Suits/dresses <BR> included</td>
+													<td>3 шт</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="button-holder">
+											<a href="#price-section" class="btn btn-primary" data-tab="tab2">More details
+												<i class="fa fa-bars"></i></a>
+										</div>
+									</div>
+								</article>
+							</div>
+							<div class="col-md-3 col-md-offset-1 col-sm-4">
+								<article class="info-box">
+									<div class="frame">
+										<div class="heading style03">
+											<h3>3. Сarefree</h3>
+											<!--<a href="#" class="icon-basket"></a>-->
+										</div>
+										<div class="text">
+											<p><p>Never want to think about washing clothes? Get everything cleaned for a set price.</p></p>
+										</div>
+										<div class="info-table">
+											<table>
+												<tbody>
+												<tr>
+													<td>Monthly subscription</td>
+													<td>15 000<i class="fa fa-rub"></i></td>
+												</tr>
+												<tr>
+													<td>The Business option</td>
+													<td>included</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="button-holder">
+											<a href="#price-section" class="btn btn-primary" data-tab="tab3">More details
+												<i class="fa fa-bars"></i></a>
+
+										</div>
+									</div>
+								</article>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="btn-prev" href="#"><i class="icon-arrow-left"></i></a>
+		<a class="btn-next" href="#"><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+		<div class="add-price-section" id="price-section">
+	<div class="frame">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="price-tabset-holder">
+						<!-- price-tabset of the page -->
+						<ul class="price-tabset">
+							<li><a href="#tab1" class="active">Standard</a></li>
+							<li><a href="#tab2">Business</a></li>
+							<li><a href="#tab3">Сarefree</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="price-tabset-holder">
+						<div class="price-tab-content">
+							<div id="tab1">
+								<div class="price-table price-standard"></div>
+							</div>
+							<div id="tab2">
+								<div class="price-table price-business"></div>
+							</div>
+							<div id="tab3">
+								<div class="price-table price-care"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="#" class="link-close"><i class="icon-arrow-left"></i></a>
+	</div>
+</div>
+		<section class="corporate-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="visual">
+					<i class="icon2-decor"></i>
+				</div>
+			</div>
+			<div class="col-sm-offset-1 col-sm-8 col-md-5">
+				<h2>We also work with corporate clients!<br></h2>
+				<a href="#" class="info-link" data-target="feedbackForm"><span>Write </span><span>&nbsp;us&nbsp;<i class="fa fa-info-circle"></i></span></a>
+			</div>
+		</div>
+	</div>
+</section>
+<section style="position: relative; padding: 0;">
+	<iframe style="display: block; z-index: -1;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d35963.36702636057!2d37.728581431065486!3d55.711404813875795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414ab53d5b6aec2b%3A0xdc57126769ee4676!2z0JPRgNCw0LnQstC-0YDQvtC90L7QstGB0LrQsNGPINGD0LsuLCA0LCDQnNC-0YHQutCy0LAsIDEwOTUxOA!5e0!3m2!1sru!2sru!4v1427143031608" width="600" height="450" frameborder="0" class="iframe-map"></iframe>
+	<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; z-index: 1;" onclick="$(this).hide(); return;"></div>
+</section>
+<div class="contacts-section">
+	<div class="heading-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12" style="text-align: center;">
+					<div class="box">
+						<h2>Contacts</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container contacts-block">
+		<div class="row">
+			<div class="col-sm-4 col-xs-12">
+				<div class="text hidden-xs">
+					<p>We are always attentive to your questions and requests. Contact us by whatever way is convenient for you.</p>
+				</div>
+			</div>
+			<div class="col-sm-8 col-xs-12" id="location">
+				<address>Dry Harder <br> Grayvoronovskaya St 4/1, Moscow, 109518, Russia.</address>
+				<span class="phone"><a href="tel:+74956665607">+7 495 666 56 07</a> <br> 10:00 - 19:00 <br><a class="email" href="#" data-target="feedbackForm">info@dryharder.me</a></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+	</main>
+
+	<footer id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 col-xs-12">
+				<p>&copy; 2014 Dry Harder</p>
+			</div>
+			<div class="col-sm-4 col-xs-12 confidentiality-links">
+				 Information about <a href="confidentiality.html" class="link">  data privacy  </a>  and 
+				<a href="#" class="link show-license-link">  payment transactions </a>.
+			</div>
+			<div class="col-sm-3 col-xs-12 social-icons">
+				<a href="https://www.facebook.com/DryHarderMsk" target="_blank">
+					<i class="fa fa-facebook"></i>
+				</a>
+				<!--<a href="#" target="_blank">-->
+					<!--<i class="fa fa-vk"></i>-->
+				<!--</a>-->
+				<a href="https://twitter.com/dryharder" target="_blank">
+					<i class="fa fa-twitter"></i>
+				</a>
+			</div>
+			<div class="col-sm-1 col-xs-12">
+				<a href="#wrapper" class="btn-top"><i class="icon-svg9"></i></a>
+			</div>
+		</div>
+	</div>
+</footer>
+
+	<div class="popup-holder">
+	<div id="myModal" class="lightbox">
+		<div class="modal-content">
+			<div class="heading">
+				<a href="#" class="close">
+					<i class="fa fa-times-circle"></i>
+				</a>
+				<button type="button" class="close step-address step-back" style="display: none;">
+					<i class="fa fa-arrow-circle-left"></i>
+				</button>
+				<h2>Registration</h2>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="text" placeholder="Name and Surname">
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Mobile" name="phone">
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="email" placeholder="Email" name="email">
+						</div>
+					</div>
+					<div class="row-holder step-address step-promo-back" style="display: none;">
+						<input type="checkbox" style="width: 20px; height: 20px;" title="Back" id="backToPromoCheckbox" class="pull-left col-lg-1">
+						<label for="backToPromoCheckbox" class="col-lg-11 weight-normal">I am a corporate client,<br>I have the promo-code</label>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="input-holder">
+							<input type="text" placeholder="Город" value="Moscow" name="city" disabled="disabled" class="disabled-bgr">
+						</div>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="input-holder">
+							<input type="text" placeholder="Str" name="street">
+						</div>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="cell">
+							<div class="input-holder">
+								<input type="text" placeholder="B." name="house">
+							</div>
+						</div>
+						<div class="cell step-address" style="display: none;">
+							<div class="input-holder">
+								<input type="text" placeholder="Apt/Office" name="room">
+							</div>
+						</div>
+						<div class="cell step-address" style="display: none;">
+							<div class="input-holder">
+								<input type="text" placeholder="F" name="float">
+							</div>
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="text" placeholder="Promo-code" class="promo input-signup-promo">
+						</div>
+					</div>
+					<div class="row-holder step-start address-select-loading"></div>
+					<div class="row-holder step-start address-select-list" style="display: none;">
+						<select>
+							<option value="null" class="none">Not selected</option>
+						</select>
+					</div>
+					<div class="row-holder">
+						<span class="col-xs-1"><input type="checkbox" id="AgreeLicense" style="width: 20px; height: 20px;" title="принять условия"></span>
+						<span class="col-xs-10"><label for="AgreeLicense" class="help-link weight-normal">Agree with <a href="#" class="help-link show-license-link">terms and conditions</a> of services</label> </span>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary btn-signup-password" disabled="disabled" data-loading="Sending..." style="display: none;">
+							<span class="inner-text"> Send password  <br> to my email and phone</span>
+							<i class="fa fa-arrow-circle-right"></i></button>
+						<button class="btn btn-primary btn-signup-next" disabled="disabled" data-loading="Sending...">
+							<span class="inner-text">Next</span>
+							<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+					<div class="row-holder link-signup-sms">
+						<a href="#" class="help-link" data-toggle="modal" data-target="#ResubmitSms"><i class="fa fa-lock"></i>Send SMS once again</a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<button type="button" class="close" data-dismiss="modal">
+					<i class="fa fa-times-circle"></i>
+				</button>
+				<h2>Login</h2>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Mobile" name="phone">
+						</div>
+					</div>
+					<div class="row-holder">
+						<div class="input-holder" style="position: relative;">
+							<input type="password" placeholder="Password" class="input-password">
+							<a href="#" onclick="return false;" class="toggle-type-password"><i class="fa fa-eye-slash"></i> </a>
+						</div>
+					</div>
+					<div class="row-holder">
+						<div class="">
+							<input type="checkbox" placeholder="Remember me" id="save_me" style="width: 15px; height: 15px;">
+							<label for="save_me" style="margin-left: 5px;">Remember me</label>
+						</div>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary" data-loading-text="Please wait...">Login<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+					<div class="row-holder">
+						<a href="#" class="help-link" data-target="PasswordReset"><i class="fa fa-lock"></i>Help! I forgot my password!</a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myModa3" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3>Are you sure you want to exit?</h3>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-primary">Yes<i class="fa fa-arrow-circle-right"></i></a>
+				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="modal fade" id="PasswordReset" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<button type="button" class="close cancel-from-reset">
+					<i class="fa fa-times-circle"></i>
+				</button>
+				<h3>Reset password</h3>
+			</div>
+			<form action="" class="signup-form">
+				<fieldset>
+					<div class="row-holder">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Mobile" name="phone">
+						</div>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary"  data-loading-text="Please wait...">Reset  <i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+				</fieldset>
+			</form>
+			<div class="button-box">
+				<a href="#" class="btn btn-default cancel-from-reset">Cancel <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="ResubmitSms" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<button type="button" class="close" data-dismiss="modal">
+					<i class="fa fa-times-circle"></i>
+				</button>
+				<h3>SMS with new password was sent</h3>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="Mobile" name="phone">
+						</div>
+					</div>
+					<div class="row-holder">
+						<div class="input-holder">
+							<input type="password" placeholder="Password" class="input-password">
+						</div>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary" data-loading-text="Please wait...">Login<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+				</fieldset>
+			</form>
+			<div class="button-box">
+				<a href="#" class="btn btn-default btn-base" data-loading-text="Sending...">Send again</a>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myLicense" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" style="padding: 10px 10px 10px;">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+			<div class="heading">
+				<h3>Terms and conditions</h3>
+			</div>
+			<div class="row-holder"></div>
+			<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">OK</button>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="myMessage" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3></h3>
+			</div>
+			<div class="button-box l">
+				<a href="#" class="btn btn-primary" data-dismiss="modal">ОK <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="modal fade" id="myConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3></h3>
+			</div>
+			<div class="button-box l">
+				<a href="#" class="btn btn-primary">Yes <i class="fa fa-arrow-circle-right"></i></a>
+			</div>
+			<div class="button-box r">
+				<a href="#" class="btn btn-default" data-dismiss="modal">@No <i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="feedbackFormResult" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="heading">
+				<h3>Message sent!</h3>
+			</div>
+			<div class="button-box">
+				<a href="#" class="btn btn-default" data-dismiss="modal">ОК</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<div class="modal-content contacts-section">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+
+			<div class="heading-section">
+				<div class="box">
+					<h2>Contacts</h2>
+				</div>
+			</div>
+
+			<div class="row contacts-row">
+				<div class="col-sm-4 col-xs-12">
+					<div class="text hidden-xs">
+						<p>We are always attentive to your questions and requests. Contact us by whatever way is convenient for you.</p>
+					</div>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<address>Dry Harder <br> Grayvoronovskaya St 4/1, Moscow, 109518, Russia.</address>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<span class="phone"><a href="tel:+74956665607">+7 495 666 56 07</a><br> 10:00 - 19:00 <br><a class="email" href="mailto:info@dryharder.me">info@dryharder.me</a></span>
+				</div>
+			</div>
+
+			<!-- contacts-form of the page -->
+			<form action="feedback/message/create" class="contacts-form wpcf7-form sent" onsubmit="return false;">
+				<fieldset>
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<div class="row-holder">
+								<label class="none">Name</label>
+								<span class="wpcf7-form-control-wrap text-field-required">
+									<input type="text" name="name" placeholder="Name" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required text-field-class wpcf7-use-title-as-watermark">
+								</span>
+							</div>
+							<div class="row-holder">
+								<label class="none">Phone number</label>
+								<span class="wpcf7-form-control-wrap text-field-required input-group">
+									<span class="input-group-addon plus-seven">+7</span>
+									<input type="text" name="phone" placeholder="Phone number" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required text-field-class wpcf7-use-title-as-watermark input-group-addon-input">
+								</span>
+							</div>
+							<div class="row-holder">
+								<label class="none">E-mail</label>
+								<span class="wpcf7-form-control-wrap Emailfield">
+									<input type="text" name="email" placeholder="E-mail" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email email-class wpcf7-use-title-as-watermark">
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-8 col-xs-12">
+							<label class="none">Your message</label>
+							<span class="wpcf7-form-control-wrap textarea">
+								<textarea name="text" placeholder="Your message" class="wpcf7-form-control wpcf7-textarea textarea-class wpcf7-use-title-as-watermark" cols="10" rows="4"></textarea>
+							</span>
+						</div>
+					</div>
+					<div class="button-holder">
+						<div class="row">
+							<div class="col-sm-4 col-xs-12">
+								<span class="note">* All required field</span>
+							</div>
+							<div class="col-sm-8 col-xs-12">
+								<div class="btn btn-primary">
+									<span class="submit-label">Send</span> <i class="fa fa-envelope"></i>
+									<input type="submit" value="Send" class="wpcf7-form-control wpcf7-submit submit-class feedBackFormSubmit">
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+	</div>
+</div>
+	<div class="modal fade" id="orderForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content contacts-section">
+			<button type="button" class="close" data-dismiss="modal">
+				<i class="fa fa-times-circle"></i>
+			</button>
+			<div class="heading-section">
+				<div class="box">
+					<h2>Order for service</h2>
+				</div>
+			</div>
+			<div class="form-request-content">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+<script type="text/javascript" src="assets/js/src.min.js?v=4408"></script>
+<script type="text/javascript" src="assets/js/app.js?v=4408"></script>
+<script type="text/javascript" src="http://cdn2.adnous.ru/1082.js"></script>
+
+<script>(function() {
+	var _fbq = window._fbq || (window._fbq = []);
+	if (!_fbq.loaded) {
+		var fbds = document.createElement('script');
+		fbds.async = true;
+		fbds.src = '//connect.facebook.net/en_US/fbds.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(fbds, s);
+		_fbq.loaded = true;
+	}
+	_fbq.push(['addPixelId', '304919476372889']);
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', 'PixelInitialized', {}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=304919476372889&amp;ev=PixelInitialized" /></noscript>
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript"> (function (d, w, c) {
+	(w[c] = w[c] || []).push(function () {
+		try {
+			w.yaCounter27721494 = new Ya.Metrika({
+				id: 27721494,
+				clickmap: true,
+				trackLinks: true,
+				accurateTrackBounce: true,
+				webvisor: true
+			});
+		} catch (e) {
+		}
+	});
+	var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () {
+		n.parentNode.insertBefore(s, n);
+	};
+	s.type = "text/javascript";
+	s.async = true;
+	s.src = "https://mc.yandex.ru/metrika/watch.js";
+	if (w.opera == "[object Opera]") {
+		d.addEventListener("DOMContentLoaded", f, false);
+	} else {
+		f();
+	}
+})(document, window, "yandex_metrika_callbacks");</script>
+<noscript>
+	<div><img src="https://mc.yandex.ru/watch/27721494" style="position:absolute; left:-9999px;" alt="" /></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- SmartPixel  -->
+<script type="text/javascript">
+	adroll_adv_id = "6NET24OUVRGALEN72GTZDW";
+	adroll_pix_id = "YZ6SMA5WOFE6BP5OVVVF2Y";
+	(function () {
+		var oldonload = window.onload;
+		window.onload = function(){
+			__adroll_loaded=true;
+			var scr = document.createElement("script");
+			var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+			scr.setAttribute('async', 'true');
+			scr.type = "text/javascript";
+			scr.src = host + "/j/roundtrip.js";
+			((document.getElementsByTagName('head') || [null])[0] ||
+			document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+			if(oldonload){oldonload()}};
+	}());
+</script>
+<!-- /SmartPixel  -->
+
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+	(function(){ var widget_id = 'hJxwuRyx1a';
+		var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "LocalBusiness",
+      "url": "http://dryharder.me",
+      "logo": "http://dryharder.me/images/logo.png",
+      "contactPoint" : [{
+	    "@type" : "ContactPoint",
+	    "telephone" : "+7 495 666-56-07",
+	    "contactType" : "customer service",
+	    "areaServed" : "RU",
+	    "availableLanguage": ["RU","EN"]
+	  }],
+	  "sameAs" : [
+	    "https://www.facebook.com/DryHarderMsk"
+	  ]
+    }
+</script>
+
+<div style="display: none;">
+	<div itemscope itemtype="http://schema.org/LocalBusiness">
+		<a itemprop="url" href="http://dryharder.me">
+			<div itemprop="name"><strong>Dry Harder - химчистка с доставкой</strong></div>
+		</a>
+		<div itemprop="description">Dry Harder - это новая хорошая химчистка, в которой вещи снова становятся свежими, выглаженными и красиво сложенными. Мы с радостью заберем и доставим ваши вещи, примем оплату он-лайн и приведем все в порядок.
+		</div>
+		<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+			<span itemprop="streetAddress">Ул. Грайвороновская, д. 4, cтр. 1</span><br>
+			<span itemprop="addressLocality">Москва</span><br>
+			<span itemprop="postalCode">109518</span><br>
+			<span itemprop="addressCountry">Россия</span><br>
+		</div>
+		<div class="telephone">+7 495 666-56-07</div>
+		<time itemprop="openingHours" datetime="Mo-Su 8:00-22:00">Вызов курьера на забор вещей - с 8:00 до 22:00 без выходных</time>
+	</div>
+</div>
+</body>
+</html>

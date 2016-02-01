@@ -1,0 +1,92 @@
+<div class="popup-holder">
+	<div id="myModal" class="lightbox">
+		<div class="modal-content">
+			<div class="heading">
+				<a href="#" class="close">
+					<i class="fa fa-times-circle"></i>
+				</a>
+				<button type="button" class="close step-address step-back" style="display: none;">
+					<i class="fa fa-arrow-circle-left"></i>
+				</button>
+				<h2>@@register</h2>
+			</div>
+			<form action="" class="signup-form" onsubmit="return false;">
+				<fieldset>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="text" placeholder="@@nameAndSurname">
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder input-group">
+							<span class="input-group-addon plus-seven">+7</span>
+							<input type="tel" placeholder="@@mobileNumber" name="phone">
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="email" placeholder="Email" name="email">
+						</div>
+					</div>
+					<div class="row-holder step-address step-promo-back" style="display: none;">
+						<input type="checkbox" style="width: 20px; height: 20px;" title="@@back" id="backToPromoCheckbox" class="pull-left col-lg-1">
+						<label for="backToPromoCheckbox" class="col-lg-11 weight-normal">@@iAmCorp<br>@@iHaveTheCode</label>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="input-holder">
+							<input type="text" placeholder="Город" value="@@Moscow" name="city" disabled="disabled" class="disabled-bgr">
+						</div>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="input-holder">
+							<input type="text" placeholder="@@street" name="street">
+						</div>
+					</div>
+					<div class="row-holder step-address" style="display: none;">
+						<div class="cell">
+							<div class="input-holder">
+								<input type="text" placeholder="@@building" name="house">
+							</div>
+						</div>
+						<div class="cell step-address" style="display: none;">
+							<div class="input-holder">
+								<input type="text" placeholder="@@apt" name="room">
+							</div>
+						</div>
+						<div class="cell step-address" style="display: none;">
+							<div class="input-holder">
+								<input type="text" placeholder="@@floor" name="float">
+							</div>
+						</div>
+					</div>
+					<div class="row-holder step-start">
+						<div class="input-holder">
+							<input type="text" placeholder="@@promocode" class="promo input-signup-promo">
+						</div>
+					</div>
+					<div class="row-holder step-start address-select-loading"></div>
+					<div class="row-holder step-start address-select-list" style="display: none;">
+						<select>
+							<option value="null" class="none">@@notSelected</option>
+						</select>
+					</div>
+					<div class="row-holder">
+						<span class="col-xs-1"><input type="checkbox" id="AgreeLicense" style="width: 20px; height: 20px;" title="принять условия"></span>
+						<span class="col-xs-10"><label for="AgreeLicense" class="help-link weight-normal">@@agreedWith<a href="#" class="help-link show-license-link">@@termsAndCond</a>@@ofService</label> </span>
+					</div>
+					<div class="row-holder">
+						<button class="btn btn-primary btn-signup-password" disabled="disabled" data-loading="@@sending" style="display: none;">
+							<span class="inner-text"> @@sendPassword <br> @@toEmailAndPhone</span>
+							<i class="fa fa-arrow-circle-right"></i></button>
+						<button class="btn btn-primary btn-signup-next" disabled="disabled" data-loading="@@sending">
+							<span class="inner-text">@@next</span>
+							<i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+					<div class="row-holder link-signup-sms">
+						<a href="#" class="help-link" data-toggle="modal" data-target="#ResubmitSms"><i class="fa fa-lock"></i>@@sendSmsAgain</a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

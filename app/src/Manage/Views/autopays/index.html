@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.3.1/yeti/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/manage/main.css">
+</head>
+<body ng-app="Dryharder">
+
+<div class="container">
+	<div class="row" ng-controller="AutoPayCtrl" id="AutoPayCtrl" style="margin-top: 10px;">
+
+		<div class="col-md-12">
+
+			<table class="table">
+				<tr>
+					<th>id</th>
+					<th>agbis id</th>
+					<th>email</th>
+					<th>name</th>
+					<th>token</th>
+					<th>orders</th>
+				</tr>
+				<tr ng-repeat="item in list" ng-class="{'tokenized': item.tokenExists}">
+					<td class="col-md-1">{{item.id}}</td>
+					<td class="col-md-2">{{item.agbis_id}}</td>
+					<td class="col-md-2">{{item.email}}</td>
+					<td class="col-md-1">{{item.name}}</td>
+					<td class="col-md-1">{{item.tokenExists}}</td>
+					<td class="col-md-1">
+						<button class="btn btn-xs" ng-click="orders(item)"><i class="fa fa-list"></i></button>
+					</td>
+				</tr>
+			</table>
+
+		</div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="AutoPayOrdersCtrl" ng-controller="AutoPayOrdersCtrl">
+	<div class="modal-dialog" style="width: 900px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Заказы клиента</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table">
+					<tr>
+						<th>id</th>
+						<th>номер</th>
+						<th>к оплате</th>
+						<th>статус</th>
+						<th>название</th>
+						<th>списать</th>
+						<th>попытка</th>
+						<th>результат</th>
+					</tr>
+					<tr ng-repeat="item in list" ng-class="{'tokenized': item.order_autopay && item.order_autopay.state == 1, 'tokenized-error': item.order_autopay && item.order_autopay.state == 0}">
+						<td>{{item.id}}</td>
+						<td>{{item.doc_number}}</td>
+						<td>{{item.amount}}</td>
+						<td>{{item.status}}</td>
+						<td>{{item.status_name}}</td>
+						<td>
+							<button ng-show="item.autopay && !item.order_autopay" ng-click="autopay($event, item)">списать</button>
+						</td>
+						<td>
+							<span ng-show="!item.order_autopay">нет попытки</span>
+							<span ng-show="item.order_autopay.state == 0">есть попытка</span>
+							<span ng-show="item.order_autopay.state == 1">попытка успешна</span>
+						</td>
+						<td>{{item.order_autopay.comment}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/manage/bower_components/jquery2/jquery.min.js"></script>
+<script type="text/javascript" src="/manage/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/manage/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src='/manage/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+<script type="text/javascript" src='/manage/bower_components/textAngular/dist/textAngular.min.js'></script>
+
+<script type="text/javascript" src="/manage/main.js"></script>
+
+</body>
+</html>

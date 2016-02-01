@@ -1,0 +1,390 @@
+/* forms style */
+
+.select-holder{
+	float:left;
+	width:100%;
+	position:relative;
+	select{
+		float:left;
+		width:100%;
+		height:32px;
+		font-size:14px;
+		line-height:18px;
+		color:$lightgrey-text-color;
+	}
+}
+
+.language-form{
+	float:right;
+	width:65px;
+	position:relative;
+	text-align:left;
+	margin:10px 0 0;
+	.select-form{
+		float:left;
+		width:100%;
+		position:relative;
+	}
+}
+
+/* contacts-form style */
+.contacts-form{
+	position:relative;
+}
+
+/* registration-form  */
+.registration-form{
+	overflow:hidden;
+	padding:44px 30px 44px 60px;
+	z-index:10;
+	.row-holder{
+		position:relative;
+		@extend %clearfix;
+		margin:44px 0 0;
+		&:first-child{
+			margin-top:0;
+		}
+		>.holder{
+			position:relative;
+			@extend %clearfix;
+			margin:0 -62px 0 0;
+		}
+		.cell{
+			float:left;
+			min-height:1px;
+			width:33.333332%;
+			padding:0 62px 0 0;
+			position:relative;
+			&.two-cell{
+				width:66.6666662%;
+			}
+		}
+		.box-holder{
+			@extend %clearfix;
+			position:relative;
+			width:100%;
+			.box{
+				float:right;
+				width:40%;
+				&:first-child{
+					float:left;
+					width:51%;
+				}
+			}
+		}
+	}
+	.label-holder{
+		float:left;
+		width:100%;
+		position:relative;
+		margin:0 0 20px;
+		label{
+			display:inline-block;
+			vertical-align:top;
+			font-size:16px;
+			line-height:20px;
+			font-weight:normal;
+			color:$gray-darker;
+			i{
+				display:inline-block;
+				vertical-align:top;
+				margin:1px 16px 0 2px;
+			}
+		}
+	}
+	.input-holder{
+		float:left;
+		width:100%;
+		position:relative;
+		input{
+			background:$base-input-background;
+			border:none;
+			width:100%;
+			height:61px;
+			padding:17px 20px 17px 32px;
+			margin:0;
+			float:left;
+			font-size:20px;
+			line-height:24px;
+			color:$gray-darker;
+			@include placeholder($base-input-placeholder-text-color);
+			@include animation-bg;
+			&:focus{
+				background:darken($base-input-background, 3%);
+			}
+		}
+	}
+	.select-holder{
+		float:left;
+		width:100%;
+		position:relative;
+		select{
+			float:left;
+			width:100%;
+			height:60px;
+			font-size:20px;
+			line-height:24px;
+			color:$base-input-placeholder-text-color;
+		}
+	}
+	.btn{
+		display:block;
+		width:100%;
+		box-shadow:2px 2px 0 0 darken($brand-primary, 10%);
+		i{
+			display:inline-block;
+			vertical-align:middle;
+			margin:-2px 0 0 12px;
+			color:darken($brand-primary, 10%);
+		}
+		&:hover,
+		&:focus{
+			box-shadow:2px 2px 0 0 darken($brand-primary, 15%);
+			i{
+				color:darken($brand-primary, 15%);
+			}
+		}
+	}
+	.link-report{
+		display:inline-block;
+		vertical-align:top;
+		margin:18px 0 0;
+		font-size:16px;
+		line-height:20px;
+		color:$lightgrey-text-color;
+	}
+	p{
+		margin:0;
+	}
+	@include max-screen($screen-lg){
+		padding:34px 40px;
+	}
+	@include max-screen($screen-md){
+		padding:20px 10px;
+		.label-holder{
+			margin:0 0 5px;
+		}
+		.row-holder{
+			margin:20px 0 0;
+			>.holder{
+				margin:0;
+			}
+			.cell{
+				width:100%;
+				padding:0;
+				margin:20px 0 0;
+				&:first-child{
+					margin:0;
+				}
+				&.two-cell{
+					width:100%;
+				}
+			}
+		}
+	}
+	@include max-screen($screen-sm){
+		.label-holder{
+			label{
+				font-size:14px;
+				line-height:18px;
+				font-weight:normal;
+				color:#adadad;
+			}
+		}
+		.row-holder{
+			padding:20px 0 0;
+			margin:30px 0 0;
+			background:url(../images/divider03.png) repeat-x;
+			.cell{
+				margin:15px 0 0;
+			}
+			&:first-child{
+				padding-top:0;
+				background:none;
+			}
+		}
+	}
+}
+
+/* signup-form style */
+.signup-form{
+	position:relative;
+	overflow:hidden;
+	.row-holder{
+		overflow:hidden;
+		margin:30px 0 0;
+		&:first-child{
+			margin-top:0;
+		}
+		.frame{
+			margin:0 0 0 64px;
+		}
+		.number{
+			float:left;
+			font-size:30px;
+			line-height:36px;
+			margin:13px 0 0;
+		}
+		.cell{
+			float:left;
+			width:27%;
+			padding:0 30px 0 0;
+			min-height:1px;
+			&+.cell{
+				width:55%;
+				padding:0 30px 0 0;
+				&+.cell{
+					padding:0;
+					width:18%;
+				}
+			}
+		}
+	}
+	.input-holder{
+		position:relative;
+		float:left;
+		width:100%;
+		input{
+			background:#fff;
+			border:5px solid #000;
+			width:100%;
+			height:60px;
+			padding:12px 15px;
+			margin:0;
+			display:block;
+			font-size:16px;
+			line-height:20px;
+			color:#000;
+			@include placeholder(#000);
+			@include animation-bg;
+			&:focus{
+				background:$whitesmoke-background-color;
+			}
+		}
+	}
+	.btn{
+		display:block;
+		width:100%;
+		i{
+			display:inline-block;
+			vertical-align:middle;
+			margin:0 0 0 4px;
+		}
+	}
+	.help-link{
+	    display: inline;
+		vertical-align:top;
+		i{
+			vertical-align:top;
+			margin:4px 3px 0 0;
+			color:$brand-primary;
+		}
+	}
+	@include max-screen($screen-xs){
+		.row-holder{
+			.cell{
+				width:100%;
+				padding:0;
+				margin:20px 0 0;
+				&+.cell{
+					width:100%;
+					padding:0;
+					&+.cell{
+						width:100%;
+						padding:0;
+					}
+				}
+				&:first-child{
+					margin-top:0;
+				}
+			}
+		}
+	}
+}
+
+/* filter-form style */
+.filter-form{
+	position:relative;
+	padding:0 0 51px;
+	margin:-24px 0 0;
+	.select-holder{
+		width:174px;
+		&.style02{
+			width:158px;
+		}
+	}
+	.link-refresh{
+		margin:8px 0 0;
+		display:inline-block;
+		vertical-align:top;
+		padding:0 0 3px;
+		font-size:14px;
+		line-height:18px;
+		color:$lightgrey-text-color;
+		i{
+			display:inline-block;
+			vertical-align:top;
+			color:$brand-primary;
+			margin:2px 4px 0 0;
+		}
+		&:hover{
+			color:$brand-primary;
+		}
+	}
+	@include max-screen($screen-md){
+		margin:0 0 33px;
+		padding:20px 0 0;
+		.select-holder{
+			width:100%;
+		}
+	}
+}
+
+/* search-box style */
+.search-box{
+	overflow:hidden;
+	position:relative;
+	background:$whitesmoke-background-color;
+	border-radius:12px;
+	margin:2px 0 0;
+	button{
+		float:right;
+		background:none;
+		border:none;
+		width:30px;
+		height:30px;
+		padding:0;
+		margin:0;
+		text-align:center;
+		i{
+			display:inline-block;
+			vertical-align:middle;
+			color:$brand-primary;
+			font-size:14px;
+			line-height:14px;
+			margin:-2px 0 0;
+		}
+	}
+	>.holder{
+		margin:0 30px 0 0;
+	}
+	input[type="search"]{
+		background:none;
+		border:none;
+		width:100%;
+		height:30px;
+		padding:6px 10px 6px 15px;
+		margin:0;
+		float:left;
+		color:$gray-darker;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		font-size:14px;
+		line-height:18px;
+		color:$tabset-text-color;
+	}
+	@include max-screen($screen-md){
+		margin:0 0 20px;
+	}
+}

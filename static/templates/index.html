@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	@@include('./index/meta.html')
+	<script>
+		@@include('./index/scripts.js')
+		var GLOBAL_URL = 'http://www.himstat.ru/cl/laundry2/api/';
+		var API_BASE_URL = '/api/v1/';
+		var DASHBOARD_URL = '/account/';
+		var LANG = '@@lang';
+		var TEST = false;
+		var TRANS = T_LANG;
+	</script>
+</head>
+<body class="fixed-header">
+<!-- main container of all the page elements -->
+<div id="wrapper">
+
+	@@include('./index/start-section.html', T_LANG)
+
+	<main id="main" role="main">
+		@@include('./index/main/our-services.html', T_LANG)
+		@@include('./index/main/how-does-it-work.html', T_LANG)
+		@@include('./index/main/how-we-work.html', T_LANG)
+		@@include('./index/main/our-process.html', T_LANG)
+		@@include('./index/main/tabset-section.html', T_LANG)
+		@@include('./index/main/price-anchor.html', T_LANG)
+		@@include('./index/main/price-section.html', T_LANG)
+		@@include('./index/main/corporate-section.html', T_LANG)
+	</main>
+
+	@@include('./index/footer.html', T_LANG)
+
+	@@include('./index/modal/myModal.html', T_LANG)
+	@@include('./index/modal/myModa2.html', T_LANG)
+	@@include('./index/modal/myModa3.html', T_LANG)
+	@@include('./index/modal/PasswordReset.html', T_LANG)
+	@@include('./index/modal/ResubmitSms.html', T_LANG)
+	@@include('./index/modal/myLicense.html', T_LANG)
+	@@include('./index/modal/myMessage.html', T_LANG)
+	@@include('./index/modal/myConfirm.html', T_LANG)
+	@@include('./index/modal/feedbackForm.html', T_LANG)
+	@@include('./index/modal/orderForm.html', T_LANG)
+
+</div>
+<script type="text/javascript" src="assets/js/src.min.js?v=@@ts"></script>
+<script type="text/javascript" src="assets/js/app.js?v=@@ts"></script>
+@@include('./index/counters.html')
+</body>
+</html>
