@@ -1144,7 +1144,11 @@ function addCard() {
             json.data,
             // успешная оплата
             function (options) {
-                $.get('/account/flash/message/add_card_success')
+                $('#flashMessage').rempove();
+                $.get('/account/flash/message/add_card_success', function(html) {
+                    $('body').append('html');
+                    $('#flashMessage').modal('show');
+                });
             },
             // ошибка оплаты
             function (reason, options) {
