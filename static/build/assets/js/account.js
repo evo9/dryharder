@@ -1156,3 +1156,7 @@ function addCard() {
         );
     });
 }
+
+function payFinish() {
+    //var
+}

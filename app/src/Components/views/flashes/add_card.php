@@ -8,10 +8,14 @@
                 <h3 class="message_title"><?= trans('flashes.add_card.title'); ?></h3>
             </div>
             <div class="row-holder">
-                <p>Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст.. </p>
+                <p class="text-center"><?= trans('flashes.add_card.content'); ?></p>
+            </div>
+            <div class="checkboxes">
+                <input type="checkbox" name="autopay" id="autopay_input" hidden>
+                <label for="autopay_input"><?= trans('flashes.add_card.check_autopay'); ?></label>
             </div>
             <div class="action_buttons text-center">
-                <button class="btn btn-dh-green" onclick="addCard()">Далее</button>
+                <button class="btn btn-dh-green" onclick="addCard()"><?= trans('main.next'); ?></button>
             </div>
         </div>
         <div class="clearfix"></div>

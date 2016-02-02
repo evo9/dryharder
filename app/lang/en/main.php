@@ -119,5 +119,7 @@ return [
                                         Security of you credit details is of utmost importance for us.
                                         All transactions are conducted by CloudPayments (credit card processing center) on a secured server certified
                                         in accordance with international security standard PCI DSS.',
+    'next' => 'Next',
+    'ok' => 'Ok'
 
 ];
