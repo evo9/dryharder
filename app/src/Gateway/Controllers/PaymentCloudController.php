@@ -151,7 +151,7 @@ class PaymentCloudController extends Controller
     {
         // может быть уже была оплата, сразу ответим "ок"
         $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
-            ->whereOrderId($this->params['order_id'])
+            //->whereOrderId($this->params['order_id'])
             ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(0)
             ->first();
@@ -162,7 +162,7 @@ class PaymentCloudController extends Controller
 
         // такая транзакция уже должна быть в нашей базе, и не оплаченная
         $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
-            ->whereOrderId($this->params['order_id'])
+            //->whereOrderId($this->params['order_id'])
             ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(1)
             ->first();
@@ -179,14 +179,14 @@ class PaymentCloudController extends Controller
         $pay->request = $this->params['request'];
         $pay->paid($this->params['token']);
 
-        if ($this->saveCard)
-            $this->addCard();
+        /*if ($this->saveCard)
+            $this->addCard();*/
 
         // удалить все токены, если клиент против хранения карты
-        $saveCard = Customer::instance()->initByExternalId($this->params['customer_id'])->isSaveCard();
+        /*$saveCard = Customer::instance()->initByExternalId($this->params['customer_id'])->isSaveCard();
         if(!$saveCard){
             PaymentCloud::removeTokens($this->params['customer_id']);
-        }
+        }*/
 
         Reporter::payTransactionPaid($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id'], $pay->id);
 

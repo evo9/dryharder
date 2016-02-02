@@ -11,8 +11,8 @@
                 <p><?= trans('flashes.add_card.success_content'); ?></p>
             </div>
             <div class="checkboxes">
-                <input type="checkbox" name="autopay" id="autopay_input" hidden>
-                <label for="autopay_input"><?= trans('flashes.add.card.check_autopay'); ?></label>
+                <input type="checkbox" name="autopay" id="autopay_input" value="1" hidden>
+                <label for="autopay_input"><?= trans('flashes.add_card.check_autopay'); ?></label>
             </div>
             <div class="action_buttons text-center">
                 <button class="btn btn-dh-green" onclick="payFinish()"><?= trans('main.ok'); ?></button>

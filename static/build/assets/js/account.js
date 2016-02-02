@@ -1144,7 +1144,7 @@ function addCard() {
             json.data,
             // успешная оплата
             function (options) {
-                $('#flashMessage').rempove();
+                $('#flashMessage').remove();
                 $.get('/account/flash/message/add_card_success', function(html) {
                     $('body').append('html');
                     $('#flashMessage').modal('show');
@@ -1158,5 +1158,15 @@ function addCard() {
 }
 
 function payFinish() {
-    //var
+    var modal = $('#flashMessage'),
+        data = {};
+    modal.find('input[type="checkbox"]:checked').each(function() {
+        data[$(this).attr('name')] = $(this).val();
+    });
+    if (data.length == 0)  {
+        modal.modal('hide');
+    }
+    else {
+        $.post('/account/');
+    }
 }
