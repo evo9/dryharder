@@ -25,6 +25,7 @@ class CreateCloudPaymentsCard extends Migration {
 			$table->string('email', 255)->default(''); // email плательщика
 			$table->boolean('is_default')->default(0); // карта по умолчанию
 			$table->timestamp('external_at'); // datetime_load // Дата создания по времени сервера оплаты
+			$table->text('request')->default(''); // query_string // данные запроса/
 			$table->timestamps();
 		});
 	}

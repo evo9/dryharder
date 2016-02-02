@@ -20,6 +20,7 @@ use Response;
 class PaymentCloudController extends Controller
 {
     private $params = [];
+    private $saveCard = false;
 
     /**
      * сюда от платежного шлюза приходит запрос на check
@@ -34,13 +35,8 @@ class PaymentCloudController extends Controller
         Reporter::payExternalCheck($input['AccountId'], $input['InvoiceId'], $input['Amount'], $input);
 
         $this->filter();
-        if ($this->params['order_id'] > '') {
-            $this->checkOrder();
-            $this->processCheckRequest();
-        }
-        else {
-            $this->processCheckCard();
-        }
+        $this->checkOrder();
+        $this->processCheckRequest();
     }
 
     /**
@@ -55,14 +51,9 @@ class PaymentCloudController extends Controller
         $input = Input::all();
         Reporter::payExternalPay($input['AccountId'], $input['InvoiceId'], $input['Amount'], $input);
 
-        //$this->filter();
-        if ($this->params['order_id']> '') {
-            $this->checkOrder();
-            $this->processPayRequest();
-        }
-        else {
-            $this->processPayCard();
-        }
+        $this->filter();
+        $this->checkOrder();
+        $this->processPayRequest();
 
     }
 
@@ -129,7 +120,7 @@ class PaymentCloudController extends Controller
     {
         // вдруг уже был чек с этими параметрами
         $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
-            ->whereOrderId($this->params['order_id'])
+            //->whereOrderId($this->params['order_id'])
             ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(1)
             ->first();
@@ -188,6 +179,9 @@ class PaymentCloudController extends Controller
         $pay->request = $this->params['request'];
         $pay->paid($this->params['token']);
 
+        if ($this->saveCard)
+            $this->addCard();
+
         // удалить все токены, если клиент против хранения карты
         $saveCard = Customer::instance()->initByExternalId($this->params['customer_id'])->isSaveCard();
         if(!$saveCard){
@@ -198,6 +192,17 @@ class PaymentCloudController extends Controller
 
         $this->responseSuccess();
 
+    }
+
+    private function addCard()
+    {
+        // Проверяем наличие сохраненной карты
+        $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
+        if (!$card) {
+            // Добавляем новую карту
+            $card = new CloudPaymentsCard();
+            $card->addRecord($card, $this->params);
+        }
     }
 
     /**
@@ -227,26 +232,25 @@ class PaymentCloudController extends Controller
      */
     private function checkOrder()
     {
+        if ($this->params['order_id']) {
+            try {
 
-        try {
+                $api = new Api();
+                $api->IsGoodOrder($this->params['order_id'], $this->params['customer_id']);
+                Reporter::payOrderFound($this->params['customer_id'], $this->params['order_id']);
 
-            $api = new Api();
-            $api->IsGoodOrder($this->params['order_id'], $this->params['customer_id']);
-            Reporter::payOrderFound($this->params['customer_id'], $this->params['order_id']);
+            } catch (ApiException $e) {
 
-        } catch (ApiException $e) {
+                Reporter::payOrderLost($this->params['customer_id'], $this->params['order_id']);
 
-            Reporter::payOrderLost($this->params['customer_id'], $this->params['order_id']);
+                if ($e->getCode() == 400) {
+                    $this->responseError(10);
+                }
 
-            if ($e->getCode() == 400) {
-                $this->responseError(10);
+                $this->responseError(13);
+
             }
-
-            $this->responseError(13);
-
         }
-
-
     }
 
     /**
@@ -284,6 +288,14 @@ class PaymentCloudController extends Controller
 
         // все данные запроса
         $params['request'] = json_encode(Input::all(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        if (Input::has('Data')) {
+            $data = json_decode(Input::get('Data'));
+            $data = get_object_vars($data);
+            if (isset($data['saveCard']) && $data['saveCard']) {
+                $this->saveCard = true;
+            }
+        }
 
         return $params;
 
@@ -370,23 +382,6 @@ class PaymentCloudController extends Controller
         ];
 
         Reporter::payResponseSuccess($this->params['customer_id'], $this->params['payment_id'], $this->params['order_id']);
-
-        Response::json($data)->send();
-        die();
-
-    }
-
-    /**
-     * Добавление карты. ответ успешно
-     */
-    private function responseAddCardSuccess()
-    {
-
-        $data = [
-            'code' => 0
-        ];
-
-        Reporter::paySaveCardResponseSuccess($this->params['customer_id'], $this->params['payment_id']);
 
         Response::json($data)->send();
         die();
@@ -558,42 +553,5 @@ class PaymentCloudController extends Controller
         Log::debug('response commit xml', []);
         die();
 
-    }
-
-    private function processCheckCard()
-    {
-        $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
-        if ($card) {
-            // card is exist message and return
-        }
-        else {
-            $card = new CloudPaymentsCard();
-            unset($this->params['order_id'], $this->params['request']);
-            $card->unguard();
-            $card->fill($this->params);
-            $card->save();
-
-        }
-
-            $this->responseAddCardSuccess();
-    }
-
-    private function processPayCard()
-    {
-        $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
-        if ($card) {
-            $card->token($this->params['token']);
-        }
-        else {
-            $card = new CloudPaymentsCard();
-            unset($this->params['order_id'], $this->params['request']);
-            $card->unguard();
-            $card->fill($this->params);
-            $card->save();
-        }
-
-        if ($card) {
-            $this->responseAddCardSuccess();
-        }
     }
 }

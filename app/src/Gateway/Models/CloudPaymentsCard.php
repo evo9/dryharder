@@ -37,4 +37,13 @@ class CloudPaymentsCard extends \Eloquent
             ->first();
     }
 
+    public function addRecord(CloudPaymentsCard $card, $data)
+    {
+        if (isset($data['order_id'])) {
+            unset($data['order_id']);
+        }
+        $card->unguard();
+        $card->fill($data);
+        $card->save();
+    }
 }

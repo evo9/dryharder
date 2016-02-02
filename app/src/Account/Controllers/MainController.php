@@ -605,6 +605,30 @@ class MainController extends BaseController
 
     }
 
+    /**
+     * Добавление новой карты
+     */
+    public function addCard()
+    {
+        $api = new Api();
+
+        $data = [
+            'publicId'    => Config::get('cloud.PublicId'),
+            'description' => 'Привязка карты в dryharder.me ',
+            'amount'      => 1,
+            'currency'    => 'RUB',
+            'accountId'   => $api->id(),
+            'data'        => [
+                'saveCard'      => 1
+            ]
+        ];
+
+        return Response::json([
+            'data' => $data
+        ]);
+    }
+
+
 
     public function reviewOrder()
     {

@@ -285,21 +285,6 @@ $v = 19;
 		</div>
 	</div>
 
-	<div class="modal fade" id="flashMessage" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" style="padding: 10px 10px 10px;">
-				<button type="button" class="close" data-dismiss="modal">
-					<i class="fa fa-times-circle"></i>
-				</button>
-				<div class="heading">
-					<h3></h3>
-				</div>
-				<div class="row-holder"></div>
-			</div>
-            <div class="clearfix"></div>
-		</div>
-	</div>
-
 	<div class="modal fade" id="reviewSurvey" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content" style="padding: 10px 10px 10px;">

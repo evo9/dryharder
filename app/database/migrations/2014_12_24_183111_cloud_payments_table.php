@@ -34,7 +34,7 @@ class CloudPaymentsTable extends Migration {
 
 			$table->string('email')->default(''); // email плательщика
 			$table->boolean('exported')->default(0); // is_loaded // флаг успешного экспорта
-			$table->string('request')->default(''); // query_string // данные запроса
+			$table->string('request')->default(''); // query_string // данные запроса/
 			$table->boolean('waiting')->default(1); // Ожидание подтверждения от системы оплаты. 1 ожидан6ие, 0 уже оплачено
 
 			$table->timestamp('external_at'); // datetime_load // Дата создания по времени сервера оплаты

@@ -9,26 +9,63 @@ use View;
 
 class Flash
 {
-
-
     private $user;
+
+    private $methodName;
+
+    private $type;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+        $this->methodName = $this->getMethodName($type);
+        $this->user = Customer::instance()->initByKey()->get();
+    }
+
+    private function getMethodName($type)
+    {
+        if ($type > '') {
+            $result = '';
+            $typeArr = explode('_', $type);
+            foreach ($typeArr as $t) {
+                $result .= ucfirst($t);
+            }
+
+            return $result;
+        }
+        else {
+            return null;
+        }
+    }
 
     public function getFlashMessage()
     {
-
-        $this->user = Customer::instance()->initByKey()->get();
-        $message = $this->getInviteMessage();
-
-        if (!$message) {
+        if (!$this->methodName) {
             return null;
         }
+        $methodName = 'get%sMessage';
+        $methodName = sprintf($methodName, $this->methodName);
 
-        return $this->viewMessage($message);
+        $params = [];
+
+        if (method_exists($this, $methodName)) {
+            $result = $this->$methodName();
+            if (!$result['status']) {
+                return null;
+            }
+            if (isset($result['params']))
+                $params = $result['params'];
+        }
+
+        return $this->viewMessage($params);
 
     }
 
     private function getInviteMessage()
     {
+        $result = [
+            'status' => false
+        ];
         $lastView = CustomerFlash::findLast(1, $this->user->id);
         if (!$lastView) {
 
@@ -38,46 +75,56 @@ class Flash
             $lastView->qnt = 1;
             $lastView->save();
 
-            return 'add_card';
+            $result['status'] = true;
 
         }
-        return null;
+
+        // только три раза
+        if ($lastView->qnt >= 3) {
+            return $result;
+        }
+
+        // не чаще, чем раз в час
+        if (time() - strtotime($lastView->updated_at) < 60*60) {
+            return $result;
+        }
+
+        $lastView->qnt++;
+        $lastView->save();
+
+        $result['status'] = true;
+        $invite = new InviteComponent();
+        $result['params'] = ['invite_url' => $invite->url()];
+
+        return $result;
 
     }
 
-    private function viewMessage($message)
+    private function getAddCardMessage()
     {
+        return ['status' => true];
 
-        switch ($message) {
+        $result['status'] = false;
 
-            case 'invite':
+        $lastView = CustomerFlash::findLast(1, $this->user->id);
+        if (!$lastView) {
 
-                $invite = new InviteComponent();
+            $lastView = new CustomerFlash();
+            $lastView->flash_id = 1;
+            $lastView->customer_id = $this->user->id;
+            $lastView->qnt = 1;
+            $lastView->save();
 
-                return View::make('flash::invite', [
-                    'invite_url' => $invite->url(),
-                    'title'      => trans('flashes.invite.title'),
-                    'content'    => trans('flashes.invite.content'),
-                ]);
-
-                break;
-
-            case 'add_card':
-
-                return View::make('flash::add_card', [
-                    'title' => trans('flashes.add_card.title'),
-                    'content' => ''
-                ]);
-
-                break;
-
-            default:
-
-                return null;
-                break;
+            return $result['status'] = true;
 
         }
+        return $result;
 
+    }
+
+    private function viewMessage($data = [])
+    {
+        return View::make('flash::' . $this->type, $data);
     }
 
 

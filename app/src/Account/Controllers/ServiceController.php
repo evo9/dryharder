@@ -8,10 +8,10 @@ use Response;
 class ServiceController extends BaseController
 {
 
-    public function flash()
+    public function flash($type)
     {
 
-        $flash = new Flash();
+        $flash = new Flash($type);
 
         $view = $flash->getFlashMessage();
         if(!$view){

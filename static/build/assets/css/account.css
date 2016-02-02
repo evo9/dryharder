@@ -381,3 +381,28 @@ a.detail-order-hover {
 .mt-40 {
 	margin-top: 40px;
 }
+
+#flashMessage {
+	font-family: Arial, sans-serif;
+}
+#flashMessage .message_title {
+	text-align: center;
+	color: #00b464;
+	font-size: 28px;
+	margin: 30px 0 0;
+}
+#flashMessage .close {
+	margin: 10px 10px 0 0;
+}
+#flashMessage .row-holder {
+	font-size: 20px;
+	padding: 0 10px;
+}
+.modal .btn-dh-green {
+	display: inline-block;
+	color: #fff;
+	font-size: 20px;
+	background: #2dd982;
+	box-shadow: 2px 2px 0 0 #aac1b5;
+	margin: 0 0 40px;
+}
