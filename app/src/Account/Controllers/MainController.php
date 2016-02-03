@@ -111,6 +111,10 @@ class MainController extends BaseController
     {
 
         $api = new Api();
+
+        $cards = PaymentCloud::getCustomersCards($api->id());
+        
+
         $token = PaymentCloud::getToken($api->id());
         $saveCard = Customer::instance()->initByExternalId($api->id())->isSaveCard();
         $autoPay = Customer::instance()->isAutoPay();

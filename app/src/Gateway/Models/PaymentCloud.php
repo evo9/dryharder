@@ -376,6 +376,10 @@ class PaymentCloud extends \Eloquent
 
     public static function getCustomersCards($customerId)
     {
-
+        return self::whereCustomerId($customerId)
+            ->notFailed()
+            ->whereWaiting(0)
+            ->where('token', '!=', '')
+            ->get();
     }
 }
