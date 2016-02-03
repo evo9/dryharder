@@ -46,7 +46,8 @@ class AccountServiceProvider extends Illuminate\Support\ServiceProvider
         Route::get('/account/order/services/pdf/{id}', MainController::class . '@orderServicesPdf');
         Route::get('/account/pay/init/{id}/{target}/{reset}', MainController::class . '@pay');
         Route::get('/account/add_card', MainController::class . '@addCard');
-        Route::get('/account/add_card', MainController::class . '@addCard');
+        Route::post('/account/autopay', MainController::class . '@autopay');
+        Route::post('/account/pay_finish', MainController::class . '@payFinish');
         Route::get('/account/pay/card', MainController::class . '@card');
         Route::get('/account/pay/check/{id}', MainController::class . '@checkPay');
         Route::post('/account/pay/token', MainController::class . '@token');

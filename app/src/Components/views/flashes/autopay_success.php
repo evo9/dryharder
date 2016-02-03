@@ -5,18 +5,15 @@
                 <i class="fa fa-times-circle"></i>
             </button>
             <div class="heading">
-                <h3 class="message_title"><?= trans('flashes.add_card.success_title'); ?></h3>
+                <h3 class="message_title"><?= trans('flashes.autopay.title'); ?></h3>
             </div>
             <div class="row-holder">
-                <p class="text-center"><?= trans('flashes.add_card.success_content'); ?></p>
-            </div>
-            <div class="checkboxes">
-                <input type="checkbox" name="autopay" id="autopay_input" value="1" hidden>
-                <label for="autopay_input"><?= trans('flashes.add_card.check_autopay'); ?></label>
+                <p class="text-center"><?= trans('flashes.autopay.content'); ?></p>
             </div>
             <div class="action_buttons text-center">
-                <button class="btn btn-dh-green" onclick="autopay()"><?= trans('main.ok'); ?></button>
+                <button class="btn btn-dh-green" data-dismiss="modal"><?= trans('main.ok'); ?></button>
             </div>
+            <div class="small_desc"><?= trans('flashes.autopay.setting_link'); ?></div>
         </div>
         <div class="clearfix"></div>
     </div>

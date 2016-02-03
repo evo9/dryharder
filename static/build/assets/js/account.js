@@ -1127,7 +1127,7 @@ function hoverOrderDetails() {
 }
 
 function getFlashMessage(type) {
-    $('#flashMessage').remove()
+    $('#flashMessage, .modal-backdrop').remove()
     $.get('/account/flash/message/' + type, function (html) {
         if (html) {
             $('body').append(html);
@@ -1144,17 +1144,27 @@ function addCard() {
             json.data,
             // успешная оплата
             function (options) {
-                $('#flashMessage').remove();
-                $.get('/account/flash/message/add_card_success', function(html) {
-                    $('body').append('html');
-                    $('#flashMessage').modal('show');
-                });
+                getFlashMessage('add_card_success');
             },
             // ошибка оплаты
             function (reason, options) {
             }
         );
     });
+}
+
+function autopay() {
+    var modal = $('#flashMessage');
+    if (modal.find('input:checked').length > 0) {
+        $.post('/account/autopay', { autopay: 1 }, function(json) {
+            modal.modal('hide');
+            getFlashMessage(json.message);
+
+        });
+    }
+    else {
+        modal.modal('hide');
+    }
 }
 
 function payFinish() {
@@ -1167,6 +1177,9 @@ function payFinish() {
         modal.modal('hide');
     }
     else {
-        $.post('/account/');
+        $.post('/account/pay_finish', data, function(json) {
+            modal.modal('hide');
+            getFlashMessage(json.message);
+        });
     }
 }

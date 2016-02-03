@@ -179,9 +179,6 @@ class PaymentCloudController extends Controller
         $pay->request = $this->params['request'];
         $pay->paid($this->params['token']);
 
-        /*if ($this->saveCard)
-            $this->addCard();*/
-
         // удалить все токены, если клиент против хранения карты
         /*$saveCard = Customer::instance()->initByExternalId($this->params['customer_id'])->isSaveCard();
         if(!$saveCard){
@@ -192,17 +189,6 @@ class PaymentCloudController extends Controller
 
         $this->responseSuccess();
 
-    }
-
-    private function addCard()
-    {
-        // Проверяем наличие сохраненной карты
-        $card = CloudPaymentsCard::whereCustomerCard($this->params['card_pan'], $this->params['customer_id']);
-        if (!$card) {
-            // Добавляем новую карту
-            $card = new CloudPaymentsCard();
-            $card->addRecord($card, $this->params);
-        }
     }
 
     /**

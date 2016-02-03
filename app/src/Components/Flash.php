@@ -102,8 +102,6 @@ class Flash
 
     private function getAddCardMessage()
     {
-        return ['status' => true];
-
         $result['status'] = false;
 
         $lastView = CustomerFlash::findLast(1, $this->user->id);

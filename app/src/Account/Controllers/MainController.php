@@ -628,7 +628,32 @@ class MainController extends BaseController
         ]);
     }
 
+    /**
+     * Включение/отключение автооплаты.
+     */
+    public function autopay()
+    {
+        $api = new Api();
 
+        $message = 'autopay_success';
+
+        if (Input::has('autopay')) {
+            $paymentId = Input::has('payment_id') ? Input::get('payment_id') : null;
+            if (!PaymentCloud::autopayEnable($api->id(), $paymentId)) {
+                $message = 'autopay_error';
+            }
+        }
+        else {
+
+            // TODO реализовать данный ф-ционал
+            /*if (!PaymentCloud::autopayDisable($api->id())) {
+                $message = 'autopay_error';
+            }
+            $message = 'autopay_disable';*/
+        }
+
+        return Response::json(['message' => $message]);
+    }
 
     public function reviewOrder()
     {

@@ -341,5 +341,41 @@ class PaymentCloud extends \Eloquent
 
     }
 
+    public static function autopayEnable($customerId, $paymentId = null)
+    {
+        self::whereCustomerId($customerId)
+            ->update([
+                'autopay' => 0
+            ]);
+        if ($paymentId) {
+            $pay = self::wherePaymentId($paymentId)->first();
+        }
+        else {
+            $pay = self::whereCustomerId($customerId)
+                ->notFailed()
+                ->whereWaiting(0)
+                ->where('token', '!=', '')
+                ->orderBy('id', 'DESC')
+                ->first();
+        }
 
+        if ($pay) {
+            $pay->autopay = 1;
+            $pay->save();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static function autopayDisable()
+    {
+        
+    }
+
+    public static function getCustomersCards($customerId)
+    {
+
+    }
 }

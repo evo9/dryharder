@@ -405,6 +405,7 @@ a.detail-order-hover {
 	background: #2dd982;
 	box-shadow: 2px 2px 0 0 #aac1b5;
 	margin: 0 0 40px;
+	padding: 13px 25px;
 }
 .checkboxes {
 	text-align: center;
@@ -418,4 +419,15 @@ a.detail-order-hover {
 }
 .checkboxes > input[type="checkbox"]:checked + label {
 	background: url(../../images/checkbox_checked.png) no-repeat;
+}
+.small_desc {
+	font-size: 12px;
+	color: #8e8d8d;
+	text-align: center;
+}
+.small_desc > a {
+	color: #00b464;
+}
+.small_desc > a:hover {
+	text-decoration: none;
 }
