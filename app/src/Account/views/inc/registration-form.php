@@ -89,48 +89,30 @@
                     <li id="payment_info">
                         <a class="opener" href="#"><i class="fa fa-rub" style="width: 22px;"></i><?= trans('main.PAYMENT_INFO') ?></a>
                         <div class="slide">
-                            <form action="#" class="registration-form pay-form">
-                                <fieldset>
-                                    <?php if($cardInfo){ ?>
-                                        <div class="row-holder info-card-in-account">
-                                            <div class="holder">
-                                                <h4><?= trans('main.Last card') ?></h4>
-                                                <?= $cardInfo ?>
-                                            </div>
-                                        </div>
-                                        <div class="row-holder info-card-in-account">
-                                            <div class="holder">
-                                                <div class="cell">
-                                                    <button class="btn btn-primary save-card-remove" data-loading-text="<?= trans('main.deleting') ?>"><?= trans('main.DELETE CARD') ?><i class="fa fa-floppy-o"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                    <div class="row-holder personal-card-settings">
-                                        <div class="holder">
-
-                                            <div>
-                                                <input id="save-card-account" type="checkbox" <?= $saveCard ? ' checked="checked"' : '' ?> class="checkbox-save-card">
-                                                <label for="save-card-account" class="label-save-card" style="margin-top: 10px;"><?= trans('main.AFTER_PAYMENT_SAVE_CARD') ?></label>
-                                            </div>
-                                            <div style="clear: both;"></div>
-
-                                            <div>
-                                                <input id="save-autopay-account" type="checkbox" <?= $saveCard ? ' checked="checked"' : '' ?> class="checkbox-autopay-card">
-                                                <label for="save-autopay-account" class="save-autopay-modal" style="margin-top: 10px;"><?= trans('main.AUTO_PAYMENT_SAVE_CARD') ?></label>
-                                            </div>
-                                            <div style="clear: both;"></div>
-
-                                            <p class="pay-form-comment"><small><?= trans('main.card security info') ?></small></p>
-
-                                            <p class="save-card-info" style="display: none;"><?= trans('main.AFTER_PAYMENT_SAVE_CARD_T') ?></p>
-                                            <p class="autopay-info" style="display: none;"><?= trans('main.AUTO_PAYMENT_SAVE_CARD_T') ?></p>
-                                            <p class="autopay-info-off" style="display: none;"><?= trans('main.AUTO_PAYMENT_OFF_T') ?></p>
-
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
+                            <div class="card_action_button">
+                                <button class="btn btn-primary" onclick="addCard(true);"><?php echo trans('main.add_new_card') ?> <i class="fa fa-plus"></i></button>
+                            </div>
+                            <ul id="account_card_list">
+                                <li class="heading">
+                                    <span class="select_card"></span>
+                                    <span class="card_num"><?php echo trans('main.card_num'); ?></span>
+                                    <span class="card_autopay"><?php echo trans('main.card_autopay'); ?></span>
+                                </li>
+                                <?php foreach ($cards as $card) : ?>
+                                    <li>
+                                        <span class="select_card">
+                                            <span class="label" data-payment="<?php echo $card['payment_id'] ?>"></span>
+                                        </span>
+                                        <span class="card_num"><?php echo $card['card_pan']; ?></span>
+                                        <span class="card_autopay">
+                                            <span class="label <?php echo $card['autopay'] ? 'checked' : ''; ?>" data-payment="<?php echo $card['payment_id'] ?>"></span>
+                                        </span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <div class="card_action_button">
+                                <button class="btn btn-primary" onclick="deleteCard($(this))" data-loading-text="<?= trans('main.deleting') ?>"><?php echo trans('main.DELETE CARD') ?> <i class="fa fa-trash"></i></button>
+                            </div>
                         </div>
                     </li>
 

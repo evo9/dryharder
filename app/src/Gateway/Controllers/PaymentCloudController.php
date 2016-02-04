@@ -20,7 +20,6 @@ use Response;
 class PaymentCloudController extends Controller
 {
     private $params = [];
-    private $saveCard = false;
 
     /**
      * сюда от платежного шлюза приходит запрос на check
@@ -177,13 +176,11 @@ class PaymentCloudController extends Controller
 
         // обновляем транзакцию как оплаченную
         $pay->request = $this->params['request'];
-        $pay->paid($this->params['token']);
-
-        // удалить все токены, если клиент против хранения карты
-        /*$saveCard = Customer::instance()->initByExternalId($this->params['customer_id'])->isSaveCard();
-        if(!$saveCard){
-            PaymentCloud::removeTokens($this->params['customer_id']);
-        }*/
+        $isNew = false;
+        if (!PaymentCloud::checkTokenCard($this->params['customer_id'], $this->params['card_pan'])) {
+            $isNew = true;
+        }
+        $pay->paid($this->params['token'], $isNew);
 
         Reporter::payTransactionPaid($this->params['customer_id'], $this->params['order_id'], $this->params['payment_id'], $pay->id);
 
@@ -198,7 +195,7 @@ class PaymentCloudController extends Controller
     private function processPayFail()
     {
         $pay = PaymentCloud::whereCustomerId($this->params['customer_id'])
-            ->whereOrderId($this->params['order_id'])
+            //->whereOrderId($this->params['order_id'])
             ->wherePaymentId($this->params['payment_id'])
             ->whereWaiting(1)
             ->first();
@@ -218,7 +215,7 @@ class PaymentCloudController extends Controller
      */
     private function checkOrder()
     {
-        if ($this->params['order_id']) {
+        if ($this->params['order_id'] > '') {
             try {
 
                 $api = new Api();
@@ -274,14 +271,6 @@ class PaymentCloudController extends Controller
 
         // все данные запроса
         $params['request'] = json_encode(Input::all(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-        if (Input::has('Data')) {
-            $data = json_decode(Input::get('Data'));
-            $data = get_object_vars($data);
-            if (isset($data['saveCard']) && $data['saveCard']) {
-                $this->saveCard = true;
-            }
-        }
 
         return $params;
 

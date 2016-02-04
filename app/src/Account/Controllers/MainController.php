@@ -49,6 +49,7 @@ class MainController extends BaseController
         $mainPage = Config::get('app.url');
         $langReplace = App::getLocale() == 'ru' ? 'index' : App::getLocale();
         $mainPage = str_replace('#lang#', $langReplace, $mainPage);
+        $cards = [];
 
         try {
             $api = new Api();
@@ -70,6 +71,8 @@ class MainController extends BaseController
             }
             $saveCard = $customer->isSaveCard();
 
+            $cards = PaymentCloud::getCustomersCards($api->id());
+
         } catch (ApiException $e) {
             return \Redirect::to($mainPage);
         }
@@ -83,6 +86,7 @@ class MainController extends BaseController
             'agbisKey'   => $agbisKey,
             'saveCard'   => $saveCard,
             'invite_url' => $invite->url(),
+            'cards'       => $cards
         ]);
 
     }
@@ -112,9 +116,6 @@ class MainController extends BaseController
 
         $api = new Api();
 
-        $cards = PaymentCloud::getCustomersCards($api->id());
-        
-
         $token = PaymentCloud::getToken($api->id());
         $saveCard = Customer::instance()->initByExternalId($api->id())->isSaveCard();
         $autoPay = Customer::instance()->isAutoPay();
@@ -125,6 +126,37 @@ class MainController extends BaseController
             'autoPay'  => $autoPay,
         ]);
 
+    }
+
+    public function prepayment()
+    {
+        $params = [
+            'cards' => [],
+            'lastPay' => [
+                'payment_id' => '-1',
+                'card_pan' => trans('pay.prepayment.new_card')
+            ]
+        ];
+
+        $api = new Api();
+        $customerId = $api->id();
+        $lastPay = PaymentCloud::getLastPay($customerId);
+        if ($lastPay) {
+            $params['lastPay'] = [
+                'payment_id' => $lastPay['payment_id'],
+                'card_pan' => $lastPay['card_pan']
+            ];
+        }
+
+        $cards = PaymentCloud::getCustomersCards($customerId);
+        foreach ($cards as $card) {
+            $params['cards'][] = [
+                'payment_id' => $card['payment_id'],
+                'card_pan' => $card['card_pan']
+            ];
+        }
+
+        return View::make('ac::prepayment', $params);
     }
 
 
@@ -236,6 +268,11 @@ class MainController extends BaseController
             'message' => $result->message,
         ]);
 
+    }
+
+    public function payByToken()
+    {
+        
     }
 
     /**
@@ -612,24 +649,35 @@ class MainController extends BaseController
     /**
      * Добавление новой карты
      */
-    public function addCard()
+    public function newCard()
     {
         $api = new Api();
 
         $data = [
             'publicId'    => Config::get('cloud.PublicId'),
-            'description' => 'Привязка карты в dryharder.me ',
+            'description' => 'Добвление карты в dryharder.me ',
             'amount'      => 1,
             'currency'    => 'RUB',
-            'accountId'   => $api->id(),
-            'data'        => [
-                'saveCard'      => 1
-            ]
+            'accountId'   => $api->id()
         ];
 
         return Response::json([
             'data' => $data
         ]);
+    }
+
+    /**
+     * Удаление карт
+     */
+    public function deleteCard()
+    {
+        if (Input::has('payments')) {
+            $api = new Api();
+
+            PaymentCloud::deleteCard($api->id(), Input::get('payments'));
+        }
+
+        return Response::json();
     }
 
     /**
@@ -648,12 +696,34 @@ class MainController extends BaseController
             }
         }
         else {
+            PaymentCloud::autopayDisable($api->id());
+            $message = 'autopay_disable';
+        }
 
-            // TODO реализовать данный ф-ционал
-            /*if (!PaymentCloud::autopayDisable($api->id())) {
-                $message = 'autopay_error';
-            }
-            $message = 'autopay_disable';*/
+        return Response::json(['message' => $message]);
+    }
+
+    public function payFinish()
+    {
+        $api = new Api();
+        $saveCard = false;
+        $autopay = false;
+
+        $message = '';
+
+        if (Input::has('save_card')) {
+            $saveCard = true;
+        }
+        if (Input::has('autopay')) {
+            $autopay = true;
+        }
+
+        $lastPay = PaymentCloud::finishPay($api->id(), $saveCard, $autopay);
+        if ($lastPay && $autopay) {
+            $message = 'autopay_success';
+        }
+        elseif ($lastPay && $saveCard) {
+            $message = 'card_saved';
         }
 
         return Response::json(['message' => $message]);

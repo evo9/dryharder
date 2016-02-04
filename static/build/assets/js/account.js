@@ -756,293 +756,129 @@ function doPaymentListeners() {
     AppAccount.errorMessage = trans('Server error. Please try later');
 
     // кнопка "оплатить" - выбор карты
-    var $btn = AppAccount.payBtn();
-    var $modal = $('#select-pay-card');
+    var $btn = AppAccount.payBtn(),
+        data = null,
+        sum = 0;
 
-    $btn.off('click').on('click', function () {
+    $btn.off('click').on('click', function(e){
+        e.preventDefault();
 
-        var $this = $(this);
-        var order_id = $this.data('id');
-        var subscription_id = $this.data('subscriptionid');
-        var sum = $this.data('sum');
-        var request = subscription_id ?
+        var orderId = $(this).data('id'),
+            subscriptionId = $(this).data('subscriptionid');
+        sum = $(this).data('sum');
+        data = subscriptionId ?
         {
-            id: subscription_id,
+            id: subscriptionId,
             target: 'subscription'
         } : {
-            id: order_id,
+            id: orderId,
             target: 'order'
         };
 
-        AppAccount.payWait();
-        AppAccount.ajaxError = function (q) {
-            AppAccount.payReset();
-            AppAccount.alertAjaxError(q);
-        };
-        $.get('/account/pay/card', function (data) {
+        getFlashMessage('pay_success');
 
-            var $html = $modal.find('.card-table');
-            $btn.each(function (key, btn) {
-                var m = $(btn).parents('.modal');
-                m.length > 0 && m.modal('hide');
-            });
-
-            // предлагаем выбор - оплатить привязанной или новой
-            $html.html(data);
-            $modal.modal('show');
-            $modal.off('hidden.bs.modal').on('hidden.bs.modal', function () {
-                AppAccount.payReset();
-            });
-
-            onClickSaveCardCheckbox();
-
-            $modal.find('.select-card-item').on('click', function () {
-                var $this = $(this);
-                var messageId = 'Payment in progress...';
-                if ($this.data('type') == 'card') {
-                    messageId = 'Loading payment form...';
-                    setTimeout(beginPay.bind(null, request.id, request.target, function () {
-                        $modal.modal('hide');
-                    }), 200);
-                }
-                else if ($this.data('type') == 'yandex') {
-                    messageId = 'Loading payment form...';
-
-                    $.get('/account/pay/check/' + request.id, function (res) {
-                        if (res.data.state == 'error') {
-                            submitYamForm(request.id, sum);
-                        }
-                        else {
-                            $modal.modal('hide');
-                            AppAccount.alertMessage(res.data.message)
-                        }
-                    });
-
-                }
-                else if ($this.data('type') == 'token') {
-                    setTimeout(beginPayToken.bind(null, request.id, request.target, function () {
-                        $modal.modal('hide');
-                    }), 200);
-                }
-                $html.html('<p class="title-waiting-paid">' + trans(messageId) + '</p>');
-            });
-
-        });
-
-        return false;
+        /*$.get('/account/prepayment', function(html) {
+            if(html) {
+                $('body').append(html);
+                $('#prepayment').modal('show');
+                cardSelector();
+                payStart();
+            }
+        });*/
     });
 
+    function cardSelector() {
+        var modal = $('#prepayment');
+        var selected = modal.find('.selected'),
+            list = modal.find('ul');
+        selected.click(function() {
+            $(this).hide();
+            list.slideDown(200);
+        });
+        list.find('li').click(function() {
+            var card = $(this).text(),
+                payment = $(this).data('payment');
+            list.slideUp(200, function() {
+                selected.find('span').text(card);
+                selected.find('input').val(payment);
+                selected.show();
+            });
+        });
+    }
 
-    function submitYamForm(orderId, sum) {
+    function payStart() {
+        var modal = $('#prepayment');
+        var submitBtn = modal.find('.btn-dh-green');
+        submitBtn.click(function() {
+            var modal = $('#prepayment');
+            if (modal.find('#yandex_input:checked').length > 0) {
+                $.get('/account/pay/check/' + data.id, function(res){
+                    if(res.data.state == 'error'){
+                        payByYandex();
+                    }else{
+                        modal.modal('hide');
+                    }
+                });
+            }
+            else {
+                var payment = modal.find('.selected input').val();
+                if (payment > 0) {
+                    payByToken();
+                }
+                else {
+                    modal.modal('hide');
+                    payNewCard(true);
+                }
+            }
+        });
+    }
+
+    // оплата через Яндекс
+    function payByYandex() {
         $('#ya-payment-form').remove();
         var $form = $('<form action="' + YAM_URL + '" id="ya-payment-form" target="_top"></form>');
+        $('body').append($form);
         $form.append('<input name="shopId" value="' + YAM_SID + '" type="hidden"/>');
         $form.append('<input name="scid" value="' + YAM_SCID + '" type="hidden"/>');
         $form.append('<input name="sum" value="' + sum + '" type="hidden">');
         //noinspection JSUnresolvedVariable
         $form.append('<input name="customerNumber" value="' + CID + '" type="hidden"/> ');
-        $form.append('<input name="orderNumber" value="' + orderId + '" type="hidden"/>  ');
+        $form.append('<input name="orderNumber" value="' + data.id + '" type="hidden"/>  ');
         $form.append('<input type="submit" value="Оплатить"/>');
         $form.submit();
     }
 
-    // платеж по токену
-    function beginPayToken(id, target, callback) {
-
-        AppAccount.payWait();
-
-        AppAccount.ajaxError = function (q) {
-            callback();
-            AppAccount.payReset();
-            AppAccount.alertAjaxError(q);
-        };
-        $.post('/account/pay/token', {id: id, target: target}, function (data) {
-            callback();
-            console.log(data);
-            AppAccount.payReset();
-            AppAccount.alertMessage(trans('Payment successful'));
-        });
-
-    }
-
-    // инициализация платежа в CloudPayments
-    function beginPay(id, target, callback) {
-
-        AppAccount.payWait();
-
-        cp.CloudPayments = cp.CloudPayments || null;
-        var payments = new cp.CloudPayments();
-        payments.charge = payments.charge || null;
-
-        AppAccount.ajaxError = function (q) {
-            callback();
-            AppAccount.payReset();
-            if (q.status && q.status == 409) {
-                AppAccount.confirmError(q.responseJSON.message, q.responseJSON.data['repeatText'], function () {
-                    AppAccount.closeAlert();
-                    requestInitPay(true);
-                });
-            }
-            else {
-                AppAccount.alertAjaxError(q);
-            }
-        };
-
-        requestInitPay(false);
-
-        function requestInitPay(reset) {
+    // новая карта
+    function payNewCard(reset) {
+        if (data) {
             reset = reset ? 1 : 0;
-            $.ajax(
-                '/account/pay/init/' + id + '/' + target + '/' + reset,
-                {
-                    success: function (data) {
-
-                        callback();
-                        AppAccount.payWait();
-
-                        payments.charge(
-                            data.data,
-                            // успешная оплата
-                            function (options) {
-                                console.log(options);
-                                AppAccount.alertMessage(trans('Payment successful'));
-                                AppAccount.payReset();
-                            },
-                            // ошибка оплаты
-                            function (reason, options) {
-                                console.log(reason);
-                                console.log(options);
-                                AppAccount.payReset();
-                                AppAccount.alertError(trans('Payment not finished'));
-                            }
-                        );
-
-                    }
+            $.get(
+                '/account/pay/init/' + data.id + '/' + data.target + '/' + reset,
+                function(json) {
+                    var payments = new cp.CloudPayments();
+                    payments.charge(
+                        json.data,
+                        // успешная оплата
+                        function (options) {
+                            getFlashMessage('pay_new_card_success');
+                        },
+                        // ошибка оплаты
+                        function (reason, options) {
+                        }
+                    );
                 }
             );
         }
-
-
     }
 
-
-    $('.save-card-remove').off('click').on('click', function () {
-
-        var $btn = $(this);
-        $btn.button('loading');
-
-        AppAccount.ajaxError = function (q) {
-            $btn.button('reset');
-            AppAccount.alertAjaxError(q);
-        };
-
-        $.post('/account/forms/card/remove', function () {
-            $btn.button('reset');
-            $('.info-card-in-account').fadeOut().remove();
-            $('.header-card-item').fadeOut().remove();
-        });
-
-    });
-
-    function onClickSaveCardCheckbox() {
-
-        var $ch = $('.checkbox-save-card');
-        var $lb = $ch.parent().find('label');
-        var alertText = $ch.parents('.modal').find('.save-card-info').html();
-
-        var $auto = $('.checkbox-autopay-card');
-        var $lbAuto = $auto.parent().find('label');
-        var alertTextAuto = $auto.parents('.modal,.personal-card-settings').find('.autopay-info').html();
-        var alertTextAutoOff = $auto.parents('.modal,.personal-card-settings').find('.autopay-info-off').html();
-
-        $auto.parent().find('i').tooltip().off('click').on('click', function () {
-            AppAccount.alertMessage(alertTextAuto);
-            return false;
-        });
-        $ch.parent().find('i').tooltip().off('click').on('click', function () {
-            AppAccount.alertMessage(alertText);
-            return false;
-        });
-
-        $ch.off('change').on('change', function () {
-
-            var check = $(this).is(':checked') ? 1 : 0;
-            load();
-
-            AppAccount.ajaxError = function (q) {
-                reset();
-                AppAccount.alertAjaxError(q);
-            };
-
-            $.post('/account/forms/card/save', {as: check}, function (data) {
-                data == '1' ? $ch.prop('checked', true) : $ch.removeAttr('checked', false);
-                if (data == 1) {
-                    AppAccount.alertMessage(alertText);
-                }
-                reset();
+    // оплата по токену
+    function payByToken() {
+        if (data) {
+            $.post('/account/pay/token', data, function(json){
+                getFlashMessage('pay_success');
             });
-
-            if (!check) {
-                $auto.removeAttr('checked');
-                $auto.attr('disabled', 'disabled');
-                $auto.parent().addClass('disabled').removeClass('active');
-            }
-            else {
-                $auto.removeAttr('disabled');
-                $auto.parent().addClass('active').removeClass('disabled');
-            }
-
-        });
-
-        $auto.off('change').on('change', function () {
-
-            var check = $(this).is(':checked') ? 1 : 0;
-            loadAuto();
-
-            AppAccount.ajaxError = function (q) {
-                resetAuto();
-                AppAccount.alertAjaxError(q);
-            };
-
-            $.post('/account/forms/autopay/save', {as: check}, function (data) {
-                if (data == 1) {
-                    AppAccount.alertMessage(alertTextAuto);
-                }
-                else {
-                    AppAccount.alertMessage(alertTextAutoOff);
-                }
-                data == '1' ? $auto.prop('checked', true) : $auto.removeAttr('checked', false);
-                resetAuto();
-            });
-
-        });
-
-        function reset() {
-            $ch.removeAttr('disabled');
-            $lb.html($lb.data('html'));
         }
-
-        function load() {
-            $ch.attr('disabled', 'disabled');
-            $lb.data('html', $lb.html());
-            $lb.html(trans('saving'));
-        }
-
-        function resetAuto() {
-            $auto.removeAttr('disabled');
-            $lbAuto.html($lbAuto.data('html'));
-        }
-
-        function loadAuto() {
-            $auto.attr('disabled', 'disabled');
-            $lbAuto.data('html', $lbAuto.html());
-            $lbAuto.html(trans('saving'));
-        }
-
     }
-
-    onClickSaveCardCheckbox();
-
 }
 
 function initCustomForms() {
@@ -1127,24 +963,34 @@ function hoverOrderDetails() {
 }
 
 function getFlashMessage(type) {
-    $('#flashMessage, .modal-backdrop').remove()
-    $.get('/account/flash/message/' + type, function (html) {
-        if (html) {
-            $('body').append(html);
-            $('#flashMessage').modal('show');
+    $('.modal').modal('hide');
+    setTimeout(function() {
+        $('#flashMessage, #prepayment, .modal-backdrop').remove()
+        if (type != '') {
+            $.get('/account/flash/message/' + type, function (html) {
+                if (html) {
+                    $('body').append(html);
+                    $('#flashMessage').modal('show');
+                }
+            });
         }
-    });
+    }, 200);
 }
 
-function addCard() {
-    $.get('/account/add_card', function(json) {
+function addCard(reload) {
+    $.get('/account/new_card', function(json) {
         $('#flashMessage').modal('hide');
         var payments = new cp.CloudPayments();
         payments.charge(
             json.data,
             // успешная оплата
             function (options) {
-                getFlashMessage('add_card_success');
+                if (reload) {
+                    location.reload();
+                }
+                else {
+                    getFlashMessage('add_card_success');
+                }
             },
             // ошибка оплаты
             function (reason, options) {
@@ -1157,7 +1003,6 @@ function autopay() {
     var modal = $('#flashMessage');
     if (modal.find('input:checked').length > 0) {
         $.post('/account/autopay', { autopay: 1 }, function(json) {
-            modal.modal('hide');
             getFlashMessage(json.message);
 
         });
@@ -1173,13 +1018,43 @@ function payFinish() {
     modal.find('input[type="checkbox"]:checked').each(function() {
         data[$(this).attr('name')] = $(this).val();
     });
-    if (data.length == 0)  {
-        modal.modal('hide');
-    }
-    else {
-        $.post('/account/pay_finish', data, function(json) {
-            modal.modal('hide');
-            getFlashMessage(json.message);
+    $.post('/account/pay_finish', data, function(json) {
+        getFlashMessage(json.message);
+    });
+}
+
+function deleteCard(self) {
+    if ($('#account_card_list .label.checked').length) {
+        var payments = [],
+            text = self.text(),
+            loadText = self.data('loading-text');
+        self.text(loadText);
+        $('#account_card_list .label.checked').each(function() {
+            payments.push($(this).data('payment'));
+        });
+        $.post('/account/delete_card', { payments: payments }, function() {
+            self.text(text);
+            location.reload();
         });
     }
 }
+
+(function() {
+    $('#account_card_list .label').click(function() {
+        var self = $(this),
+            isCheck = $(this).hasClass('checked');
+
+        $('#account_card_list .label').removeClass('checked');
+        if (!isCheck) {
+            self.addClass('checked');
+        }
+    });
+    $('#account_card_list span.card_autopay .label').click(function() {
+        var data = {};
+        if ($(this).hasClass('checked')) {
+            data['autopay'] = 1;
+            data['payment_id'];
+        }
+        $.post('/account/autopay', data);
+    });
+})();

@@ -179,7 +179,7 @@ $v = 19;
             </div>
 
             <div id="tab7_2" class="tab-box">
-			    <?= View::make('ac::inc.registration-form', compact('saveCard', 'cardInfo')) ?>
+			    <?= View::make('ac::inc.registration-form', compact('cards')) ?>
             </div>
 
             <div id="tab7_3" class="tab-box">

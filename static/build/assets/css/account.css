@@ -382,7 +382,7 @@ a.detail-order-hover {
 	margin-top: 40px;
 }
 
-#flashMessage {
+#flashMessage, #prepayment {
 	font-family: Arial, sans-serif;
 }
 #flashMessage .message_title {
@@ -391,12 +391,26 @@ a.detail-order-hover {
 	font-size: 28px;
 	margin: 30px 0 0;
 }
-#flashMessage .close {
+#prepayment .message_title {
+	font-size: 28px;
+}
+#flashMessage .close,
+#prepayment .close {
 	margin: 10px 10px 0 0;
 }
-#flashMessage .row-holder {
+#flashMessage .row-holder,
+#prepayment .row-holder {
 	font-size: 20px;
 	padding: 0 10px;
+}
+#prepayment > .modal-dialog {
+	width: 780px;
+}
+#prepayment .modal-content {
+	padding: 20px 20px 10px 50px;
+}
+#prepayment .row-holder {
+	padding: 0 40px 0 10px;
 }
 .modal .btn-dh-green {
 	display: inline-block;
@@ -411,11 +425,17 @@ a.detail-order-hover {
 	text-align: center;
 	margin: 0 0 40px;
 }
+#prepayment .checkboxes {
+	text-align: left;
+}
 .checkboxes > label {
 	display: inline-block;
 	background: url(../../images/checkbox.png) no-repeat;
 	font-size: 20px;
 	padding: 0 0 0 40px;
+}
+.checkboxes > label:first-of-type {
+	margin: 0 25px 0 0;
 }
 .checkboxes > input[type="checkbox"]:checked + label {
 	background: url(../../images/checkbox_checked.png) no-repeat;
@@ -430,4 +450,90 @@ a.detail-order-hover {
 }
 .small_desc > a:hover {
 	text-decoration: none;
+}
+#prepayment .cards_wrap {
+	position: relative;
+	margin: 0 0 25px;
+}
+#prepayment .cards_wrap .selected {
+	background: url(../../images/select_arrow.png) 95% 30px no-repeat;
+	border: 5px solid #ebebeb;
+	padding: 18px 11px;
+}
+#prepayment .cards_wrap ul {
+	border: 5px solid #000;
+	background: url(../../images/select_arrow_selected.png) 95% 30px no-repeat;
+	list-style: none;
+	padding: 10px 0;
+	display: none;
+}
+#prepayment .cards_wrap ul li {
+	padding: 10px;
+}
+#prepayment .cards_wrap ul li:hover {
+	color: #20b369;
+}
+#prepayment .checkboxes {
+	padding: 0 10px;
+}
+#prepayment .checkboxes .yandex_money {
+	display: inline-block;
+	width: 124px;
+	height: 20px;
+	background: url(../../images/yndex_money.png) 0 50% no-repeat;
+	margin: 0 0 0 10px;
+}
+#prepayment .checkboxes > label {
+	height: 30px;
+}
+#prepayment .checkboxes > label,
+#prepayment .checkboxes > label > span {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+ul#account_card_list {
+	list-style: none;
+	padding: 0 80px;
+}
+ul#account_card_list > li {
+	padding: 10px 0;
+}
+ul#account_card_list > li.heading {
+	border-bottom: 1px solid #d9d9d9;
+}
+ul#account_card_list > li {
+	clear: both;
+	overflow: hidden;
+}
+ul#account_card_list > li > span {
+	display: block;
+	float: left;
+}
+ul#account_card_list > li > span.select_card {
+	width: 60px;
+	height: 30px;
+}
+ul#account_card_list > li > span.card_num {
+	width: 300px;
+	height: 30px;
+	line-height: 30px;
+}
+ul#account_card_list > li > span.card_autopay {
+	width: 200px;
+	text-align: center;
+}
+ul#account_card_list > li span.label {
+	display: block;
+	width: 30px;
+	height: 30px;
+	margin: 0 auto;
+	background: url(../../images/checkbox.png);
+}
+ul#account_card_list > li span.checked {
+	background: url(../../images/checkbox_checked.png);
+}
+
+.card_action_button {
+	padding: 30px 80px;
 }

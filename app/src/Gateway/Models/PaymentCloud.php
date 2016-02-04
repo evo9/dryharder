@@ -153,11 +153,13 @@ class PaymentCloud extends \Eloquent
      *
      * @return bool
      */
-    public function paid($token)
+    public function paid($token, $isNew = false)
     {
 
         $this->failed = 0;
-        $this->token = $token;
+        if ($isNew) {
+            $this->token = $token;
+        }
         $this->waiting = 0;
 
         return $this->save();
@@ -369,9 +371,12 @@ class PaymentCloud extends \Eloquent
         }
     }
 
-    public static function autopayDisable()
+    public static function autopayDisable($customerId)
     {
-        
+        self::whereCustomerId($customerId)
+            ->update([
+                'autopay' => 0
+            ]);
     }
 
     public static function getCustomersCards($customerId)
@@ -381,5 +386,60 @@ class PaymentCloud extends \Eloquent
             ->whereWaiting(0)
             ->where('token', '!=', '')
             ->get();
+    }
+
+    public static function getLastPay($customerId)
+    {
+        $lastPay = self::whereCustomerId($customerId)
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        if (!$lastPay) {
+            return null;
+        }
+
+        if ($lastPay->failed || $lastPay->waiting) {
+            return null;
+        }
+
+        return $lastPay;
+    }
+
+    public static function checkTokenCard($customerId, $cardPan)
+    {
+        return self::whereCustomerId($customerId)
+            ->where('card_pan', '=', $cardPan)
+            ->where('token', '!=', '')
+            ->notFailed()
+            ->whereWaiting(0)
+            ->first();
+    }
+
+    public static function finishPay($cusomerId, $saveCard, $autopay)
+    {
+        $lastPay = self::getLastPay($cusomerId);
+        if ($lastPay) {
+            if (!$saveCard) {
+                $lastPay->token = '';
+            }
+            elseif ($saveCard && $autopay) {
+                $lastPay->autopay = 1;
+            }
+            $lastPay->save();
+
+            return $lastPay;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static function deleteCard($customerId, $payments)
+    {
+        self::whereCustomerId($customerId)
+            ->whereIn('payment_id', $payments)
+            ->update([
+                'token' => ''
+            ]);
     }
 }

@@ -5,15 +5,15 @@
                 <i class="fa fa-times-circle"></i>
             </button>
             <div class="heading">
-                <h3 class="message_title"><?= trans('flashes.autopay.title_error'); ?></h3>
+                <h3 class="message_title"><?php echo trans('flashes.autopay.title_error'); ?></h3>
             </div>
             <div class="row-holder">
-                <p class="text-center"><?= trans('flashes.autopay.content_error'); ?></p>
+                <p class="text-center"><?php echo trans('flashes.autopay.content_error'); ?></p>
             </div>
             <div class="action_buttons text-center">
-                <button class="btn btn-dh-green" onclick=""><?= trans('main.ok'); ?></button>
+                <button class="btn btn-dh-green" onclick=""><?php echo trans('main.ok'); ?></button>
             </div>
-            <div class="change_card_link"><?= trans('flashes.autopay.setting_link'); ?></div>
+            <div class="small_desc"><?php echo trans('flashes.autopay.setting_link'); ?></div>
         </div>
         <div class="clearfix"></div>
     </div>

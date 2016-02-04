@@ -185,7 +185,23 @@ function sendEvent(category, action, label, value) {
 		s.parentNode.insertBefore(fbds, s);
 		_fbq.loaded = true;
 	}
+
+	var hash = parseUrl();
+	if (hash) {
+
+	}
 })();
+
+function parseUrl() {
+	var url = location.href;
+
+	var subUrl = url.split('#');
+	if (subUrl.length > 1) {
+		return subUrl.pop();
+	}
+
+	return null;
+}
 
 
 AppEventListeners.$request = {

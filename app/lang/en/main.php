@@ -120,6 +120,9 @@ return [
                                         All transactions are conducted by CloudPayments (credit card processing center) on a secured server certified
                                         in accordance with international security standard PCI DSS.',
     'next' => 'Next',
-    'ok' => 'Ok'
+    'ok' => 'Ok',
+    'card_num' => 'Card number',
+    'card_autopay' => 'Autopay',
+    'add_new_card' => 'Add card'
 
 ];
