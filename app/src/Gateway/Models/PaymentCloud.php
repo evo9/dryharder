@@ -442,4 +442,27 @@ class PaymentCloud extends \Eloquent
                 'token' => ''
             ]);
     }
+
+    public static function getCustomerAutopayCard($customerId)
+    {
+        return self::whereCustomerId($customerId)
+            ->notFailed()
+            ->whereWaiting(0)
+            ->where('autopay', '=', 1)
+            ->first();
+    }
+
+    public static function getCustomersPaidOrders($customerId)
+    {
+        $orders = self::whereCustomerId($customerId)
+            ->notFailed()
+            ->whereWaiting(0)
+            ->get();
+        $ids = [];
+        foreach ($orders as $order) {
+            $ids[] = $order->order_id;
+        }
+
+        return $ids;
+    }
 }
