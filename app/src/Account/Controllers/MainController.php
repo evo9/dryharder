@@ -270,11 +270,6 @@ class MainController extends BaseController
 
     }
 
-    public function payByToken()
-    {
-        
-    }
-
     /**
      * данные для форм
      *

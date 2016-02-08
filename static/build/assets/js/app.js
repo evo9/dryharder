@@ -186,10 +186,11 @@ function sendEvent(category, action, label, value) {
 		_fbq.loaded = true;
 	}
 
-	var hash = parseUrl();
+	/*var hash = parseUrl();
 	if (hash) {
-
-	}
+		var blockPos = $('#' + hash).offset().top;
+		console.log(blockPos);
+	}*/
 })();
 
 function parseUrl() {
