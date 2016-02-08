@@ -48,7 +48,8 @@ class ParsePriceContentCommand extends Command
                     'lang'      => [
                         'ru' => $row[1],
                         'en' => empty($row[11]) ? $row[1] : $row[11],
-                    ]
+                    ],
+                    'hash' => $row[12]
                 ];
                 continue;
             }
@@ -103,7 +104,10 @@ class ParsePriceContentCommand extends Command
         foreach ($prices as $item) {
 
             if (!empty($item['delimiter'])) {
-                $content .= View::make('cmd::prices.delimiter', ['title' => $item['lang'][$lang]])->render();
+                $content .= View::make('cmd::prices.delimiter', [
+                    'title' => $item['lang'][$lang],
+                    'hash' => $tab == 'standard' ? $item['hash'] : ''
+                ])->render();
                 continue;
             }
 
@@ -117,6 +121,9 @@ class ParsePriceContentCommand extends Command
                 continue;
             }
 
+        }
+        if ($tab == 'standard') {
+            $content .= View::make('cmd::prices.bottom');
         }
 
         $table = str_replace('{content}', $content, $table);
