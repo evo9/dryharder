@@ -31,7 +31,7 @@
                 </label>
             </div>
             <div class="action_buttons text-center">
-                <button class="btn btn-dh-green"><?php echo trans('main.ok'); ?></button>
+                <button class="btn btn-dh-green" data-load="<?php echo trans('main.payment_process'); ?>"><?php echo trans('main.ok'); ?></button>
             </div>
         </div>
         <div class="clearfix"></div>

@@ -123,6 +123,7 @@ return [
     'ok' => 'Ок',
     'card_num' => 'Номер карты',
     'card_autopay' => 'Автооплата',
-    'add_new_card' => 'Добавить карту'
+    'add_new_card' => 'Добавить карту',
+    'payment_process' => 'Процесс оплаты...'
 
 ];

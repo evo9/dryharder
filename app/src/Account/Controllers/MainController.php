@@ -474,6 +474,15 @@ class MainController extends BaseController
             $api = new Api();
             $services = $api->Services($id)['services'];
 
+            $showButton = true;
+            if (PaymentCloud::checkPaid($id)) {
+                $showButton = false;
+            }
+            $total = 0;
+            foreach ($services as $service) {
+                $total += $service['amount'];
+            }
+
             // если не русский, будем переводить
             if (App::getLocale() != 'ru') {
                 foreach ($services as &$item) {
@@ -491,6 +500,8 @@ class MainController extends BaseController
         return View::make('ac::order', [
             'services' => $services,
             'id'       => $id,
+            'showButton' => $showButton,
+            'total' => $total
         ]);
 
     }
@@ -510,6 +521,15 @@ class MainController extends BaseController
             $os = new OrderServiceComponent();
             $services = $os->parseOrderService($id);
 
+            $showButton = true;
+            if (PaymentCloud::checkPaid($id)) {
+                $showButton = false;
+            }
+            $total = 0;
+            foreach ($services as $service) {
+                $total += $service['amount'];
+            }
+
             // если не русский, будем переводить
             if (App::getLocale() != 'ru') {
                 foreach ($services as &$item) {
@@ -527,6 +547,8 @@ class MainController extends BaseController
         return View::make('ac::order', [
             'services' => $services,
             'id'       => $id,
+            'showButton' => $showButton,
+            'total' => $total
         ]);
 
     }

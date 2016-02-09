@@ -133,7 +133,8 @@ $(function () {
     var $ordersTableHistorySm = $('.orders-accordion.visible-xs.history-orders');
 
     // контейнер детальной информации о заказе
-    var $orderDetails = $('.orders-table');
+    //var $orderDetails = $('.orders-table');
+    var $orderDetails = $('#order_pay_button');
     var $orderDetailsModal = $('#myModal4');
 
     // слой закрывающий табы на время загрузки их содержимого
@@ -278,11 +279,6 @@ $(function () {
             $overlay.show();
             $.get('/account/order/services/' + id, function (data) {
                 $orderDetails.html(data);
-                if (!paid) {
-                    AppAccount.payBtn().data('id', id);
-                    AppAccount.payBtn().data('sum', sum);
-                    AppAccount.payBtn().show();
-                }
                 hoverOrderDetails();
                 $overlay.hide();
 
@@ -757,10 +753,11 @@ function doPaymentListeners() {
 
     // кнопка "оплатить" - выбор карты
     var $btn = AppAccount.payBtn(),
+        $orderDetails = $('#order_pay_button'),
         data = null,
         sum = 0;
 
-    $btn.off('click').on('click', function(e){
+    $orderDetails.on('click', '.button-holder.checkout', function(e){
         e.preventDefault();
 
         var orderId = $(this).data('id'),
@@ -775,16 +772,14 @@ function doPaymentListeners() {
             target: 'order'
         };
 
-        getFlashMessage('pay_success');
-
-        /*$.get('/account/prepayment', function(html) {
+        $.get('/account/prepayment', function(html) {
             if(html) {
                 $('body').append(html);
                 $('#prepayment').modal('show');
                 cardSelector();
                 payStart();
             }
-        });*/
+        });
     });
 
     function cardSelector() {
@@ -809,28 +804,34 @@ function doPaymentListeners() {
     function payStart() {
         var modal = $('#prepayment');
         var submitBtn = modal.find('.btn-dh-green');
-        submitBtn.click(function() {
-            var modal = $('#prepayment');
-            if (modal.find('#yandex_input:checked').length > 0) {
-                $.get('/account/pay/check/' + data.id, function(res){
-                    if(res.data.state == 'error'){
-                        payByYandex();
-                    }else{
-                        modal.modal('hide');
+        var loadText = submitBtn.data('load'),
+            defaultText = submitBtn.text();
+        if (loadText != defaultText) {
+                submitBtn.click(function() {
+                    submitBtn.text(loadText);
+                    var modal = $('#prepayment');
+
+                    if (modal.find('#yandex_input:checked').length > 0) {
+                        $.get('/account/pay/check/' + data.id, function(res){
+                            if(res.data.state == 'error'){
+                                payByYandex();
+                            }else{
+                                modal.modal('hide');
+                            }
+                        });
+                    }
+                    else {
+                        var payment = modal.find('.selected input').val();
+                        if (payment > 0) {
+                            payByToken();
+                        }
+                        else {
+                            modal.modal('hide');
+                            payNewCard(true);
+                        }
                     }
                 });
-            }
-            else {
-                var payment = modal.find('.selected input').val();
-                if (payment > 0) {
-                    payByToken();
-                }
-                else {
-                    modal.modal('hide');
-                    payNewCard(true);
-                }
-            }
-        });
+        }
     }
 
     // оплата через Яндекс
@@ -875,7 +876,13 @@ function doPaymentListeners() {
     function payByToken() {
         if (data) {
             $.post('/account/pay/token', data, function(json){
-                getFlashMessage('pay_success');
+                if (json.errors && json.errors.length) {
+                    AppAccount.alertError(json.message);
+                }
+                else {
+                    getFlashMessage('pay_success');
+                    $orderDetails.html('');
+                }
             });
         }
     }

@@ -123,6 +123,7 @@ return [
     'ok' => 'Ok',
     'card_num' => 'Card number',
     'card_autopay' => 'Autopay',
-    'add_new_card' => 'Add card'
+    'add_new_card' => 'Add card',
+    'payment_process' => 'Payment process...'
 
 ];

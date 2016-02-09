@@ -465,4 +465,31 @@ class PaymentCloud extends \Eloquent
 
         return $ids;
     }
+
+    public static function checkPaid($orderId)
+    {
+        $order = self::whereOrderId($orderId)
+            ->notFailed()
+            ->where(function($query) {
+                $query
+                    ->where('waiting', 1)
+                    ->orWhere('exported', 1)
+                    ->orWhere(function($query) {
+                        /** @var PaymentCloud $query */
+                        $query->where('waiting', 0)->where('exported', 0);
+                    });
+            })
+            ->first();
+
+        if (!$order) {
+            return false;
+        }
+
+        // закрыть заказ если он "висит" уже долго
+        if ($order->closeIfLongWaiting()) {
+            return false;
+        }
+
+        return true;
+    }
 }
