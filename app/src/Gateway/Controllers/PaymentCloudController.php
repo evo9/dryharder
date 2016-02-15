@@ -13,6 +13,7 @@ use Dryharder\Components\Reporter;
 use Dryharder\Gateway\Components\GenerateAgentXML;
 use Dryharder\Gateway\Models\PaymentCloud;
 use Dryharder\Gateway\Models\CloudPaymentsCard;
+use Dryharder\Gateway\Models\RefundPayment;
 use Input;
 use Log;
 use Response;
@@ -72,6 +73,30 @@ class PaymentCloudController extends Controller
         $this->filter();
         $this->processPayFail();
 
+    }
+
+    /**
+     * сюда от платежного шлюза приходит запрос о возврате средств по платежу
+     */
+    public function refund()
+    {
+        $input = Input::all();
+
+        Reporter::payExternalFail($input['TransactionId'], $input['PaymentTransactionId'], $input['AccountId'], $input['Amount']);
+
+        $refund = new RefundPayment();
+        $refund->transaction_id = $input['TransactionId'];
+        $refund->payment_id = $input['PaymentTransactionId'];
+        $refund->amount = $input['Amount'];
+        $refund->customer_id = $input['AccountId'];
+        $refund->save();
+
+        $data = [
+            'code' => 0
+        ];
+
+        Response::json($data)->send();
+        die();
     }
 
 

@@ -799,5 +799,59 @@ class Api
 
     }
 
+    public function refundPayment($paymentId, $amount)
+    {
+        $url = Config::get('cloud.refund');
+
+        $post = [
+            'TransactionId' => $paymentId,
+            'Amount' => $amount
+        ];
+
+        Reporter::refundRequest($paymentId, $amount);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_USERPWD, Config::get('cloud.PublicId') . ':' . Config::get('cloud.SecretKey'));
+        $result = curl_exec($ch);
+        $error = curl_error($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        $response = @json_decode($result);
+        $paySuccess = false;
+
+        Reporter::refundResponse($paymentId, $amount, $response, $error);
+
+        // есть нормальный ответ
+        if (!$error && !empty($response) && is_object($response)) {
+
+            // ошибка
+            if ($response->Success) {
+                $paySuccess = true;
+            } else {
+                $error = !empty($response->Message) ? $response->Message : 'Ошибка операции во время возврата платежа';
+            }
+
+        }
+
+        if ($paySuccess) {
+            Reporter::refundSuccess($paymentId, $amount);
+
+            return (object)[
+                'success' => true,
+                'message' => 'Возврат платежа выполнен успешно',
+            ];
+        }
+
+        $error = trim($error . ' [code=' . $code . ']');
+        Reporter::refundError($paymentId, $amount, $error);
+
+        return (object)[
+            'success' => false,
+            'message' => $error,
+        ];
+    }
 
 }

@@ -439,7 +439,8 @@ class PaymentCloud extends \Eloquent
         self::whereCustomerId($customerId)
             ->whereIn('payment_id', $payments)
             ->update([
-                'token' => ''
+                'token' => '',
+                'autopay' => 0
             ]);
     }
 

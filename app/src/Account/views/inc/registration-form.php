@@ -89,29 +89,35 @@
                     <li id="payment_info">
                         <a class="opener" href="#"><i class="fa fa-rub" style="width: 22px;"></i><?= trans('main.PAYMENT_INFO') ?></a>
                         <div class="slide">
-                            <div class="card_action_button">
-                                <button class="btn btn-primary" onclick="addCard(true);"><?php echo trans('main.add_new_card') ?> <i class="fa fa-plus"></i></button>
-                            </div>
-                            <ul id="account_card_list">
-                                <li class="heading">
-                                    <span class="select_card"></span>
-                                    <span class="card_num"><?php echo trans('main.card_num'); ?></span>
-                                    <span class="card_autopay"><?php echo trans('main.card_autopay'); ?></span>
-                                </li>
-                                <?php foreach ($cards as $card) : ?>
-                                    <li>
+                            <div class="inner">
+                                <div class="card_action_button">
+                                    <button class="btn btn-primary" onclick="getFlashMessage('add_card_description');"><?php echo trans('main.add_new_card') ?> <i class="fa fa-plus"></i></button>
+                                </div>
+                                <ul id="account_card_list">
+                                    <li class="heading">
+                                        <span class="select_card"></span>
+                                        <span class="card_num"><?php echo trans('main.card_num'); ?></span>
+                                        <span class="card_autopay"><?php echo trans('main.card_autopay'); ?></span>
+                                    </li>
+                                    <?php foreach ($cards as $card) : ?>
+                                        <li>
                                         <span class="select_card">
                                             <span class="label" data-payment="<?php echo $card['payment_id'] ?>"></span>
                                         </span>
-                                        <span class="card_num"><?php echo $card['card_pan']; ?></span>
+                                            <span class="card_num"><?php echo $card['card_pan']; ?></span>
                                         <span class="card_autopay">
                                             <span class="label <?php echo $card['autopay'] ? 'checked' : ''; ?>" data-payment="<?php echo $card['payment_id'] ?>"></span>
                                         </span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                            <div class="card_action_button">
-                                <button class="btn btn-primary" onclick="deleteCard($(this))" data-loading-text="<?= trans('main.deleting') ?>"><?php echo trans('main.DELETE CARD') ?> <i class="fa fa-trash"></i></button>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <div class="card_action_button">
+                                    <button class="btn btn-primary" onclick="deleteCard($(this))" data-loading-text="<?= trans('main.deleting') ?>"><?php echo trans('main.DELETE CARD') ?> <i class="fa fa-trash"></i></button>
+                                </div>
+
+                                <div id="payment_info_description">
+                                    <?php echo trans('main.payment_info'); ?>
+                                </div>
                             </div>
                         </div>
                     </li>

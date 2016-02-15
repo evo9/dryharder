@@ -25,6 +25,7 @@ class GatewayServiceProvider extends Illuminate\Support\ServiceProvider
             Route::any('cloud/check', PaymentCloudController::class . '@check');
             Route::any('cloud/pay', PaymentCloudController::class . '@pay');
             Route::any('cloud/fail', PaymentCloudController::class . '@fail');
+            Route::any('cloud/refund', PaymentCloudController::class . '@refund');
             Route::get('cloud/waiting/{id}', PaymentCloudController::class . '@waiting');
             Route::get('cloud/export', PaymentCloudController::class . '@export');
         });

@@ -474,6 +474,46 @@ class Reporter
         self::report(self::PAY_TOKEN_ERROR, $data);
     }
 
+    const REFUND_REQUEST = 'pay.refund.request';
+    public static function refundRequest($paymentId, $amount)
+    {
+        $message = 'начало возврата средств';
+        $data = compact('message', 'paymentId', 'amount');
+        self::report(self::REFUND_REQUEST, $data);
+    }
+
+    const REFUND_RESPONSE = 'pay.refund.response';
+    public static function refundResponse($paymentId, $amount, $response, $error)
+    {
+        $message = 'ответ платежной системы на возврат платежа';
+        $data = compact('message', 'paymentId', 'amount', 'response', 'error');
+        self::report(self::REFUND_RESPONSE, $data);
+    }
+
+    const REFUND_SUCCESS = 'pay.refund.success';
+    public static function refundSuccess($paymentId, $amount)
+    {
+        $message = 'успех возврата платежа';
+        $data = compact('message', 'paymentId', 'amount');
+        self::report(self::REFUND_SUCCESS, $data);
+    }
+
+    const REFUND_ERROR = 'pay.refund.error';
+    public static function refundError($paymentId, $amount, $error)
+    {
+        $message = 'ошибка возврата платежа';
+        $data = compact('message', 'paymentId', 'amount', 'error');
+        self::report(self::REFUND_ERROR, $data);
+    }
+
+    const REFUND_EXTERNAL = 'pay.refund.external';
+    public static function refundExternal($transactionId, $paymentId, $customerId, $amount)
+    {
+        $message = 'платеж возвращен';
+        $data = compact('message', 'transactionId', 'paymentId', 'customerId', 'amount');
+        self::report(self::REFUND_EXTERNAL, $data);
+    }
+
     const ERROR_LOST_EXTERNAL_CUSTOMER = 'error.lost.external.customer';
 
     public static function errorLostExternalCustomer($customer_id, $external_user)

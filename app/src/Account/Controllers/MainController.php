@@ -38,7 +38,6 @@ class MainController extends BaseController
      */
     public function index()
     {
-
         if (Input::get('orderNumber')) {
             return Redirect::to('/account');
         }
@@ -91,6 +90,16 @@ class MainController extends BaseController
 
     }
 
+    public function customersCards()
+    {
+        $api  =new Api();
+        $cards = PaymentCloud::getCustomersCards($api->id());
+
+        return View::make('ac::inc.customers-cards', [
+            'cards' => $cards
+        ]);
+    }
+
     public function bonus()
     {
         $api = new Api();
@@ -140,20 +149,24 @@ class MainController extends BaseController
 
         $api = new Api();
         $customerId = $api->id();
-        $lastPay = PaymentCloud::getLastPay($customerId);
-        if ($lastPay) {
-            $params['lastPay'] = [
-                'payment_id' => $lastPay['payment_id'],
-                'card_pan' => $lastPay['card_pan']
-            ];
-        }
 
         $cards = PaymentCloud::getCustomersCards($customerId);
+        $cPan = [];
         foreach ($cards as $card) {
+            $cPan[] = $card['card_pan'];
             $params['cards'][] = [
                 'payment_id' => $card['payment_id'],
                 'card_pan' => $card['card_pan']
             ];
+        }
+        if (count($cPan) > 0) {
+            $lastPay = PaymentCloud::getLastPay($customerId);
+            if ($lastPay && in_array($lastPay['card_pan'], $cPan)) {
+                $params['lastPay'] = [
+                    'payment_id' => $lastPay['payment_id'],
+                    'card_pan' => $lastPay['card_pan']
+                ];
+            }
         }
 
         return View::make('ac::prepayment', $params);
@@ -672,7 +685,7 @@ class MainController extends BaseController
 
         $data = [
             'publicId'    => Config::get('cloud.PublicId'),
-            'description' => 'Добвление карты в dryharder.me ',
+            'description' => 'Добавление карты в dryharder.me ',
             'amount'      => 1,
             'currency'    => 'RUB',
             'accountId'   => $api->id()
@@ -680,6 +693,37 @@ class MainController extends BaseController
 
         return Response::json([
             'data' => $data
+        ]);
+    }
+
+    /**
+     * Возврат платежа после добавления карты
+     */
+    public function refund()
+    {
+        $api = new Api();
+
+        if (!Input::has('newCard')) {
+            return Response::json([
+                'data' => '',
+                'message' => 'Action not found'
+            ]);
+        }
+
+        $lastPay = PaymentCloud::getLastPay($api->id());
+        if (!$lastPay || $lastPay['amount'] != 1) {
+            return $this->responseErrorMessage('Ошибка! Не найден платеж.', 500);
+        }
+
+        $result = $api->refundPayment($lastPay['payment_id'], $lastPay['amount']);
+
+        if (!$result->success) {
+            return $this->responseErrorMessage($result->message, 500);
+        }
+
+        return Response::json([
+            'data'    => '',
+            'message' => $result->message,
         ]);
     }
 

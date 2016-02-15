@@ -759,6 +759,7 @@ function doPaymentListeners() {
 
     $orderDetails.on('click', '.button-holder.checkout', function(e){
         e.preventDefault();
+        $('#prepayment, .modal-backdrop').remove();
 
         var orderId = $(this).data('id'),
             subscriptionId = $(this).data('subscriptionid');
@@ -786,10 +787,12 @@ function doPaymentListeners() {
         var modal = $('#prepayment');
         var selected = modal.find('.selected'),
             list = modal.find('ul');
-        selected.click(function() {
-            $(this).hide();
-            list.slideDown(200);
-        });
+        if (list.find('li').length > 1) {
+            selected.click(function() {
+                $(this).hide();
+                list.slideDown(200);
+            });
+        }
         list.find('li').click(function() {
             var card = $(this).text(),
                 payment = $(this).data('payment');
@@ -993,7 +996,7 @@ function addCard(reload) {
             // успешная оплата
             function (options) {
                 if (reload) {
-                    location.reload();
+                    refund();
                 }
                 else {
                     getFlashMessage('add_card_success');
@@ -1003,6 +1006,18 @@ function addCard(reload) {
             function (reason, options) {
             }
         );
+    });
+}
+
+function refund() {
+    $.post('/account/pay/refund', { newCard: 1 }, function(json) {
+        cardList();
+    });
+}
+
+function cardList() {
+    $.get('/account/customers_cards', function(html) {
+        $('ul#account_card_list').html(html);
     });
 }
 
@@ -1031,36 +1046,43 @@ function payFinish() {
 }
 
 function deleteCard(self) {
-    if ($('#account_card_list .label.checked').length) {
+    if ($('#account_card_list span.select_card > .label.checked').length) {
         var payments = [],
             text = self.text(),
             loadText = self.data('loading-text');
         self.text(loadText);
-        $('#account_card_list .label.checked').each(function() {
+        $('#account_card_list span.select_card > .label.checked').each(function() {
             payments.push($(this).data('payment'));
         });
         $.post('/account/delete_card', { payments: payments }, function() {
             self.text(text);
-            location.reload();
+            cardList();
         });
     }
 }
 
 (function() {
-    $('#account_card_list .label').click(function() {
+    $('#payment_info').click(function() {
+        cardList();
+    });
+    $('#account_card_list').on('click', 'span.select_card > .label', function() {
         var self = $(this),
             isCheck = $(this).hasClass('checked');
 
-        $('#account_card_list .label').removeClass('checked');
+        $('#account_card_list span.select_card > .label').removeClass('checked');
         if (!isCheck) {
             self.addClass('checked');
         }
     });
-    $('#account_card_list span.card_autopay .label').click(function() {
-        var data = {};
-        if ($(this).hasClass('checked')) {
+    $('#account_card_list').on('click', 'span.card_autopay .label', function() {
+        var data = {},
+            self = $(this),
+            isCheck = $(this).hasClass('checked')
+        $('#account_card_list span.card_autopay > .label').removeClass('checked');
+        if (!isCheck) {
             data['autopay'] = 1;
             data['payment_id'];
+            self.addClass('checked');
         }
         $.post('/account/autopay', data);
     });
