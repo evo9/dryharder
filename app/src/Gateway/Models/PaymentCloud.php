@@ -54,18 +54,24 @@ class PaymentCloud extends \Eloquent
      *
      * @return PaymentCloud|null
      */
-    public static function getToken($customer_id)
+    public static function getToken($customerId, $paymentId)
     {
         // последняя успешная оплата клиента, в которой есть токен
-        $lastPay = self::payed()
-            ->whereCustomerId($customer_id)
+        /*$lastPay = self::payed()
+            ->whereCustomerId($customerId)
             ->notFailed()
             ->whereWaiting(0)
             ->where('token', '!=', '')
             ->orderBy('id', 'desc')
+            ->first();*/
+
+        $tokenCard = self::whereCustomerId($customerId)
+            ->wherePaymentId($paymentId)
             ->first();
 
-        return ($lastPay && $lastPay->token) ? $lastPay : null;
+
+
+        return ($tokenCard && $tokenCard->token) ? $tokenCard : null;
 
     }
 

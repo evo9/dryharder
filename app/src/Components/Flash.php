@@ -113,9 +113,10 @@ class Flash
             $lastView->qnt = 1;
             $lastView->save();
 
-            return $result['status'] = true;
+            $result['status'] = true;
 
         }
+
         return $result;
 
     }

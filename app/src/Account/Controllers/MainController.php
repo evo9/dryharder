@@ -57,7 +57,7 @@ class MainController extends BaseController
             }
             $user = $api->ContrInfo();
             $promo = $this->promoInfo($user, $promo);
-            $token = PaymentCloud::getToken($user['id']);
+            //$token = PaymentCloud::getToken($user['id']);
             $agbisKey = $api->key();
 
             $customer = Customer::instance()->initByExternalId($user['id']);
@@ -81,7 +81,6 @@ class MainController extends BaseController
         return View::make('ac::index', [
             'user'       => $user,
             'promo'      => $promo,
-            'token'      => $token,
             'agbisKey'   => $agbisKey,
             'saveCard'   => $saveCard,
             'invite_url' => $invite->url(),
@@ -235,7 +234,14 @@ class MainController extends BaseController
 
     public function token()
     {
+        if (!Input::has('payment_id')) {
+            return Response::json([
+                'errors'    => [],
+                'message' => trans('pay.prepayment.search_card_error')
+            ]);
+        }
 
+        $paymentId = Input::get('payment_id');
         $target = Input::get('target');
         $order_id = $this->parsePayTarget($target, Input::get('id'));
 
@@ -269,16 +275,21 @@ class MainController extends BaseController
             return $this->responseErrorMessage('Оплата заказа не доступна', 403);
         }
 
-        $token = PaymentCloud::getToken($api->id());
+        $token = PaymentCloud::getToken($api->id(), $paymentId);
+        if ($token) {
+            $result = $api->payByToken($order_id, $token->token, $order['amount'], $order['doc_number']);
+            if (!$result->success) {
+                return $this->responseErrorMessage($result->message, 200);
+            }
 
-        $result = $api->payByToken($order_id, $token->token, $order['amount'], $order['doc_number']);
-        if (!$result->success) {
-            return $this->responseErrorMessage($result->message, 500);
+            return Response::json([
+                'data'    => '',
+                'message' => $result->message,
+            ]);
         }
-
         return Response::json([
-            'data'    => '',
-            'message' => $result->message,
+            'errors'    => [],
+            'message' => 'Ошибка! Карта не найдена!',
         ]);
 
     }

@@ -5,7 +5,7 @@
                 <i class="fa fa-times-circle"></i>
             </button>
             <div class="heading">
-                <h3 class="message_title"><?php echo trans('flashes.pay.title'); ?></h3>
+                <h3 class="message_title"><?php echo trans('flashes.pay.success_title'); ?></h3>
             </div>
             <div class="row-holder">
                 <p class="text-center"><?php echo trans('main.Order payment is success'); ?></p>
