@@ -364,10 +364,10 @@ class PaymentCloud extends \Eloquent
         if ($pay) {
             $pay->autopay = 1;
             $pay->save();
-            return true;
+            return $pay;
         }
         else {
-            return false;
+            return null;
         }
     }
 

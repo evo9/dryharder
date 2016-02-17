@@ -748,20 +748,21 @@ class MainController extends BaseController
     {
         $api = new Api();
 
-        $message = 'autopay_success';
+        $currentCard = '';
 
         if (Input::has('autopay')) {
             $paymentId = Input::has('payment_id') ? Input::get('payment_id') : null;
-            if (!PaymentCloud::autopayEnable($api->id(), $paymentId)) {
-                $message = 'autopay_error';
+            $card = PaymentCloud::autopayEnable($api->id(), $paymentId);
+            if ($card) {
+                $currentCard = '<i class="fa fa-credit-card"></i> ' . $card['card_type'] . ' ***' . substr($card['card_pan'], -4);;
             }
         }
         else {
             PaymentCloud::autopayDisable($api->id());
-            $message = 'autopay_disable';
+            $currentCard = '';
         }
 
-        return Response::json(['message' => $message]);
+        return Response::json(['currentCard' => $currentCard]);
     }
 
     public function payFinish()

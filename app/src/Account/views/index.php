@@ -11,8 +11,10 @@ use Dryharder\Gateway\Models\PaymentCloud;
  */
 
 $cardInfo = null;
-if ($token) {
-	$cardInfo = '<i class="fa fa-credit-card"></i> ' . $token->card_type . ' ***' . substr($token->card_pan, -4);
+foreach ($cards as $c) {
+	if ($c['autopay']) {
+		$cardInfo = '<i class="fa fa-credit-card"></i> ' . $c['card_type'] . ' ***' . substr($c['card_pan'], -4);
+	}
 }
 
 $v = 19;

@@ -1062,7 +1062,7 @@ function deleteCard(self) {
 }
 
 (function() {
-    $('#payment_info').click(function() {
+    $('#payment_info > a.opener').click(function() {
         cardList();
     });
     $('#account_card_list').on('click', 'span.select_card > .label', function() {
@@ -1081,9 +1081,11 @@ function deleteCard(self) {
         $('#account_card_list span.card_autopay > .label').removeClass('checked');
         if (!isCheck) {
             data['autopay'] = 1;
-            data['payment_id'];
+            data['payment_id'] = self.data('payment');
             self.addClass('checked');
         }
-        $.post('/account/autopay', data);
+        $.post('/account/autopay', data, function(json) {
+            $('span.card-info.header-card-item').html(json.currentCard);
+        });
     });
 })();
