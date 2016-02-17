@@ -1071,10 +1071,11 @@ function deleteCard(self) {
     $('#account_card_list').on('click', 'span.select_card > .label', function () {
         var self = $(this),
             isCheck = $(this).hasClass('checked');
-
-        $('#account_card_list span.select_card > .label').removeClass('checked');
         if (!isCheck) {
             self.addClass('checked');
+        }
+        else {
+            self.removeClass('checked');
         }
     });
     $('#account_card_list').on('click', 'span.card_autopay .label', function () {
