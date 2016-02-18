@@ -25,12 +25,12 @@ class AutoPayController extends BaseController
             return \View::make('man::autopays.index');
         }
 
-        $list = CustomerModel::where('auto_pay', 1)->get()->all();
+        $list = CustomerModel::getAutopayAll();
 
-        foreach ($list as $customer) {
+        /*foreach ($list as $customer) {
             $token = PaymentCloud::getToken($customer->agbis_id);
             $customer->tokenExists = !empty($token);
-        }
+        }*/
 
         return $list;
 
@@ -39,11 +39,9 @@ class AutoPayController extends BaseController
     public function start($order_id, $customer_id)
     {
 
-        $pay = OrderAutopay::whereOrderId($order_id)->first();
-
-        if($pay){
+        if(!$this->isNotPaidOrder($customer_id, $order_id)){
             return Response::json([
-                'message' => 'Уже создана заявка на автосписание по этому заказу',
+                'message' => 'Заказ находится в процессе оплаты',
             ], 500);
         }
 
@@ -54,7 +52,8 @@ class AutoPayController extends BaseController
             ], 500);
         }
 
-        if(!$customer->isSaveCard() || !$customer->isAutoPay()){
+        $autopayCard = PaymentCloud::getCustomerAutopayCard($customer_id);
+        if(!$autopayCard){
             return Response::json([
                 'message' => 'Автоплатежи клиента выключены',
             ], 500);
@@ -78,8 +77,7 @@ class AutoPayController extends BaseController
             ], 500);
         }
 
-        $token = PaymentCloud::getToken($customer_id);
-        if(!$token){
+        if($autopayCard->token == ''){
             return Response::json([
                 'message' => 'Токен привязанной карты не найден',
             ], 500);
@@ -92,22 +90,32 @@ class AutoPayController extends BaseController
             'state'       => 0,
         ]);
 
-        $result = $api->payByToken($order_id, $token->token, $order['amount'], $order['doc_number'], $sessionId);
+        $result = $api->payByToken($order_id, $autopayCard->token, $order['amount'], $order['doc_number'], $sessionId);
         $pay->comment = $result->message;
         $pay->save();
 
         if($result->success){
             $pay->state = 1;
             $pay->save();
-            Mailer::succesAutoPay($customer, $order, $token);
+            Mailer::succesAutoPay($customer, $order, $autopayCard);
             return Response::json([]);
         }
 
-        Mailer::errorAutoPay($customer, $order, $token);
+        Mailer::errorAutoPay($customer, $order, $autopayCard);
         return Response::json([
             'message' => $result->message,
         ], 500);
 
+    }
+
+    private function isNotPaidOrder($customerId, $orderId)
+    {
+        $orders = PaymentCloud::getCustomersPaidOrders($customerId);
+
+        if (!in_array($orderId, $orders)) {
+            return true;
+        }
+        return false;
     }
 
     public function orders($cid)

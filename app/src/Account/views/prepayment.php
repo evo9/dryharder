@@ -10,8 +10,8 @@
             <div class="row-holder">
                 <div class="cards_wrap">
                     <div class="selected">
-                        <span><?php echo $lastPay['card_pan']; ?></span>
-                        <input type="hidden" name="payment" value="<?php echo $lastPay['payment_id']; ?>">
+                        <span><?php echo $selectedCard['card_pan']; ?></span>
+                        <input type="hidden" name="payment" value="<?php echo $selectedCard['payment_id']; ?>">
                     </div>
                     <ul>
                         <li data-payment="-1"><?php echo trans('pay.prepayment.new_card'); ?></li>

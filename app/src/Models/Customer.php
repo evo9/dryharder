@@ -3,6 +3,8 @@
 
 namespace Dryharder\Models;
 
+use DB;
+
 use Dryharder\Gateway\Models\PaymentCloud;
 
 /**
@@ -23,6 +25,7 @@ use Dryharder\Gateway\Models\PaymentCloud;
  * @method static Customer whereInvite($code)
  * @method static Customer wherePhone($phone)
  * @method static Customer whereAgbisId($id)
+ * @method static Customer getAutopayAll()
  * @method static Customer first()
  * @method static Customer get()
  * @method static Customer[] all()
@@ -111,6 +114,17 @@ class Customer extends \Eloquent
         $array['existsPaid'] = $this->existsPaid;
         $array['tokenExists'] = $this->tokenExists;
         return $array;
+    }
+
+    public static function scopeGetAutopayAll()
+    {
+        $customers = Customer::leftJoin('payment_cloud', function($join) {
+                $join->on('payment_cloud.customer_id', '=', 'customers.agbis_id');
+            })
+            ->where('payment_cloud.autopay', '=', 1)
+            ->get();
+
+        return $customers;
     }
 
 }

@@ -48,7 +48,6 @@ class MainController extends BaseController
         $mainPage = Config::get('app.url');
         $langReplace = App::getLocale() == 'ru' ? 'index' : App::getLocale();
         $mainPage = str_replace('#lang#', $langReplace, $mainPage);
-        $cards = [];
 
         try {
             $api = new Api();
@@ -140,7 +139,7 @@ class MainController extends BaseController
     {
         $params = [
             'cards' => [],
-            'lastPay' => [
+            'selectedCard' => [
                 'payment_id' => '-1',
                 'card_pan' => trans('pay.prepayment.new_card')
             ]
@@ -159,13 +158,22 @@ class MainController extends BaseController
             ];
         }
         if (count($cPan) > 0) {
-            $lastPay = PaymentCloud::getLastPay($customerId);
+            /*$lastPay = PaymentCloud::getLastPay($customerId);
             if ($lastPay && in_array($lastPay['card_pan'], $cPan)) {
-                $params['lastPay'] = [
+                $params['selectedCard'] = [
                     'payment_id' => $lastPay['payment_id'],
                     'card_pan' => $lastPay['card_pan']
                 ];
             }
+            else {*/
+                $lastAddedCard = PaymentCloud::lastAddedCard($customerId);
+                if ($lastAddedCard) {
+                    $params['selectedCard'] = [
+                        'payment_id' => $lastAddedCard['payment_id'],
+                        'card_pan' => $lastAddedCard['card_pan']
+                    ];
+                }
+            //}
         }
 
         return View::make('ac::prepayment', $params);

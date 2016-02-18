@@ -499,4 +499,14 @@ class PaymentCloud extends \Eloquent
 
         return true;
     }
+
+    public static function lastAddedCard($customerId)
+    {
+        return self::whereCustomerId($customerId)
+            ->whereWaiting(0)
+            ->notFailed()
+            ->where('token', '!=', '')
+            ->orderBy('id', 'desc')
+            ->first();
+    }
 }
