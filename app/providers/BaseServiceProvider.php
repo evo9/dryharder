@@ -77,6 +77,11 @@ class BaseServiceProvider extends Illuminate\Support\ServiceProvider
         });
         $this->commands('dh.orders.autopay');
 
+       /* $this->app['dh.orders.autopay'] = $this->app->share(function () {
+            return new \OrdersAutopayCommand();
+        });
+        $this->commands('dh.orders.autopay');*/
+
     }
 
     private function routes()

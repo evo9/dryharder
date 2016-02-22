@@ -33,3 +33,6 @@ tr.tokenized {
 tr.tokenized-error {
 	background-color: rgba(160, 0, 43, 0.14);
 }
+tr.green {
+	background: #e2fafa;
+}

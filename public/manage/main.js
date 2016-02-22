@@ -290,19 +290,96 @@ App.controller('InviteCtrl', ['$scope', '$http', function ($scope, $http) {
 App.controller('AutoPayCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
 	$scope.list = [];
+	$scope.checked = [];
+	$scope.orderInfo = [];
+	$scope.payProcess = false;
 	load();
 
+	$rootScope.$on('dh.order.pay', function(event, data) {
+		$scope.orderInfo.countOrders --;
+		$scope.orderInfo.totalOrderAmount -= data.amount;
+	});
+
+	$rootScope.$on('dh.check.customers.orders', function(event, data) {
+		angular.forEach($scope.list, function(item, key) {
+			if (item.agbisId == data.customerId) {
+				$scope.list[key].isGoodOrder = data.isGoodOrder;
+			}
+		});
+	});
+
 	$scope.orders = function(item){
-		$rootScope.$broadcast('dh.load.orders', {id: item.agbis_id});
+		$rootScope.$broadcast('dh.load.orders', {id: item.agbisId});
 	};
 
 	function load() {
 		$http
 			.get('/man/autopays')
 			.success(function (data) {
-				$scope.list = data;
+				$scope.list = data.list;
+				$scope.orderInfo = data.orderInfo
 			});
 	}
+
+	$scope.check = function(id) {
+		if ($scope.inArray(id, $scope.checked)) {
+			angular.forEach($scope.checked, function(value, key) {
+				if ($scope.checked[key] == id) {
+					$scope.checked.splice(key, 1);
+				}
+			});
+		}
+		else {
+			$scope.checked.push(id);
+		}
+	};
+
+	$scope.checkAll = function() {
+		if ($scope.checked.length > 0) {
+			$scope.checked = [];
+		}
+		else {
+			angular.forEach($scope.list, function(item, key) {
+				if (item.isGoodOrder)
+				$scope.checked.push(item.agbisId);
+			});
+		}
+	};
+
+	$scope.payAll = function() {
+		if ($scope.checked.length > 0) {
+			$scope.payProcess = true;
+			$http
+				.post(
+					'/man/autopays/autopay_all',
+					{ customers: $scope.checked }
+				)
+				.success(function(data) {
+					$scope.payProcess = false;
+					$scope.ckecked = [];
+					if (data.result.length > 0) {
+						angular.forEach(data.result, function(v, k) {
+							angular.forEach($scope.list, function(item, key) {
+								if (item.agbisId == v.customerId){
+									$scope.list[key].isGoodOrder = v.isGoodOrder;
+								}
+							});
+						});
+					}
+				});
+			;
+		}
+	}
+
+
+	$scope.inArray = function(el, arr) {
+		for (var i = 0; i < arr.length; i ++) {
+			if (arr[i] == el) {
+				return true;
+			}
+		}
+		return false;
+	};
 
 }]);
 
@@ -325,8 +402,12 @@ App.controller('AutoPayOrdersCtrl', ['$scope', '$http', '$rootScope', function (
 		$http
 			.get('/man/autopays/start/' + order.id + '/' + $scope.cid)
 			.success(function (data) {
+				if (data.amount) {
+					$rootScope.$broadcast('dh.order.pay', { amount: data.amount });
+				}
 				$($event.currentTarget).remove();
 				load($scope.cid);
+				checkCustomersOrders($scope.cid)
 			})
 			.error(function (data) {
 				load($scope.cid);
@@ -341,6 +422,17 @@ App.controller('AutoPayOrdersCtrl', ['$scope', '$http', '$rootScope', function (
 			.success(function (data) {
 				$scope.list = data;
 			});
+	}
+
+	function checkCustomersOrders(customerId) {
+		$http
+			.get('/man/autopays/check_customers_orders/' + customerId)
+			.success(function(data) {
+				$rootScope.$broadcast('dh.check.customers.orders', {
+					customerId: customerId,
+					isGoodOrder: data.isGoodOrder
+				});
+			})
 	}
 
 }]);

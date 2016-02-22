@@ -14,10 +14,11 @@ use Dryharder\Gateway\Models\PaymentCloud;
 use Dryharder\Models\Customer as CustomerModel;
 use Dryharder\Models\OrderAutopay;
 use Response;
+use Input;
 
 class AutoPayController extends BaseController
 {
-
+    private $orderInfo;
 
     public function index()
     {
@@ -25,15 +26,132 @@ class AutoPayController extends BaseController
             return \View::make('man::autopays.index');
         }
 
+        $orderInfo = [
+            'countOrders' => 0,
+            'totalOrderAmount' => 0
+        ];
+
         $list = CustomerModel::getAutopayAll();
 
-        /*foreach ($list as $customer) {
-            $token = PaymentCloud::getToken($customer->agbis_id);
-            $customer->tokenExists = !empty($token);
-        }*/
+        $result = [];
+        foreach ($list as $customer) {
+            $this->orderInfo = [
+                'totalOrder' => 0,
+                'totalOrderAmount' => 0
+            ];
+            $data = [
+                'phone' => $customer->phone,
+                'agbisId' => $customer->agbis_id,
+                'agbisPassword' => $customer->agbis_password
+            ];
+            $this->checkPaidOrders($data);
 
-        return $list;
+            $orderInfo['countOrders'] += $this->orderInfo['totalOrder'];
+            $orderInfo['totalOrderAmount'] += $this->orderInfo['totalOrderAmount'];
 
+            $result[] = [
+                'id' => $customer->customer_id,
+                'agbisId' => $customer->agbis_id,
+                'agbisId' => $customer->agbis_id,
+                'email' => $customer->email,
+                'name' => $customer->name,
+                'isGoodOrder' => $this->orderInfo['totalOrder'] > 0 ? true : false
+            ];
+        }
+
+        return [
+            'list' => $result,
+            'orderInfo' => $orderInfo
+        ];
+
+    }
+
+    private function checkPaidOrders($data)
+    {
+        $api = new Api();
+
+        $customerId = $data['agbisId'];
+        $phone = '+7' . $data['phone'];
+        $user = $api->Login_con($phone, $data['agbisPassword']);
+        $key = $user->key;
+        $orders = $api->Orders($key)['orders'];
+        foreach ($orders as $order) {
+            if ($this->isNotPaidOrder($customerId, $order['id'])) {
+                if ($api->IsGoodOrder($order['id'], $customerId)) {
+                    $this->orderInfo['totalOrder'] ++;
+                    $this->orderInfo['totalOrderAmount'] += $order['amount'];
+                }
+            }
+        }
+    }
+
+    public function checkCustomersOrders($customerId)
+    {
+        $customer = Customer::instance()->initByExternalId($customerId);
+
+        $this->orderInfo = [
+            'totalOrder' => 0,
+            'totalOrderAmount' => 0
+        ];
+        $data = [
+            'phone' => $customer->get()->phone,
+            'agbisId' => $customerId,
+            'agbisPassword' => $customer->get()->credential->agbis_password
+        ];
+        $this->checkPaidOrders($data);
+
+        $isGoodOrder = $this->orderInfo['totalOrder'] > 0 ? true : false;
+
+        return Response::json([
+            'isGoodOrder' => $isGoodOrder,
+        ], 200);
+    }
+
+    public function autopayAll()
+    {
+        $result = [];
+        if (Input::has('customers')) {
+            $api = new Api();
+            $customers = Input::get('customers');
+            foreach ($customers as $customerId) {
+                $customer = Customer::instance()->initByExternalId($customerId);
+                if ($customer) {
+                    $card = PaymentCloud::getCustomerAutopayCard($customerId);
+                    if ($card) {
+                        $phone = '+7' . $customer->get()->phone;
+                        $password = $customer->get()->credential->agbis_password;
+                        $user = $api->Login_con($phone, $password);
+                        $key = $user->key;
+                        $orders = $api->Orders($key)['orders'];
+                        foreach ($orders as $order) {
+                            if ($this->isNotPaidOrder($customerId, $order['id'])) {
+                                if ($api->IsGoodOrder($order['id'], $customerId)) {
+                                    if($this->isNotPaidOrder($customerId, $order['id'])){
+                                        $api->payByToken($order['id'], $card->token, $order['amount'], $order['doc_number'], $key);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    $data = [
+                        'phone' => $customer->get()->phone,
+                        'agbisId' => $customerId,
+                        'agbisPassword' => $customer->get()->credential->agbis_password
+                    ];
+                    $this->checkPaidOrders($data);
+
+                    $result[] = [
+                        'customerId' => $customerId,
+                        'isGoodOrder' => $this->orderInfo['totalOrder'] > 0 ? true : false
+                    ];
+                }
+            }
+        }
+
+        return Response::json([
+            'result' => $result
+        ], 200);
     }
 
     public function start($order_id, $customer_id)
@@ -98,7 +216,9 @@ class AutoPayController extends BaseController
             $pay->state = 1;
             $pay->save();
             Mailer::succesAutoPay($customer, $order, $autopayCard);
-            return Response::json([]);
+            return Response::json([
+                'amount' => $order['amount']
+            ]);
         }
 
         Mailer::errorAutoPay($customer, $order, $autopayCard);

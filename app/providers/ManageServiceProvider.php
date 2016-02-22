@@ -54,6 +54,8 @@ class ManageServiceProvider extends Illuminate\Support\ServiceProvider {
                 Route::any('autopays', AutoPayController::class . '@index');
                 Route::any('autopays/orders/{cid}', AutoPayController::class . '@orders');
                 Route::any('autopays/start/{order_id}/{customer_id}', AutoPayController::class . '@start');
+                Route::any('autopays/check_customers_orders/{customer_id}', AutoPayController::class . '@checkCustomersOrders');
+                Route::any('autopays/autopay_all', AutoPayController::class . '@autopayAll');
 
             }
         );

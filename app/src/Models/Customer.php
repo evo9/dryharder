@@ -118,8 +118,12 @@ class Customer extends \Eloquent
 
     public static function scopeGetAutopayAll()
     {
-        $customers = Customer::leftJoin('payment_cloud', function($join) {
+        $customers = DB::table('customers')
+            ->leftJoin('payment_cloud', function($join) {
                 $join->on('payment_cloud.customer_id', '=', 'customers.agbis_id');
+            })
+            ->leftJoin('customer_credentials', function($join) {
+                $join->on('customer_credentials.customer_id', '=', 'customers.id');
             })
             ->where('payment_cloud.autopay', '=', 1)
             ->get();
