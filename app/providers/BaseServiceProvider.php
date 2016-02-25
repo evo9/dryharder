@@ -76,7 +76,6 @@ class BaseServiceProvider extends Illuminate\Support\ServiceProvider
             return new \OrdersAutopayCommand();
         });
         $this->commands('dh.orders.autopay');
-
     }
 
     private function routes()

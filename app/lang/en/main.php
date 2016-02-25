@@ -123,6 +123,8 @@ return [
     'ok' => 'Ok',
     'card_num' => 'Card number',
     'card_autopay' => 'Autopay',
-    'add_new_card' => 'Add card'
+    'add_new_card' => 'Add card',
+    'payment_process' => 'One second...',
+    'payment_info' => 'Все операции по Вашей карте осуществляются при полном соблюдении требований VISA International, MasterCard и других платежных систем. Безопасность обработки Интернет- платежей гарантирована международными сертификатами безопасности PCI DSS. Dry Harder не имеет до ступа к данным ваших карт.'
 
 ];

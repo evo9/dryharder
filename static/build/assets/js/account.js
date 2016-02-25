@@ -133,7 +133,8 @@ $(function () {
     var $ordersTableHistorySm = $('.orders-accordion.visible-xs.history-orders');
 
     // контейнер детальной информации о заказе
-    var $orderDetails = $('.orders-table');
+    //var $orderDetails = $('.orders-table');
+    var $orderDetails = $('#order_pay_button');
     var $orderDetailsModal = $('#myModal4');
 
     // слой закрывающий табы на время загрузки их содержимого
@@ -278,11 +279,6 @@ $(function () {
             $overlay.show();
             $.get('/account/order/services/' + id, function (data) {
                 $orderDetails.html(data);
-                if (!paid) {
-                    AppAccount.payBtn().data('id', id);
-                    AppAccount.payBtn().data('sum', sum);
-                    AppAccount.payBtn().show();
-                }
                 hoverOrderDetails();
                 $overlay.hide();
 
@@ -757,11 +753,13 @@ function doPaymentListeners() {
 
     // кнопка "оплатить" - выбор карты
     var $btn = AppAccount.payBtn(),
+        $orderDetails = $('#order_pay_button'),
         data = null,
         sum = 0;
 
-    $btn.off('click').on('click', function(e){
+    $orderDetails.on('click', '.button-holder.checkout', function (e) {
         e.preventDefault();
+        $('#prepayment, .modal-backdrop').remove();
 
         var orderId = $(this).data('id'),
             subscriptionId = $(this).data('subscriptionid');
@@ -775,30 +773,30 @@ function doPaymentListeners() {
             target: 'order'
         };
 
-        getFlashMessage('pay_success');
-
-        /*$.get('/account/prepayment', function(html) {
-            if(html) {
+        $.get('/account/prepayment', function (html) {
+            if (html) {
                 $('body').append(html);
                 $('#prepayment').modal('show');
                 cardSelector();
                 payStart();
             }
-        });*/
+        });
     });
 
     function cardSelector() {
         var modal = $('#prepayment');
         var selected = modal.find('.selected'),
             list = modal.find('ul');
-        selected.click(function() {
-            $(this).hide();
-            list.slideDown(200);
-        });
-        list.find('li').click(function() {
+        if (list.find('li').length > 1) {
+            selected.click(function () {
+                $(this).hide();
+                list.slideDown(200);
+            });
+        }
+        list.find('li').click(function () {
             var card = $(this).text(),
                 payment = $(this).data('payment');
-            list.slideUp(200, function() {
+            list.slideUp(200, function () {
                 selected.find('span').text(card);
                 selected.find('input').val(payment);
                 selected.show();
@@ -809,25 +807,32 @@ function doPaymentListeners() {
     function payStart() {
         var modal = $('#prepayment');
         var submitBtn = modal.find('.btn-dh-green');
-        submitBtn.click(function() {
-            var modal = $('#prepayment');
-            if (modal.find('#yandex_input:checked').length > 0) {
-                $.get('/account/pay/check/' + data.id, function(res){
-                    if(res.data.state == 'error'){
-                        payByYandex();
-                    }else{
-                        modal.modal('hide');
-                    }
-                });
-            }
-            else {
-                var payment = modal.find('.selected input').val();
-                if (payment > 0) {
-                    payByToken();
+        submitBtn.click(function () {
+            var loadText = $(this).data('load'),
+                defaultText = $(this).text();
+            if (loadText != defaultText) {
+                submitBtn.text(loadText);
+                var modal = $('#prepayment');
+
+                if (modal.find('#yandex_input:checked').length > 0) {
+                    $.get('/account/pay/check/' + data.id, function (res) {
+                        if (res.data.state == 'error') {
+                            payByYandex();
+                        }
+                        else {
+                            modal.modal('hide');
+                        }
+                    });
                 }
                 else {
-                    modal.modal('hide');
-                    payNewCard(true);
+                    var payment = modal.find('.selected input').val();
+                    if (payment > 0) {
+                        payByToken();
+                    }
+                    else {
+                        modal.modal('hide');
+                        payNewCard(true);
+                    }
                 }
             }
         });
@@ -854,7 +859,7 @@ function doPaymentListeners() {
             reset = reset ? 1 : 0;
             $.get(
                 '/account/pay/init/' + data.id + '/' + data.target + '/' + reset,
-                function(json) {
+                function (json) {
                     var payments = new cp.CloudPayments();
                     payments.charge(
                         json.data,
@@ -874,8 +879,16 @@ function doPaymentListeners() {
     // оплата по токену
     function payByToken() {
         if (data) {
-            $.post('/account/pay/token', data, function(json){
-                getFlashMessage('pay_success');
+            data['payment_id'] = $('#prepayment .selected > input[name="payment"]').val();
+            $.post('/account/pay/token', data, function (json) {
+                if (json.errors) {
+                    AppAccount.alertError(json.message);
+                    $('.modal').modal('hide');
+                }
+                else {
+                    getFlashMessage('pay_success');
+                    $orderDetails.html('');
+                }
             });
         }
     }
@@ -964,7 +977,7 @@ function hoverOrderDetails() {
 
 function getFlashMessage(type) {
     $('.modal').modal('hide');
-    setTimeout(function() {
+    setTimeout(function () {
         $('#flashMessage, #prepayment, .modal-backdrop').remove()
         if (type != '') {
             $.get('/account/flash/message/' + type, function (html) {
@@ -978,7 +991,7 @@ function getFlashMessage(type) {
 }
 
 function addCard(reload) {
-    $.get('/account/new_card', function(json) {
+    $.get('/account/new_card', function (json) {
         $('#flashMessage').modal('hide');
         var payments = new cp.CloudPayments();
         payments.charge(
@@ -986,7 +999,7 @@ function addCard(reload) {
             // успешная оплата
             function (options) {
                 if (reload) {
-                    location.reload();
+                    refund();
                 }
                 else {
                     getFlashMessage('add_card_success');
@@ -999,10 +1012,22 @@ function addCard(reload) {
     });
 }
 
+function refund() {
+    $.post('/account/pay/refund', {newCard: 1}, function (json) {
+        cardList();
+    });
+}
+
+function cardList() {
+    $.get('/account/customers_cards', function (html) {
+        $('ul#account_card_list').html(html);
+    });
+}
+
 function autopay() {
     var modal = $('#flashMessage');
     if (modal.find('input:checked').length > 0) {
-        $.post('/account/autopay', { autopay: 1 }, function(json) {
+        $.post('/account/autopay', {autopay: 1}, function (json) {
             getFlashMessage(json.message);
 
         });
@@ -1015,46 +1040,56 @@ function autopay() {
 function payFinish() {
     var modal = $('#flashMessage'),
         data = {};
-    modal.find('input[type="checkbox"]:checked').each(function() {
+    modal.find('input[type="checkbox"]:checked').each(function () {
         data[$(this).attr('name')] = $(this).val();
     });
-    $.post('/account/pay_finish', data, function(json) {
+    $.post('/account/pay_finish', data, function (json) {
         getFlashMessage(json.message);
     });
 }
 
 function deleteCard(self) {
-    if ($('#account_card_list .label.checked').length) {
+    if ($('#account_card_list span.select_card > .label.checked').length) {
         var payments = [],
             text = self.text(),
             loadText = self.data('loading-text');
         self.text(loadText);
-        $('#account_card_list .label.checked').each(function() {
+        $('#account_card_list span.select_card > .label.checked').each(function () {
             payments.push($(this).data('payment'));
         });
-        $.post('/account/delete_card', { payments: payments }, function() {
+        $.post('/account/delete_card', {payments: payments}, function () {
             self.text(text);
-            location.reload();
+            cardList();
         });
     }
 }
 
-(function() {
-    $('#account_card_list .label').click(function() {
+(function () {
+    $('#payment_info > a.opener').click(function () {
+        cardList();
+    });
+    $('#account_card_list').on('click', 'span.select_card > .label', function () {
         var self = $(this),
             isCheck = $(this).hasClass('checked');
-
-        $('#account_card_list .label').removeClass('checked');
         if (!isCheck) {
             self.addClass('checked');
         }
-    });
-    $('#account_card_list span.card_autopay .label').click(function() {
-        var data = {};
-        if ($(this).hasClass('checked')) {
-            data['autopay'] = 1;
-            data['payment_id'];
+        else {
+            self.removeClass('checked');
         }
-        $.post('/account/autopay', data);
+    });
+    $('#account_card_list').on('click', 'span.card_autopay .label', function () {
+        var data = {},
+            self = $(this),
+            isCheck = $(this).hasClass('checked')
+        $('#account_card_list span.card_autopay > .label').removeClass('checked');
+        if (!isCheck) {
+            data['autopay'] = 1;
+            data['payment_id'] = self.data('payment');
+            self.addClass('checked');
+        }
+        $.post('/account/autopay', data, function (json) {
+            $('span.card-info.header-card-item').html(json.currentCard);
+        });
     });
 })();

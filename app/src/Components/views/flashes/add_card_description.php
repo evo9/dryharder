@@ -5,13 +5,13 @@
                 <i class="fa fa-times-circle"></i>
             </button>
             <div class="heading">
-                <h3 class="message_title"><?php echo trans('flashes.pay.success_title'); ?></h3>
+                <h3 class="message_title"><?php echo trans('flashes.add_card.title'); ?></h3>
             </div>
             <div class="row-holder">
-                <p class="text-center"><?php echo trans('main.Order payment is success'); ?></p>
+                <p class="text-center"><?php echo trans('flashes.add_card.description'); ?></p>
             </div>
             <div class="action_buttons text-center">
-                <button class="btn btn-dh-green" data-dismiss="modal"><?php echo trans('main.ok'); ?></button>
+                <button class="btn btn-dh-green" onclick="addCard(true)"><?php echo trans('main.next'); ?></button>
             </div>
         </div>
         <div class="clearfix"></div>

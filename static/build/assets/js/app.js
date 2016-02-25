@@ -186,12 +186,35 @@ function sendEvent(category, action, label, value) {
 		_fbq.loaded = true;
 	}
 
+<<<<<<< HEAD
 	/*var hash = parseUrl();
 	if (hash) {
 		var blockPos = $('#' + hash).offset().top;
 		console.log(blockPos);
 	}*/
 })();
+=======
+
+})();
+
+function scrollToHash() {
+	var hash = parseUrl();
+	if (hash && $('#' + hash).length) {
+		if ($('#' + hash).closest('#price')) {
+			$('#price-section').show();
+		}
+		setTimeout(function() {
+			var blockPos = $('#' + hash).offset().top;
+			if ($('#fixed-header-section:visible').length) {
+				var fHeaderHeight = $('#fixed-header-section').height();
+				blockPos = blockPos - fHeaderHeight;
+			}
+			window.scrollTo(0, blockPos);
+
+		}, 1000);
+	}
+}
+>>>>>>> bdbe29180145219d37259cbbbce228fe77dc3501
 
 function parseUrl() {
 	var url = location.href;
@@ -1695,7 +1718,7 @@ function initCustomOpenClose(){
 	var animSpeed = 500;
 	var columnsHolder = jQuery('.add-price-style');
 	jQuery('.add-price-section').each(function(){
-		var holder = jQuery(this).hide();
+		var holder = jQuery(this)/*.hide()*/;
 		var frame = holder.children();
 		var holderId = holder.attr('id');
 		var closer = holder.find('.link-close');

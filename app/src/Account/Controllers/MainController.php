@@ -38,7 +38,6 @@ class MainController extends BaseController
      */
     public function index()
     {
-
         if (Input::get('orderNumber')) {
             return Redirect::to('/account');
         }
@@ -49,7 +48,6 @@ class MainController extends BaseController
         $mainPage = Config::get('app.url');
         $langReplace = App::getLocale() == 'ru' ? 'index' : App::getLocale();
         $mainPage = str_replace('#lang#', $langReplace, $mainPage);
-        $cards = [];
 
         try {
             $api = new Api();
@@ -58,7 +56,7 @@ class MainController extends BaseController
             }
             $user = $api->ContrInfo();
             $promo = $this->promoInfo($user, $promo);
-            $token = PaymentCloud::getToken($user['id']);
+            //$token = PaymentCloud::getToken($user['id']);
             $agbisKey = $api->key();
 
             $customer = Customer::instance()->initByExternalId($user['id']);
@@ -82,13 +80,22 @@ class MainController extends BaseController
         return View::make('ac::index', [
             'user'       => $user,
             'promo'      => $promo,
-            'token'      => $token,
             'agbisKey'   => $agbisKey,
             'saveCard'   => $saveCard,
             'invite_url' => $invite->url(),
             'cards'       => $cards
         ]);
 
+    }
+
+    public function customersCards()
+    {
+        $api  =new Api();
+        $cards = PaymentCloud::getCustomersCards($api->id());
+
+        return View::make('ac::inc.customers-cards', [
+            'cards' => $cards
+        ]);
     }
 
     public function bonus()
@@ -132,7 +139,7 @@ class MainController extends BaseController
     {
         $params = [
             'cards' => [],
-            'lastPay' => [
+            'selectedCard' => [
                 'payment_id' => '-1',
                 'card_pan' => trans('pay.prepayment.new_card')
             ]
@@ -140,20 +147,33 @@ class MainController extends BaseController
 
         $api = new Api();
         $customerId = $api->id();
-        $lastPay = PaymentCloud::getLastPay($customerId);
-        if ($lastPay) {
-            $params['lastPay'] = [
-                'payment_id' => $lastPay['payment_id'],
-                'card_pan' => $lastPay['card_pan']
-            ];
-        }
 
         $cards = PaymentCloud::getCustomersCards($customerId);
+        $cPan = [];
         foreach ($cards as $card) {
+            $cPan[] = $card['card_pan'];
             $params['cards'][] = [
                 'payment_id' => $card['payment_id'],
                 'card_pan' => $card['card_pan']
             ];
+        }
+        if (count($cPan) > 0) {
+            /*$lastPay = PaymentCloud::getLastPay($customerId);
+            if ($lastPay && in_array($lastPay['card_pan'], $cPan)) {
+                $params['selectedCard'] = [
+                    'payment_id' => $lastPay['payment_id'],
+                    'card_pan' => $lastPay['card_pan']
+                ];
+            }
+            else {*/
+                $lastAddedCard = PaymentCloud::lastAddedCard($customerId);
+                if ($lastAddedCard) {
+                    $params['selectedCard'] = [
+                        'payment_id' => $lastAddedCard['payment_id'],
+                        'card_pan' => $lastAddedCard['card_pan']
+                    ];
+                }
+            //}
         }
 
         return View::make('ac::prepayment', $params);
@@ -222,7 +242,14 @@ class MainController extends BaseController
 
     public function token()
     {
+        if (!Input::has('payment_id')) {
+            return Response::json([
+                'errors'    => [],
+                'message' => trans('pay.prepayment.search_card_error')
+            ]);
+        }
 
+        $paymentId = Input::get('payment_id');
         $target = Input::get('target');
         $order_id = $this->parsePayTarget($target, Input::get('id'));
 
@@ -256,16 +283,21 @@ class MainController extends BaseController
             return $this->responseErrorMessage('Оплата заказа не доступна', 403);
         }
 
-        $token = PaymentCloud::getToken($api->id());
+        $token = PaymentCloud::getToken($api->id(), $paymentId);
+        if ($token) {
+            $result = $api->payByToken($order_id, $token->token, $order['amount'], $order['doc_number']);
+            if (!$result->success) {
+                return $this->responseErrorMessage($result->message, 200);
+            }
 
-        $result = $api->payByToken($order_id, $token->token, $order['amount'], $order['doc_number']);
-        if (!$result->success) {
-            return $this->responseErrorMessage($result->message, 500);
+            return Response::json([
+                'data'    => '',
+                'message' => $result->message,
+            ]);
         }
-
         return Response::json([
-            'data'    => '',
-            'message' => $result->message,
+            'errors'    => [],
+            'message' => 'Ошибка! Карта не найдена!',
         ]);
 
     }
@@ -474,6 +506,15 @@ class MainController extends BaseController
             $api = new Api();
             $services = $api->Services($id)['services'];
 
+            $showButton = true;
+            if (PaymentCloud::checkPaid($id)) {
+                $showButton = false;
+            }
+            $total = 0;
+            foreach ($services as $service) {
+                $total += $service['amount'];
+            }
+
             // если не русский, будем переводить
             if (App::getLocale() != 'ru') {
                 foreach ($services as &$item) {
@@ -491,6 +532,8 @@ class MainController extends BaseController
         return View::make('ac::order', [
             'services' => $services,
             'id'       => $id,
+            'showButton' => $showButton,
+            'total' => $total
         ]);
 
     }
@@ -510,6 +553,15 @@ class MainController extends BaseController
             $os = new OrderServiceComponent();
             $services = $os->parseOrderService($id);
 
+            $showButton = true;
+            if (PaymentCloud::checkPaid($id)) {
+                $showButton = false;
+            }
+            $total = 0;
+            foreach ($services as $service) {
+                $total += $service['amount'];
+            }
+
             // если не русский, будем переводить
             if (App::getLocale() != 'ru') {
                 foreach ($services as &$item) {
@@ -527,6 +579,8 @@ class MainController extends BaseController
         return View::make('ac::order', [
             'services' => $services,
             'id'       => $id,
+            'showButton' => $showButton,
+            'total' => $total
         ]);
 
     }
@@ -650,7 +704,7 @@ class MainController extends BaseController
 
         $data = [
             'publicId'    => Config::get('cloud.PublicId'),
-            'description' => 'Добвление карты в dryharder.me ',
+            'description' => 'Добавление карты в dryharder.me ',
             'amount'      => 1,
             'currency'    => 'RUB',
             'accountId'   => $api->id()
@@ -658,6 +712,37 @@ class MainController extends BaseController
 
         return Response::json([
             'data' => $data
+        ]);
+    }
+
+    /**
+     * Возврат платежа после добавления карты
+     */
+    public function refund()
+    {
+        $api = new Api();
+
+        if (!Input::has('newCard')) {
+            return Response::json([
+                'data' => '',
+                'message' => 'Action not found'
+            ]);
+        }
+
+        $lastPay = PaymentCloud::getLastPay($api->id());
+        if (!$lastPay || $lastPay['amount'] != 1) {
+            return $this->responseErrorMessage('Ошибка! Не найден платеж.', 500);
+        }
+
+        $result = $api->refundPayment($lastPay['payment_id'], $lastPay['amount']);
+
+        if (!$result->success) {
+            return $this->responseErrorMessage($result->message, 500);
+        }
+
+        return Response::json([
+            'data'    => '',
+            'message' => $result->message,
         ]);
     }
 
@@ -682,20 +767,21 @@ class MainController extends BaseController
     {
         $api = new Api();
 
-        $message = 'autopay_success';
+        $currentCard = '';
 
         if (Input::has('autopay')) {
             $paymentId = Input::has('payment_id') ? Input::get('payment_id') : null;
-            if (!PaymentCloud::autopayEnable($api->id(), $paymentId)) {
-                $message = 'autopay_error';
+            $card = PaymentCloud::autopayEnable($api->id(), $paymentId);
+            if ($card) {
+                $currentCard = '<i class="fa fa-credit-card"></i> ' . $card['card_type'] . ' ***' . substr($card['card_pan'], -4);;
             }
         }
         else {
             PaymentCloud::autopayDisable($api->id());
-            $message = 'autopay_disable';
+            $currentCard = '';
         }
 
-        return Response::json(['message' => $message]);
+        return Response::json(['currentCard' => $currentCard]);
     }
 
     public function payFinish()

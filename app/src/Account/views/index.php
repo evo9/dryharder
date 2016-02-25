@@ -11,8 +11,10 @@ use Dryharder\Gateway\Models\PaymentCloud;
  */
 
 $cardInfo = null;
-if ($token) {
-	$cardInfo = '<i class="fa fa-credit-card"></i> ' . $token->card_type . ' ***' . substr($token->card_pan, -4);
+foreach ($cards as $c) {
+	if ($c['autopay']) {
+		$cardInfo = '<i class="fa fa-credit-card"></i> ' . $c['card_type'] . ' ***' . substr($c['card_pan'], -4);
+	}
 }
 
 $v = 19;
@@ -119,12 +121,7 @@ $v = 19;
 							<div class="col-xs-3 ticket-fix">
 								<div class="table-tabset-holder">
 									<div id="table-tab01">
-										<aside class="aside">
-                                            <div class="button-holder checkout" style="display: none;">
-                                                <a href="#" class="btn btn-primary"><?= trans('main.Checkout') ?> <i class="fa fa-shopping-cart"></i></a>
-                                            </div>
-											<div class="orders-table current-orders"></div>
-										</aside>
+										<aside id="order_pay_button" class="aside"></aside>
 									</div>
 								</div>
 							</div>

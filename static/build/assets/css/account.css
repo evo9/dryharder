@@ -7,7 +7,6 @@
 
 .button-holder.checkout {
 	position: relative;
-	display: none;
 	margin-top: 3em;
 }
 
@@ -385,18 +384,13 @@ a.detail-order-hover {
 #flashMessage, #prepayment {
 	font-family: Arial, sans-serif;
 }
-#flashMessage .message_title {
-	text-align: center;
-	color: #00b464;
-	font-size: 28px;
-	margin: 30px 0 0;
-}
-#prepayment .message_title {
-	font-size: 28px;
-}
 #flashMessage .close,
 #prepayment .close {
 	margin: 10px 10px 0 0;
+}
+#flashMessage .heading,
+#prepayment .heading {
+	margin: 0 0 1.5em;
 }
 #flashMessage .row-holder,
 #prepayment .row-holder {
@@ -406,11 +400,28 @@ a.detail-order-hover {
 #prepayment > .modal-dialog {
 	width: 780px;
 }
+#flashMessage .modal-content,
 #prepayment .modal-content {
-	padding: 20px 20px 10px 50px;
+	padding: 20px;
+	position: relative;
+}
+#flashMessage .close,
+#prepayment .close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 2;
+	margin: 0;
+	padding: 0;
+}
+#flashMessage h3.message_title,
+#prepayment h3.message_title {
+	font-size: 28px;
+	text-align: center;
+	color: #00b464;
 }
 #prepayment .row-holder {
-	padding: 0 40px 0 10px;
+	padding: 0 40px;
 }
 .modal .btn-dh-green {
 	display: inline-block;
@@ -423,7 +434,7 @@ a.detail-order-hover {
 }
 .checkboxes {
 	text-align: center;
-	margin: 0 0 40px;
+	margin: 0 0 1.5em;
 }
 #prepayment .checkboxes {
 	text-align: left;
@@ -474,7 +485,10 @@ a.detail-order-hover {
 	color: #20b369;
 }
 #prepayment .checkboxes {
-	padding: 0 10px;
+	padding: 0 40px;
+}
+#prepayment .checkboxes label {
+	font-weight: normal;
 }
 #prepayment .checkboxes .yandex_money {
 	display: inline-block;
@@ -494,7 +508,7 @@ a.detail-order-hover {
 
 ul#account_card_list {
 	list-style: none;
-	padding: 0 80px;
+	padding: 0;
 }
 ul#account_card_list > li {
 	padding: 10px 0;
@@ -535,5 +549,45 @@ ul#account_card_list > li span.checked {
 }
 
 .card_action_button {
-	padding: 30px 80px;
+	padding: 30px 0;
+}
+
+#payment_info > .slide > .inner {
+	padding: 0 80px;
+}
+#payment_info_description {
+	font-size: 14px;
+	color: #bebebe;
+	padding: 0 0 30px;
+}
+
+@media (max-width: 1010px) {
+	ul#account_card_list > li > span.select_card {
+		width: 10%;
+	}
+	ul#account_card_list > li > span.card_num {
+		width: 70%;
+	}
+	ul#account_card_list > li > span.card_autopay {
+		width: 20%;
+	}
+}
+@media (max-width: 670px) {
+	#payment_info > .slide > .inner {
+		padding: 0;
+	}
+	#payment_info_description {
+		font-size: 12px;
+	}
+}
+@media (max-width: 440px) {
+	ul#account_card_list > li > span.select_card {
+		width: 20%;
+	}
+	ul#account_card_list > li > span.card_num {
+		width: 50%;
+	}
+	ul#account_card_list > li > span.card_autopay {
+		width: 30%;
+	}
 }

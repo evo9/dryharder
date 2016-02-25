@@ -10,14 +10,14 @@
             <div class="row-holder">
                 <div class="cards_wrap">
                     <div class="selected">
-                        <span><?php echo $lastPay['card_pan']; ?></span>
-                        <input type="hidden" name="payment" value="<?php echo $lastPay['payment_id']; ?>">
+                        <span><?php echo $selectedCard['card_pan']; ?></span>
+                        <input type="hidden" name="payment" value="<?php echo $selectedCard['payment_id']; ?>">
                     </div>
                     <ul>
                         <li data-payment="-1"><?php echo trans('pay.prepayment.new_card'); ?></li>
                         <?php if (count($cards) > 0) : ?>
                             <?php foreach ($cards as $card) : ?>
-                                <li data-paiment="<?php echo $card['payment_id'] ?>"><?php echo $card['card_pan']; ?></li>
+                                <li data-payment="<?php echo $card['payment_id'] ?>"><?php echo $card['card_pan']; ?></li>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </ul>
@@ -31,7 +31,7 @@
                 </label>
             </div>
             <div class="action_buttons text-center">
-                <button class="btn btn-dh-green"><?php echo trans('main.ok'); ?></button>
+                <button class="btn btn-dh-green" data-load="<?php echo trans('main.payment_process'); ?>"><?php echo trans('main.next'); ?></button>
             </div>
         </div>
         <div class="clearfix"></div>

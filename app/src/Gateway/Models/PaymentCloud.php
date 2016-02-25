@@ -54,18 +54,24 @@ class PaymentCloud extends \Eloquent
      *
      * @return PaymentCloud|null
      */
-    public static function getToken($customer_id)
+    public static function getToken($customerId, $paymentId)
     {
         // последняя успешная оплата клиента, в которой есть токен
-        $lastPay = self::payed()
-            ->whereCustomerId($customer_id)
+        /*$lastPay = self::payed()
+            ->whereCustomerId($customerId)
             ->notFailed()
             ->whereWaiting(0)
             ->where('token', '!=', '')
             ->orderBy('id', 'desc')
+            ->first();*/
+
+        $tokenCard = self::whereCustomerId($customerId)
+            ->wherePaymentId($paymentId)
             ->first();
 
-        return ($lastPay && $lastPay->token) ? $lastPay : null;
+
+
+        return ($tokenCard && $tokenCard->token) ? $tokenCard : null;
 
     }
 
@@ -364,10 +370,10 @@ class PaymentCloud extends \Eloquent
         if ($pay) {
             $pay->autopay = 1;
             $pay->save();
-            return true;
+            return $pay;
         }
         else {
-            return false;
+            return null;
         }
     }
 
@@ -439,7 +445,8 @@ class PaymentCloud extends \Eloquent
         self::whereCustomerId($customerId)
             ->whereIn('payment_id', $payments)
             ->update([
-                'token' => ''
+                'token' => '',
+                'autopay' => 0
             ]);
     }
 
@@ -465,4 +472,44 @@ class PaymentCloud extends \Eloquent
 
         return $ids;
     }
+<<<<<<< HEAD
+=======
+
+    public static function checkPaid($orderId)
+    {
+        $order = self::whereOrderId($orderId)
+            ->notFailed()
+            ->where(function($query) {
+                $query
+                    ->where('waiting', 1)
+                    ->orWhere('exported', 1)
+                    ->orWhere(function($query) {
+                        /** @var PaymentCloud $query */
+                        $query->where('waiting', 0)->where('exported', 0);
+                    });
+            })
+            ->first();
+
+        if (!$order) {
+            return false;
+        }
+
+        // закрыть заказ если он "висит" уже долго
+        if ($order->closeIfLongWaiting()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function lastAddedCard($customerId)
+    {
+        return self::whereCustomerId($customerId)
+            ->whereWaiting(0)
+            ->notFailed()
+            ->where('token', '!=', '')
+            ->orderBy('id', 'desc')
+            ->first();
+    }
+>>>>>>> bdbe29180145219d37259cbbbce228fe77dc3501
 }

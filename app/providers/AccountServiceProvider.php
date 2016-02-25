@@ -54,11 +54,13 @@ class AccountServiceProvider extends Illuminate\Support\ServiceProvider
         Route::post('/account/pay_by_token', MainController::class . '@payByToken');
         Route::get('/account/pay/check/{id}', MainController::class . '@checkPay');
         Route::post('/account/pay/token', MainController::class . '@token');
+        Route::post('/account/pay/refund', MainController::class . '@refund');
         Route::get('/account/flash/message/{type}', ServiceController::class . '@flash');
         Route::get('/account/bonus', MainController::class . '@bonus');
         Route::get('/account/order/review/{id}', MainController::class . '@review');
         Route::post('/account/order/review', MainController::class . '@reviewOrder');
         Route::get('/account/subscriptions', MainController::class . '@subscriptions');
+        Route::get('/account/customers_cards', MainController::class . '@customersCards');
         Route::get(
             '/account/lang/{lang}',
             [
