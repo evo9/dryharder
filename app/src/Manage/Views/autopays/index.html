@@ -28,7 +28,6 @@
 						<th class="text-center">
 							<input type="checkbox" ng-click="checkAll()" >
 						</th>
-						<th>id</th>
 						<th>agbis id</th>
 						<th>email</th>
 						<th>name</th>
@@ -40,7 +39,6 @@
 						<td class="col-md-1 text-center">
 							<input type="checkbox" ng-click="check(item.agbisId)" ng-checked="inArray(item.agbisId, checked)" >
 						</td>
-						<td class="col-md-1">{{item.id}}</td>
 						<td class="col-md-2">{{item.agbisId}}</td>
 						<td class="col-md-2">{{item.email}}</td>
 						<td class="col-md-1">{{item.name}}</td>
@@ -76,21 +74,55 @@
 						<th>попытка</th>
 						<th>результат</th>
 					</tr>
-					<tr ng-repeat="item in list" ng-class="{'tokenized': item.order_autopay && item.order_autopay.state == 1, 'tokenized-error': item.order_autopay && item.order_autopay.state == 0}">
+					<!--<tr ng-repeat="item in list" ng-class="{'tokenized': item.order_autopay && item.order_autopay.state == 1, 'tokenized-error': item.order_autopay && item.order_autopay.state == 0}">-->
+					<tr ng-repeat="item in list">
 						<td>{{item.id}}</td>
 						<td>{{item.doc_number}}</td>
 						<td>{{item.amount}}</td>
 						<td>{{item.status}}</td>
 						<td>{{item.status_name}}</td>
 						<td>
-							<button ng-show="item.autopay && !item.order_autopay" ng-click="autopay($event, item)">списать</button>
+							<button ng-show="item.autopay && (!item.order_autopay || item.order_autopay.state == 0)" ng-click="autopay($event, item)">списать</button>
 						</td>
 						<td>
 							<span ng-show="!item.order_autopay">нет попытки</span>
-							<span ng-show="item.order_autopay.state == 0">есть попытка</span>
+							<span ng-show="item.order_autopay.state == 0">попыток - <span ng-if="item.payTotal > 0">{{ item.payTotal }}</span></span>
 							<span ng-show="item.order_autopay.state == 1">попытка успешна</span>
 						</td>
 						<td>{{item.order_autopay.comment}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="AutoPayErrorsCtrl" ng-controller="AutoPayErrorsCtrl">
+	<div class="modal-dialog" style="width: 900px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Во время автооплаты произошли следующие ошибки</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table">
+					<tr>
+						<th>Agbis id клиента</th>
+						<th>Клиент</th>
+						<th>Email клиента</th>
+						<th>ID Заказа</th>
+						<th>№ Документа</th>
+						<th>Сумма</th>
+						<th>Сообщение об ошибке</th>
+					</tr>
+					<tr ng-repeat="item in items">
+						<td>{{item.customer.agbis_id}}</td>
+						<td>{{item.customer.name}}</td>
+						<td>{{item.customer.email}}</td>
+						<td>{{item.order.id}}</td>
+						<td>{{item.order.doc_number}}</td>
+						<td>{{item.order.amount}}</td>
+						<td>{{item.message}}</td>
 					</tr>
 				</table>
 			</div>

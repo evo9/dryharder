@@ -355,6 +355,10 @@ App.controller('AutoPayCtrl', ['$scope', '$http', '$rootScope', function ($scope
 					{ customers: $scope.checked }
 				)
 				.success(function(data) {
+					if (data.errors.length > 0) {
+						$rootScope.$broadcast('dh.autopay.error', { errors: data.errors })
+					}
+
 					$scope.payProcess = false;
 					$scope.ckecked = [];
 					if (data.result.length > 0) {
@@ -435,6 +439,16 @@ App.controller('AutoPayOrdersCtrl', ['$scope', '$http', '$rootScope', function (
 			})
 	}
 
+}]);
+
+App.controller('AutoPayErrorsCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+	$scope.items = [];
+	$scope.modal = $('#AutoPayErrorsCtrl');
+
+	$rootScope.$on('dh.autopay.error', function(e, data) {
+		$scope.items = data.errors;
+		$scope.modal.modal('show');
+	});
 }]);
 
 

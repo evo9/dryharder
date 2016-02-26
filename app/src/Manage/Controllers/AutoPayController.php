@@ -35,10 +35,6 @@ class AutoPayController extends BaseController
 
         $result = [];
         foreach ($list as $customer) {
-            $this->orderInfo = [
-                'totalOrder' => 0,
-                'totalOrderAmount' => 0
-            ];
             $data = [
                 'phone' => $customer->phone,
                 'agbisId' => $customer->agbis_id,
@@ -68,6 +64,11 @@ class AutoPayController extends BaseController
 
     private function checkPaidOrders($data)
     {
+        $this->orderInfo = [
+            'totalOrder' => 0,
+            'totalOrderAmount' => 0
+        ];
+
         $api = new Api();
 
         $customerId = $data['agbisId'];
@@ -110,6 +111,7 @@ class AutoPayController extends BaseController
     public function autopayAll()
     {
         $result = [];
+        $errors = [];
         if (Input::has('customers')) {
             $api = new Api();
             $customers = Input::get('customers');
@@ -127,7 +129,30 @@ class AutoPayController extends BaseController
                             if ($this->isNotPaidOrder($customerId, $order['id'])) {
                                 if ($api->IsGoodOrder($order['id'], $customerId)) {
                                     if($this->isNotPaidOrder($customerId, $order['id'])){
-                                        $api->payByToken($order['id'], $card->token, $order['amount'], $order['doc_number'], $key);
+                                        OrderAutopay::unguard();
+                                        $pay = OrderAutopay::create([
+                                            'order_id'    => $order['id'],
+                                            'customer_id' => $customerId,
+                                            'state'       => 0,
+                                        ]);
+
+                                        $payResult = $api->payByToken($order['id'], $card->token, $order['amount'], $order['doc_number'], $key);
+                                        $pay->comment = $payResult->message;
+                                        $pay->save();
+
+                                        if($payResult->success){
+                                            $pay->state = 1;
+                                            $pay->save();
+                                            Mailer::succesAutoPay($customer, $order, $card);
+                                        }
+                                        else {
+                                            $errors[] = [
+                                                'customer' => $customer->get(),
+                                                'order' => $order,
+                                                'message' => $payResult->message
+                                            ];
+                                            Mailer::errorAutoPay($customer, $order, $card);
+                                        }
                                     }
                                 }
                             }
@@ -150,7 +175,8 @@ class AutoPayController extends BaseController
         }
 
         return Response::json([
-            'result' => $result
+            'result' => $result,
+            'errors' => $errors
         ], 200);
     }
 
@@ -273,7 +299,9 @@ class AutoPayController extends BaseController
         foreach ($orders['orders'] as &$order) {
             $order['status_name'] = Order::statusName($order['status']);
             $order['autopay'] = ($order['status'] >= 1 && $order['amount'] > 0);
-            $order['order_autopay'] = OrderAutopay::whereCustomerId($cid)->whereOrderId($order['id'])->first();
+            $lastPay = OrderAutopay::getLastPay($cid, $order['id']);
+            $order['order_autopay'] = $lastPay['lastPay'];
+            $order['payTotal'] = $lastPay['total'];
         }
 
         $orders = array_reverse($orders['orders']);

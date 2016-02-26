@@ -16,6 +16,7 @@ namespace Dryharder\Models;
  *
  * @method static OrderAutopay whereOrderId()
  * @method static OrderAutopay whereCustomerId()
+ * @method static OrderAutopay whereState()
  * @method static OrderAutopay first()
  * @method static OrderAutopay find()
  * @method static OrderAutopay get()
@@ -28,4 +29,22 @@ class OrderAutopay extends \Eloquent
     const C_STATE_NEW = 0;
     const C_STATE_PAID = 1;
 
+    public static function getLastPay($customerId, $orderId)
+    {
+        $result = [
+            'lastPay' => null,
+            'total' => 0
+        ];
+        $pays =  self::whereCustomerId($customerId)
+            ->whereOrderId($orderId)
+            ->whereState(self::C_STATE_NEW)
+            ->get();
+        $count = count($pays);
+        if ($count > 0) {
+            $result['total'] = $count;
+            $result['lastPay'] = $pays[$count - 1];
+        }
+
+        return $result;
+    }
 }

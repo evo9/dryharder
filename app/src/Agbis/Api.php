@@ -5,6 +5,7 @@ namespace Dryharder\Agbis;
 use Config;
 use Dryharder\Components\Customer;
 use Dryharder\Components\Reporter;
+use Dryharder\Gateway\Models\PaymentCloud;
 
 class Api
 {
@@ -775,7 +776,8 @@ class Api
             if ($response->Success) {
                 $paySuccess = true;
             } else {
-                $error = !empty($response->Message) ? $response->Message : 'Ошибка операции в платежной системе';
+                $message = $response->Model->CardHolderMessage;
+                $error = $message > '' ? $message : 'Ошибка операции в платежной системе';
             }
 
         }
@@ -789,7 +791,9 @@ class Api
             ];
         }
 
-        $error = trim($error . ' [code=' . $code . ']');
+        if ($code != 200)
+            $error = trim($error . ' [code=' . $code . ']');
+
         Reporter::payTokenError($user['id'], $order_id, $error, $model);
 
         return (object)[
