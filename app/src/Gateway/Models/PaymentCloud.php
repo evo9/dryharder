@@ -472,8 +472,6 @@ class PaymentCloud extends \Eloquent
 
         return $ids;
     }
-<<<<<<< HEAD
-=======
 
     public static function checkPaid($orderId)
     {
@@ -511,5 +509,4 @@ class PaymentCloud extends \Eloquent
             ->orderBy('id', 'desc')
             ->first();
     }
->>>>>>> bdbe29180145219d37259cbbbce228fe77dc3501
 }

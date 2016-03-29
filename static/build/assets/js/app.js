@@ -186,15 +186,6 @@ function sendEvent(category, action, label, value) {
 		_fbq.loaded = true;
 	}
 
-<<<<<<< HEAD
-	/*var hash = parseUrl();
-	if (hash) {
-		var blockPos = $('#' + hash).offset().top;
-		console.log(blockPos);
-	}*/
-})();
-=======
-
 })();
 
 function scrollToHash() {
@@ -214,7 +205,6 @@ function scrollToHash() {
 		}, 1000);
 	}
 }
->>>>>>> bdbe29180145219d37259cbbbce228fe77dc3501
 
 function parseUrl() {
 	var url = location.href;
