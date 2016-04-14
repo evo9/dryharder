@@ -465,14 +465,18 @@ a.detail-order-hover {
 #prepayment .cards_wrap {
 	position: relative;
 	margin: 0 0 25px;
+	cursor: pointer;
 }
 #prepayment .cards_wrap .selected {
 	background: url(../../images/select_arrow.png) 95% 30px no-repeat;
 	border: 5px solid #ebebeb;
 	padding: 18px 11px;
 }
+#prepayment .cards_wrap .selected:hover {
+	border: 5px solid #2dd982;
+}
 #prepayment .cards_wrap ul {
-	border: 5px solid #000;
+	border: 5px solid #2dd982;
 	background: url(../../images/select_arrow_selected.png) 95% 30px no-repeat;
 	list-style: none;
 	padding: 10px 0;
@@ -559,6 +563,10 @@ ul#account_card_list > li span.checked {
 	font-size: 14px;
 	color: #bebebe;
 	padding: 0 0 30px;
+}
+.card_action_button > button.no_active {
+	background: #d9d9d9;
+	box-shadow: 2px 2px 0 0 #9f9f9f;
 }
 
 @media (max-width: 1010px) {

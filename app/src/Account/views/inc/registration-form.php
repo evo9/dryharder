@@ -112,7 +112,7 @@
                                     <?php endforeach; ?>
                                 </ul>
                                 <div class="card_action_button">
-                                    <button class="btn btn-primary" onclick="deleteCard($(this))" data-loading-text="<?= trans('main.deleting') ?>"><?php echo trans('main.DELETE CARD') ?> <i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-primary <?php if (count($cards) == 0) : ?> no_active<?php endif; ?>" onclick="deleteCard($(this))" data-loading-text="<?= trans('main.deleting') ?>"><?php echo trans('main.DELETE CARD') ?> <i class="fa fa-trash"></i></button>
                                 </div>
 
                                 <div id="payment_info_description">

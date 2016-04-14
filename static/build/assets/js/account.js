@@ -789,8 +789,9 @@ function doPaymentListeners() {
             list = modal.find('ul');
         if (list.find('li').length > 1) {
             selected.click(function () {
-                $(this).hide();
-                list.slideDown(200);
+                $(this).slideUp(200, function() {
+                    list.slideDown(200);
+                });
             });
         }
         list.find('li').click(function () {
@@ -799,7 +800,7 @@ function doPaymentListeners() {
             list.slideUp(200, function () {
                 selected.find('span').text(card);
                 selected.find('input').val(payment);
-                selected.show();
+                selected.slideDown(200);
             });
         });
     }
@@ -1019,8 +1020,16 @@ function refund() {
 }
 
 function cardList() {
+    var $ul = $('ul#account_card_list');
+    var $button = $ul.next().find('button');
     $.get('/account/customers_cards', function (html) {
-        $('ul#account_card_list').html(html);
+        $ul.html(html);
+        if ($ul.find('li').length <= 1) {
+            $button.addClass('no_active');
+        }
+        else {
+            $button.removeClass('no_active');
+        }
     });
 }
 
@@ -1049,12 +1058,15 @@ function payFinish() {
 }
 
 function deleteCard(self) {
-    if ($('#account_card_list span.select_card > .label.checked').length) {
+    if (!self.hasClass('no_active')) {
         var payments = [],
             text = self.text(),
             loadText = self.data('loading-text');
         self.text(loadText);
         $('#account_card_list span.select_card > .label.checked').each(function () {
+            if ($(this).closest('li').find('span.card_autopay .label').hasClass('checked')) {
+                $('span.card-info.header-card-item').html('');
+            }
             payments.push($(this).data('payment'));
         });
         $.post('/account/delete_card', {payments: payments}, function () {
